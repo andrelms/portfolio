@@ -14,9 +14,9 @@
     --bg3: #111820;
     --gold: #c9a84c;
     --gold2: #e8c97a;
-    --text: #e8e3dc;
-    --muted: #7a756e;
-    --line: #1e2530;
+    --text: #f4f0eb;
+    --muted: #b4ac9f;
+    --line: #242c38;
   }
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
@@ -32,7 +32,7 @@
   .hero-name{font-family:'Bebas Neue',sans-serif;font-size:clamp(68px,10vw,140px);line-height:.88;color:#fff;letter-spacing:-.02em;opacity:0;animation:fadeUp .8s .4s forwards}
   .hero-name span{display:block;color:var(--gold)}
   .hero-role{font-family:'Cormorant Garamond',serif;font-size:20px;font-style:italic;color:#b0aaa2;margin-top:32px;opacity:0;animation:fadeUp .8s .6s forwards}
-  .hero-sub{font-size:11px;letter-spacing:.15em;color:#8a847c;margin-top:10px;opacity:0;animation:fadeUp .8s .8s forwards}
+  .hero-sub{font-size:12px;letter-spacing:.15em;color:#b5afa6;margin-top:10px;opacity:0;animation:fadeUp .8s .8s forwards}
   .hero-cta{display:flex;gap:16px;margin-top:40px;opacity:0;animation:fadeUp .8s 1s forwards}
   .btn{padding:12px 28px;font-size:11px;letter-spacing:.25em;text-transform:uppercase;text-decoration:none;border:1px solid var(--gold);color:var(--gold);transition:background .25s,color .25s;font-family:'DM Mono',monospace}
   .btn:hover{background:var(--gold);color:#000}
@@ -62,7 +62,7 @@
   .about-text{font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:400;line-height:1.65;color:var(--text)}
   .about-text em{color:var(--gold2);font-style:italic}
   .about-contact{margin-top:32px;display:flex;flex-direction:column;gap:10px}
-  .about-contact a{color:#9a948c;text-decoration:none;font-size:12px;letter-spacing:.1em;transition:color .2s}
+  .about-contact a{color:#b4ac9f;text-decoration:none;font-size:13px;letter-spacing:.1em;transition:color .2s}
   .about-contact a:hover{color:var(--gold)}
   .family-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px}
   .family-card{background:var(--bg2);border:1px solid var(--line);padding:22px;position:relative;overflow:hidden;transition:border-color .3s}
@@ -78,7 +78,7 @@
   .number-item{padding:64px 40px;border-right:1px solid var(--line);text-align:center}
   .number-item:last-child{border-right:none}
   .number-val{font-family:'Bebas Neue',sans-serif;font-size:64px;color:var(--gold);line-height:1;display:block}
-  .number-label{font-size:10px;letter-spacing:.2em;color:#9a948c;text-transform:uppercase;margin-top:8px}
+  .number-label{font-size:11px;letter-spacing:.15em;color:var(--muted);text-transform:uppercase;margin-top:8px}
 
   /* TIMELINE */
   .timeline-section{background:var(--bg2)}
@@ -93,8 +93,10 @@
   .timeline-role{font-size:11px;letter-spacing:.25em;color:var(--gold);text-transform:uppercase;margin-bottom:14px}
   .timeline-desc{color:var(--text);font-size:15px;line-height:1.8;max-width:680px;font-weight:400}
   .timeline-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
-  .tag{font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);color:var(--muted);transition:border-color .3s,color .3s}
-  .timeline-item:hover .tag{border-color:var(--gold);color:var(--gold)}
+  .tag{font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);color:var(--text);opacity:0.85;transition:border-color .3s,color .3s,opacity .3s}
+  .timeline-item:hover .tag{border-color:var(--gold);color:var(--gold);opacity:1}
+  .arch-grid{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:0;align-items:center;font-size:12px}
+  .arch-arrow{padding:0 14px;font-size:20px;color:var(--gold);text-align:center}
 
   /* EXPERTISE */
   .expertise-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
@@ -192,6 +194,8 @@
     .container{padding:0 24px}.consultoria-block{padding:32px}
     footer{flex-direction:column;gap:32px}.footer-links{text-align:left}
     .partners-inner{padding:80px 24px}.partners-year{display:none}
+    .arch-grid{grid-template-columns:1fr !important;gap:16px !important}
+    .arch-arrow{transform:rotate(90deg);padding:8px 0 !important}
   }
   @media(max-width:500px){
     .expertise-grid,.stack-grid,.numbers-grid,.partners-grid{grid-template-columns:1fr}
@@ -270,10 +274,10 @@
 <section class="numbers-section">
   <div class="container">
     <div class="numbers-grid">
-      <div class="number-item reveal"><span class="number-val">+10k</span><div class="number-label">Processos Judiciais<br><small style="opacity:.6;font-size:9px">Recuperação de ativos · Eichenberg &amp; Lobato</small></div></div>
-      <div class="number-item reveal"><span class="number-val">30min</span><div class="number-label">Atualização em Tempo Real<br><small style="opacity:.6;font-size:9px">Supply Chain · Dufrio CDs de Distribuição</small></div></div>
-      <div class="number-item reveal"><span class="number-val">R$M+</span><div class="number-label">Crédito Consignado<br><small style="opacity:.6;font-size:9px">Balancete Financeiro · Futuro Previdência</small></div></div>
-      <div class="number-item reveal"><span class="number-val">~1,5B</span><div class="number-label">Linhas Migradas<br><small style="opacity:.6;font-size:9px">Lakehouse Bronze/Silver/Gold · Infinilabs</small></div></div>
+      <div class="number-item reveal"><span class="number-val">+10k</span><div class="number-label">Processos Judiciais<br><small style="opacity:.9;font-size:10px;color:var(--text)">Recuperação de ativos · Eichenberg &amp; Lobato</small></div></div>
+      <div class="number-item reveal"><span class="number-val">30min</span><div class="number-label">Atualização em Tempo Real<br><small style="opacity:.9;font-size:10px;color:var(--text)">Supply Chain · Dufrio CDs de Distribuição</small></div></div>
+      <div class="number-item reveal"><span class="number-val">R$M+</span><div class="number-label">Crédito Consignado<br><small style="opacity:.9;font-size:10px;color:var(--text)">Balancete Financeiro · Futuro Previdência</small></div></div>
+      <div class="number-item reveal"><span class="number-val">~1,5B</span><div class="number-label">Linhas Migradas<br><small style="opacity:.9;font-size:10px;color:var(--text)">Lakehouse Bronze/Silver/Gold · Infinilabs</small></div></div>
     </div>
   </div>
 </section>
@@ -294,30 +298,30 @@
         <div class="timeline-tags"><span class="tag">Databricks</span><span class="tag">Microsoft Fabric</span><span class="tag">Direct Lake</span><span class="tag">Power BI</span><span class="tag">Azure</span><span class="tag">Dell</span></div>
         <div style="margin-top:24px;background:var(--bg2);border:1px solid var(--line);padding:32px" class="reveal">
           <p style="font-size:10px;letter-spacing:.3em;color:var(--gold);text-transform:uppercase;margin-bottom:20px">Arquitetura · Dell Technologies Gold Partner</p>
-          <div style="display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:0;align-items:center;font-size:12px">
+          <div class="arch-grid">
             <div style="background:var(--bg);border:1px solid var(--line);padding:20px 16px">
-              <div style="font-size:9px;letter-spacing:.25em;color:var(--muted);text-transform:uppercase;margin-bottom:12px">Fontes Legadas</div>
+              <div style="font-size:10px;letter-spacing:.2em;color:var(--muted);text-transform:uppercase;margin-bottom:12px;font-weight:500">Fontes Legadas</div>
               <div style="display:flex;flex-direction:column;gap:6px">
                 <div style="padding:6px 10px;background:#1a2030;color:var(--text);border-left:2px solid #c00">SAP</div>
                 <div style="padding:6px 10px;background:#1a2030;color:var(--text);border-left:2px solid #f00">Oracle</div>
                 <div style="padding:6px 10px;background:#1a2030;color:var(--text);border-left:2px solid #0078d4">Azure</div>
                 <div style="padding:6px 10px;background:#1a2030;color:var(--text);border-left:2px solid #036">SharePoint</div>
               </div>
-              <div style="margin-top:12px;padding:8px;border:1px solid var(--line);text-align:center;font-size:9px;letter-spacing:.12em;color:var(--gold)">QLIK → POWER BI</div>
+              <div style="margin-top:12px;padding:8px;border:1px solid var(--line);text-align:center;font-size:10px;letter-spacing:.12em;color:var(--gold)">QLIK → POWER BI</div>
             </div>
-            <div style="padding:0 14px;font-size:20px;color:var(--gold)">→</div>
+            <div class="arch-arrow">→</div>
             <div style="background:#0a1628;border:1px solid #f60;padding:20px 16px;text-align:center">
-              <div style="font-size:9px;letter-spacing:.25em;color:#f80;text-transform:uppercase;margin-bottom:12px">Databricks Platform</div>
+              <div style="font-size:10px;letter-spacing:.2em;color:#fa8;text-transform:uppercase;margin-bottom:12px;font-weight:500">Databricks Platform</div>
               <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:12px">
                 <div style="padding:6px;background:rgba(201,168,76,.15);border:1px solid var(--gold);color:var(--gold);font-size:10px">🥇 GOLD · Business</div>
-                <div style="padding:6px;background:rgba(180,180,180,.08);border:1px solid #888;color:#aaa;font-size:10px">🥈 SILVER · Validated</div>
-                <div style="padding:6px;background:rgba(180,100,50,.1);border:1px solid #a55;color:#c87;font-size:10px">🥉 BRONZE · Raw</div>
+                <div style="padding:6px;background:rgba(180,180,180,.08);border:1px solid #888;color:#ccc;font-size:10px">🥈 SILVER · Validated</div>
+                <div style="padding:6px;background:rgba(180,100,50,.1);border:1px solid #a55;color:#fca;font-size:10px">🥉 BRONZE · Raw</div>
               </div>
-              <div style="font-size:9px;letter-spacing:.12em;color:#f80;padding:6px;border:1px solid rgba(255,100,0,.3)">DELL Technologies Partner</div>
+              <div style="font-size:10px;letter-spacing:.12em;color:#fa8;padding:6px;border:1px solid rgba(255,100,0,.3)">DELL Technologies Partner</div>
             </div>
-            <div style="padding:0 14px;font-size:20px;color:var(--gold)">→</div>
+            <div class="arch-arrow">→</div>
             <div style="background:var(--bg);border:1px solid var(--line);padding:20px 16px">
-              <div style="font-size:9px;letter-spacing:.25em;color:var(--muted);text-transform:uppercase;margin-bottom:12px">Analytics Moderno</div>
+              <div style="font-size:10px;letter-spacing:.2em;color:var(--muted);text-transform:uppercase;margin-bottom:12px;font-weight:500">Analytics Moderno</div>
               <div style="display:flex;flex-direction:column;gap:6px">
                 <div style="padding:6px 10px;background:#1a2030;color:var(--text);border-left:2px solid #0078d4">Microsoft Fabric</div>
                 <div style="padding:6px 10px;background:#1a2030;color:var(--text);border-left:2px solid #f2c811">Power BI</div>
@@ -325,8 +329,8 @@
                 <div style="padding:6px 10px;background:#1a2030;color:var(--text);border-left:2px solid #0078d4">Direct Lake</div>
               </div>
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:8px">
-                <div style="padding:6px;background:#0e1318;border:1px solid var(--line);font-size:8px;letter-spacing:.08em;color:var(--muted);text-align:center">GOVERNANÇA &amp;<br>CONSISTÊNCIA</div>
-                <div style="padding:6px;background:#0e1318;border:1px solid var(--line);font-size:8px;letter-spacing:.08em;color:var(--muted);text-align:center">DOC &amp;<br>VERSIONAMENTO</div>
+                <div style="padding:6px;background:#0e1318;border:1px solid var(--line);font-size:9px;letter-spacing:.05em;color:var(--text);text-align:center;line-height:1.4">GOVERNANÇA &amp;<br>CONSISTÊNCIA</div>
+                <div style="padding:6px;background:#0e1318;border:1px solid var(--line);font-size:9px;letter-spacing:.05em;color:var(--text);text-align:center;line-height:1.4">DOC &amp;<br>VERSIONAMENTO</div>
               </div>
             </div>
           </div>
