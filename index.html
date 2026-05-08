@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>André Machado — Senior Data & AI Professional</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300&family=DM+Mono:wght@300;400;500&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080b0f;
+    --bg2: #0e1318;
+    --bg3: #111820;
+    --gold: #c9a84c;
+    --gold2: #e8c97a;
+    --text: #e8e3dc;
+    --muted: #7a756e;
+    --line: #1e2530;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font-family:'DM Mono',monospace;font-size:14px;line-height:1.7;overflow-x:hidden;cursor:none}
+  .cursor{position:fixed;width:8px;height:8px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s}
+  .cursor-ring{position:fixed;width:32px;height:32px;border:1px solid var(--gold);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);opacity:.45}
+  body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:1000;opacity:.4}
+
+  /* HERO */
+  .hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;position:relative;overflow:hidden}
+  .hero-left{display:flex;flex-direction:column;justify-content:flex-end;padding:80px 60px;position:relative;z-index:2}
+  .hero-eyebrow{font-size:11px;letter-spacing:.3em;color:var(--gold);text-transform:uppercase;margin-bottom:24px;opacity:0;animation:fadeUp .8s .2s forwards}
+  .hero-name{font-family:'Bebas Neue',sans-serif;font-size:clamp(68px,10vw,140px);line-height:.88;color:#fff;letter-spacing:-.02em;opacity:0;animation:fadeUp .8s .4s forwards}
+  .hero-name span{display:block;color:var(--gold)}
+  .hero-role{font-family:'Cormorant Garamond',serif;font-size:20px;font-style:italic;color:#b0aaa2;margin-top:32px;opacity:0;animation:fadeUp .8s .6s forwards}
+  .hero-sub{font-size:11px;letter-spacing:.15em;color:#8a847c;margin-top:10px;opacity:0;animation:fadeUp .8s .8s forwards}
+  .hero-cta{display:flex;gap:16px;margin-top:40px;opacity:0;animation:fadeUp .8s 1s forwards}
+  .btn{padding:12px 28px;font-size:11px;letter-spacing:.25em;text-transform:uppercase;text-decoration:none;border:1px solid var(--gold);color:var(--gold);transition:background .25s,color .25s;font-family:'DM Mono',monospace}
+  .btn:hover{background:var(--gold);color:#000}
+  .btn-fill{background:var(--gold);color:#000}
+  .btn-fill:hover{background:var(--gold2);border-color:var(--gold2)}
+  .hero-right{position:relative;overflow:hidden}
+  .hero-bg-text{position:absolute;font-family:'Bebas Neue',sans-serif;font-size:360px;color:transparent;-webkit-text-stroke:1px var(--line);top:50%;left:50%;transform:translate(-50%,-50%);white-space:nowrap;pointer-events:none;animation:drift 20s ease-in-out infinite alternate}
+  .hero-stats{position:absolute;bottom:80px;right:60px;display:flex;flex-direction:column;gap:32px;z-index:2;opacity:0;animation:fadeUp .8s 1.2s forwards}
+  .stat{text-align:right}
+  .stat-num{font-family:'Bebas Neue',sans-serif;font-size:48px;color:var(--gold);line-height:1}
+  .stat-label{font-size:10px;letter-spacing:.25em;color:var(--muted);text-transform:uppercase}
+  .hero-line{position:absolute;bottom:0;left:50%;width:1px;height:100%;background:linear-gradient(to bottom,transparent,var(--line),transparent)}
+  .scroll-hint{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;animation:fadeIn 1s 2s forwards;z-index:2}
+  .scroll-hint span{font-size:10px;letter-spacing:.3em;color:var(--muted);text-transform:uppercase}
+  .scroll-arrow{width:1px;height:40px;background:linear-gradient(to bottom,var(--gold),transparent);animation:scrollPulse 2s ease-in-out infinite}
+
+  /* SHARED */
+  section{padding:120px 0;position:relative}
+  .container{max-width:1200px;margin:0 auto;padding:0 60px}
+  .section-tag{font-size:10px;letter-spacing:.4em;color:var(--gold);text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:16px}
+  .section-tag::before{content:'';display:block;width:32px;height:1px;background:var(--gold)}
+  .section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,5vw,66px);font-weight:300;line-height:1.1;color:#fff;margin-bottom:64px}
+  .divider{width:100%;height:1px;background:linear-gradient(to right,transparent,var(--line),transparent)}
+
+  /* ABOUT */
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+  .about-text{font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:400;line-height:1.65;color:var(--text)}
+  .about-text em{color:var(--gold2);font-style:italic}
+  .about-contact{margin-top:32px;display:flex;flex-direction:column;gap:10px}
+  .about-contact a{color:#9a948c;text-decoration:none;font-size:12px;letter-spacing:.1em;transition:color .2s}
+  .about-contact a:hover{color:var(--gold)}
+  .family-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .family-card{background:var(--bg2);border:1px solid var(--line);padding:22px;position:relative;overflow:hidden;transition:border-color .3s}
+  .family-card:hover{border-color:var(--gold)}
+  .family-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--gold);transform:scaleY(0);transform-origin:bottom;transition:transform .3s}
+  .family-card:hover::before{transform:scaleY(1)}
+  .family-name{font-family:'Bebas Neue',sans-serif;font-size:26px;color:#fff;letter-spacing:.05em}
+  .family-detail{font-size:11px;color:var(--muted);letter-spacing:.2em;text-transform:uppercase;margin-top:4px}
+
+  /* NUMBERS */
+  .numbers-section{background:#000;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .numbers-grid{display:grid;grid-template-columns:repeat(4,1fr)}
+  .number-item{padding:64px 40px;border-right:1px solid var(--line);text-align:center}
+  .number-item:last-child{border-right:none}
+  .number-val{font-family:'Bebas Neue',sans-serif;font-size:64px;color:var(--gold);line-height:1;display:block}
+  .number-label{font-size:10px;letter-spacing:.2em;color:#9a948c;text-transform:uppercase;margin-top:8px}
+
+  /* TIMELINE */
+  .timeline-section{background:var(--bg2)}
+  .timeline{position:relative;padding-left:60px}
+  .timeline::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,transparent,var(--gold) 5%,var(--gold) 95%,transparent)}
+  .timeline-item{position:relative;padding-bottom:64px;opacity:0;transform:translateX(-20px);transition:opacity .6s,transform .6s}
+  .timeline-item.visible{opacity:1;transform:translateX(0)}
+  .timeline-dot{position:absolute;left:-64px;top:8px;width:10px;height:10px;border-radius:50%;background:var(--bg2);border:2px solid var(--gold);transition:background .3s,transform .3s}
+  .timeline-item:hover .timeline-dot{background:var(--gold);transform:scale(1.5)}
+  .timeline-year{font-family:'Bebas Neue',sans-serif;font-size:12px;letter-spacing:.35em;color:var(--gold);margin-bottom:6px}
+  .timeline-company{font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:300;color:#fff;line-height:1.1;margin-bottom:10px}
+  .timeline-role{font-size:10px;letter-spacing:.25em;color:var(--gold);text-transform:uppercase;margin-bottom:14px}
+  .timeline-desc{color:var(--text);font-size:13px;line-height:1.9;max-width:620px}
+  .timeline-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+  .tag{font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);color:var(--muted);transition:border-color .3s,color .3s}
+  .timeline-item:hover .tag{border-color:var(--gold);color:var(--gold)}
+
+  /* EXPERTISE */
+  .expertise-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+  .expertise-card{background:var(--bg2);padding:48px 40px;position:relative;overflow:hidden;transition:background .3s}
+  .expertise-card:hover{background:var(--bg3)}
+  .expertise-card::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:2px;background:linear-gradient(to right,var(--gold),transparent);transform:scaleX(0);transform-origin:left;transition:transform .4s}
+  .expertise-card:hover::after{transform:scaleX(1)}
+  .expertise-icon{font-size:28px;margin-bottom:18px;display:block}
+  .expertise-title{font-family:'Cormorant Garamond',serif;font-size:24px;color:#fff;margin-bottom:10px}
+  .expertise-desc{font-size:13px;color:var(--text);line-height:1.85}
+
+  /* STACK */
+  .stack-section{background:#000;border-top:1px solid var(--line)}
+  .stack-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px}
+  .stack-group{background:var(--bg2);padding:36px 32px}
+  .stack-group-title{font-size:10px;letter-spacing:.3em;color:var(--gold);text-transform:uppercase;margin-bottom:20px}
+  .stack-items{display:flex;flex-direction:column;gap:10px}
+  .stack-item{font-size:13px;color:var(--text);padding:8px 12px;border-left:2px solid var(--line);letter-spacing:.05em;transition:border-color .2s,color .2s}
+  .stack-item:hover{border-color:var(--gold);color:var(--text)}
+
+  /* PROJECTS */
+  .projects-section{background:var(--bg2)}
+  .projects-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+  .project-card{background:var(--bg);border:1px solid var(--line);overflow:hidden;transition:border-color .3s}
+  .project-card:hover{border-color:var(--gold)}
+  .video-thumb{position:relative;overflow:hidden;background:#000;cursor:pointer}
+  .video-thumb img{width:100%;display:block;transition:opacity .3s}
+  .video-thumb:hover img{opacity:.8}
+  .play-btn{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:64px;height:64px;background:rgba(0,0,0,.7);border:2px solid rgba(255,255,255,.8);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;color:#fff;pointer-events:none;transition:background .3s,transform .3s}
+  .video-thumb:hover .play-btn{background:var(--gold);border-color:var(--gold);color:#000;transform:translate(-50%,-50%) scale(1.1)}
+  .video-thumb.loaded{padding:0}
+  .video-thumb.loaded iframe{width:100%;aspect-ratio:16/9;display:block;border:none}
+  .video-thumb.loaded img,.video-thumb.loaded .play-btn{display:none}
+  .video-thumb-short{position:relative;overflow:hidden;background:#000;cursor:pointer;max-width:280px;margin:0 auto}
+  .video-thumb-short img{width:100%;display:block;transition:opacity .3s}
+  .video-thumb-short:hover img{opacity:.8}
+  .video-thumb-short .play-btn{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:64px;height:64px;background:rgba(0,0,0,.7);border:2px solid rgba(255,255,255,.8);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;color:#fff;pointer-events:none;transition:background .3s}
+  .video-thumb-short:hover .play-btn{background:var(--gold);border-color:var(--gold);color:#000}
+  .video-thumb-short.loaded iframe{width:100%;aspect-ratio:9/16;display:block;border:none}
+  .video-thumb-short.loaded img,.video-thumb-short.loaded .play-btn{display:none}
+  .project-info{padding:28px 32px}
+  .project-tag{font-size:10px;letter-spacing:.3em;color:var(--gold);text-transform:uppercase;margin-bottom:8px}
+  .project-title{font-family:'Cormorant Garamond',serif;font-size:22px;color:#fff;line-height:1.3;margin-bottom:10px}
+  .project-desc{font-size:13px;color:var(--text);line-height:1.8}
+  .project-link{display:inline-block;margin-top:16px;font-size:11px;letter-spacing:.2em;color:var(--gold);text-decoration:none;text-transform:uppercase;border-bottom:1px solid transparent;transition:border-color .2s}
+  .project-link:hover{border-color:var(--gold)}
+
+  .consultoria-block{background:var(--bg2);border:1px solid var(--line);padding:64px;position:relative;overflow:hidden}
+  .consultoria-block::before{content:'24~26';position:absolute;right:-20px;top:-30px;font-family:'Bebas Neue',sans-serif;font-size:180px;color:transparent;-webkit-text-stroke:1px var(--line);pointer-events:none}
+  .consultoria-text{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:300;line-height:1.75;color:var(--text);max-width:820px;margin-bottom:48px}
+  .consultoria-text strong{color:var(--gold2);font-weight:600}
+  .sectors{display:flex;flex-wrap:wrap;gap:12px}
+  .sector{padding:8px 20px;border:1px solid var(--gold);color:var(--gold);font-size:11px;letter-spacing:.2em;text-transform:uppercase;transition:background .2s,color .2s;cursor:default}
+  .sector:hover{background:var(--gold);color:#000}
+
+  .partners-section{background:#000;border-top:1px solid var(--line);overflow:hidden}
+  .partners-inner{position:relative;padding:120px 60px;max-width:1200px;margin:0 auto}
+  .partners-year{position:absolute;right:40px;top:50px;font-family:'Bebas Neue',sans-serif;font-size:160px;color:transparent;-webkit-text-stroke:1px var(--line);line-height:1;pointer-events:none}
+  .partners-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:48px}
+  .partner-card{background:var(--bg2);padding:44px 36px;position:relative;overflow:hidden;border:1px solid transparent;transition:border-color .3s,background .3s}
+  .partner-card:hover{border-color:var(--line);background:var(--bg3)}
+  .partner-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:2px;background:linear-gradient(to right,var(--gold),transparent);transform:scaleX(0);transform-origin:left;transition:transform .4s}
+  .partner-card:hover::before{transform:scaleX(1)}
+  .partner-icon{font-size:32px;margin-bottom:16px}
+  .partner-name{font-family:'Bebas Neue',sans-serif;font-size:28px;color:#fff;letter-spacing:.05em;margin-bottom:6px}
+  .partner-type{font-size:10px;letter-spacing:.25em;color:var(--gold);text-transform:uppercase;margin-bottom:12px}
+  .partner-desc{font-size:13px;color:var(--text);line-height:1.8}
+
+  /* CERTS */
+  .certs-list{display:grid;grid-template-columns:1fr 1fr;gap:0}
+  .cert-item{display:flex;align-items:flex-start;gap:16px;padding:20px 0;border-bottom:1px solid var(--line)}
+  .cert-num{font-family:'Bebas Neue',sans-serif;font-size:36px;color:var(--gold);opacity:.25;line-height:1;min-width:44px}
+  .cert-name{font-family:'Cormorant Garamond',serif;font-size:18px;color:#fff;line-height:1.3;align-self:center}
+
+  /* FOOTER */
+  footer{padding:80px 60px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:flex-end}
+  .footer-name{font-family:'Bebas Neue',sans-serif;font-size:56px;color:#fff;line-height:1;opacity:.1}
+  .footer-links{display:flex;flex-direction:column;gap:8px;text-align:right}
+  .footer-links a{color:var(--muted);text-decoration:none;font-size:11px;letter-spacing:.2em;text-transform:uppercase;transition:color .2s}
+  .footer-links a:hover{color:var(--gold)}
+
+  /* REVEAL */
+  .reveal{opacity:0;transform:translateY(36px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+
+  @keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+  @keyframes drift{from{transform:translate(-50%,-50%) rotate(-3deg)}to{transform:translate(-48%,-52%) rotate(3deg)}}
+  @keyframes scrollPulse{0%,100%{opacity:.3}50%{opacity:1}}
+
+  @media(max-width:900px){
+    .hero{grid-template-columns:1fr}.hero-right{display:none}.hero-left{padding:60px 24px}
+    .about-grid,.projects-grid,.certs-list{grid-template-columns:1fr;gap:40px}
+    .expertise-grid,.stack-grid,.numbers-grid,.partners-grid{grid-template-columns:1fr 1fr}
+    .container{padding:0 24px}.consultoria-block{padding:32px}
+    footer{flex-direction:column;gap:32px}.footer-links{text-align:left}
+    .partners-inner{padding:80px 24px}.partners-year{display:none}
+  }
+  @media(max-width:500px){
+    .expertise-grid,.stack-grid,.numbers-grid,.partners-grid{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <p class="hero-eyebrow">Senior Data &amp; AI Professional · Porto Alegre, Brasil</p>
+    <h1 class="hero-name">ANDRÉ<span>MACHADO</span></h1>
+    <p class="hero-role">Data Engineering · Analytics · LLMs · Cloud</p>
+    <p class="hero-sub">Databricks · Power BI · Python · Azure · GCP · Microsoft Fabric</p>
+    <div class="hero-cta">
+      <a href="http://insightful-data-explorer-27-sepia.vercel.app/site" target="_blank" class="btn btn-fill">Ver Projeto</a>
+      <a href="https://www.linkedin.com/in/andr%C3%A9machado-b7475257" target="_blank" class="btn">LinkedIn</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-bg-text">AM</div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">15+</div><div class="stat-label">Anos de Carreira</div></div>
+      <div class="stat"><div class="stat-num">1,5B</div><div class="stat-label">Linhas Migradas</div></div>
+      <div class="stat"><div class="stat-num">7</div><div class="stat-label">Setores Atendidos</div></div>
+    </div>
+  </div>
+  <div class="hero-line"></div>
+  <div class="scroll-hint"><span>Scroll</span><div class="scroll-arrow"></div></div>
+</section>
+
+<!-- ABOUT -->
+<section>
+  <div class="container">
+    <div class="about-grid">
+      <div>
+        <p class="section-tag">Quem sou</p>
+        <h2 class="section-title">Dados.<br>Família.<br>Propósito.</h2>
+        <p class="about-text reveal">
+          Profissional Senior em Data &amp; Analytics com experiência end-to-end em <em>BI, Engenharia de Dados, Data Science e IA aplicada ao negócio</em>. Administrador (UNIASSELVI) e Cientista de Dados (<em>PUCRS</em>). Pipeline, governança, Lakehouse Bronze/Silver/Gold e modernização analítica gerando insights escaláveis.
+        </p>
+        <div class="about-contact reveal">
+          <a href="tel:+5551998837555">📞 (51) 99883-7555</a>
+          <a href="mailto:andrelms_@hotmail.com">✉️ andrelms_@hotmail.com</a>
+          <a href="https://github.com/andrelms" target="_blank">⌨️ github.com/andrelms</a>
+          <a href="http://insightful-data-explorer-27-sepia.vercel.app/site" target="_blank">🚀 insightful-data-explorer-27.vercel.app</a>
+        </div>
+      </div>
+      <div class="reveal">
+        <p class="section-tag">Família</p>
+        <div class="family-cards">
+          <div class="family-card"><div class="family-name">Bernardo</div><div class="family-detail">4 anos</div></div>
+          <div class="family-card"><div class="family-name">Joaquim</div><div class="family-detail">2 anos</div></div>
+          <div class="family-card" style="grid-column:span 2"><div class="family-name">Floki &amp; Ragnar</div><div class="family-detail">Os gatos da casa</div></div>
+        </div>
+        <div style="margin-top:20px;padding:24px;background:var(--bg2);border:1px solid var(--line)">
+          <p class="section-tag" style="margin-bottom:10px">Formação</p>
+          <p style="font-size:13px;color:var(--text);line-height:1.9">
+            🎓 Pós-grad. Ciências de Dados &amp; IA — PUCRS (2022–2023)<br>
+            🎓 Bacharel em Administração — UNIASSELVI (2015–2019)<br>
+            📋 Prouni 100% · Pré-vestibular
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- NUMBERS -->
+<section class="numbers-section">
+  <div class="container">
+    <div class="numbers-grid">
+      <div class="number-item reveal"><span class="number-val">+10k</span><div class="number-label">Processos Judiciais<br><small style="opacity:.6;font-size:9px">Recuperação de ativos · Eichenberg &amp; Lobato</small></div></div>
+      <div class="number-item reveal"><span class="number-val">30min</span><div class="number-label">Atualização em Tempo Real<br><small style="opacity:.6;font-size:9px">Supply Chain · Dufrio CDs de Distribuição</small></div></div>
+      <div class="number-item reveal"><span class="number-val">R$M+</span><div class="number-label">Crédito Consignado<br><small style="opacity:.6;font-size:9px">Balancete Financeiro · Futuro Previdência</small></div></div>
+      <div class="number-item reveal"><span class="number-val">~1,5B</span><div class="number-label">Linhas Migradas<br><small style="opacity:.6;font-size:9px">Lakehouse Bronze/Silver/Gold · Infinilabs</small></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section class="timeline-section">
+  <div class="container">
+    <p class="section-tag">Trajetória</p>
+    <h2 class="section-title reveal">Uma carreira<br>construída<br>linha a linha.</h2>
+    <div class="timeline">
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">MAI 2025 — JAN 2026</div>
+        <div class="timeline-company">Infinilabs</div>
+        <div class="timeline-role">Business Analytics · Parceria Dell Technologies</div>
+        <div class="timeline-desc">Migração de ambientes analíticos (SAP, Oracle, Azure, SharePoint) para Databricks. Arquitetura em camadas Bronze/Silver/Gold para +20 anos de dados (~1,5B linhas). Criação de fontes via Dataflows e Direct Lake (Microsoft Fabric). Transição de Qlik para Power BI. Rituais ágeis diários.</div>
+        <div class="timeline-tags"><span class="tag">Databricks</span><span class="tag">Microsoft Fabric</span><span class="tag">Direct Lake</span><span class="tag">Power BI</span><span class="tag">Azure</span><span class="tag">Dell</span></div>
+        <div style="margin-top:24px;background:var(--bg2);border:1px solid var(--line);padding:32px" class="reveal">
+          <p style="font-size:10px;letter-spacing:.3em;color:var(--gold);text-transform:uppercase;margin-bottom:20px">Arquitetura · Dell Technologies Gold Partner</p>
+          <div style="display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:0;align-items:center;font-size:12px">
+            <div style="background:var(--bg);border:1px solid var(--line);padding:20px 16px">
+              <div style="font-size:9px;letter-spacing:.25em;color:var(--muted);text-transform:uppercase;margin-bottom:12px">Fontes Legadas</div>
+              <div style="display:flex;flex-direction:column;gap:6px">
+                <div style="padding:6px 10px;background:#1a2030;color:var(--text);border-left:2px solid #c00">SAP</div>
+                <div style="padding:6px 10px;background:#1a2030;color:var(--text);border-left:2px solid #f00">Oracle</div>
+                <div style="padding:6px 10px;background:#1a2030;color:var(--text);border-left:2px solid #0078d4">Azure</div>
+                <div style="padding:6px 10px;background:#1a2030;color:var(--text);border-left:2px solid #036">SharePoint</div>
+              </div>
+              <div style="margin-top:12px;padding:8px;border:1px solid var(--line);text-align:center;font-size:9px;letter-spacing:.12em;color:var(--gold)">QLIK → POWER BI</div>
+            </div>
+            <div style="padding:0 14px;font-size:20px;color:var(--gold)">→</div>
+            <div style="background:#0a1628;border:1px solid #f60;padding:20px 16px;text-align:center">
+              <div style="font-size:9px;letter-spacing:.25em;color:#f80;text-transform:uppercase;margin-bottom:12px">Databricks Platform</div>
+              <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:12px">
+                <div style="padding:6px;background:rgba(201,168,76,.15);border:1px solid var(--gold);color:var(--gold);font-size:10px">🥇 GOLD · Business</div>
+                <div style="padding:6px;background:rgba(180,180,180,.08);border:1px solid #888;color:#aaa;font-size:10px">🥈 SILVER · Validated</div>
+                <div style="padding:6px;background:rgba(180,100,50,.1);border:1px solid #a55;color:#c87;font-size:10px">🥉 BRONZE · Raw</div>
+              </div>
+              <div style="font-size:9px;letter-spacing:.12em;color:#f80;padding:6px;border:1px solid rgba(255,100,0,.3)">DELL Technologies Partner</div>
+            </div>
+            <div style="padding:0 14px;font-size:20px;color:var(--gold)">→</div>
+            <div style="background:var(--bg);border:1px solid var(--line);padding:20px 16px">
+              <div style="font-size:9px;letter-spacing:.25em;color:var(--muted);text-transform:uppercase;margin-bottom:12px">Analytics Moderno</div>
+              <div style="display:flex;flex-direction:column;gap:6px">
+                <div style="padding:6px 10px;background:#1a2030;color:var(--text);border-left:2px solid #0078d4">Microsoft Fabric</div>
+                <div style="padding:6px 10px;background:#1a2030;color:var(--text);border-left:2px solid #f2c811">Power BI</div>
+                <div style="padding:6px 10px;background:#1a2030;color:var(--text);border-left:2px solid #0078d4">Dataflows</div>
+                <div style="padding:6px 10px;background:#1a2030;color:var(--text);border-left:2px solid #0078d4">Direct Lake</div>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:8px">
+                <div style="padding:6px;background:#0e1318;border:1px solid var(--line);font-size:8px;letter-spacing:.08em;color:var(--muted);text-align:center">GOVERNANÇA &amp;<br>CONSISTÊNCIA</div>
+                <div style="padding:6px;background:#0e1318;border:1px solid var(--line);font-size:8px;letter-spacing:.08em;color:var(--muted);text-align:center">DOC &amp;<br>VERSIONAMENTO</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">FEV — MAI 2025</div>
+        <div class="timeline-company">Unimed<br>Porto Alegre</div>
+        <div class="timeline-role">Business Analytics</div>
+        <div class="timeline-desc">Migração de dashboards em produção de Qlik para Power BI sprint a sprint. Transição de conexões diretas com Databricks para Dataflows, reduzindo dependências técnicas e melhorando governança. Desenvolvimento de visualizações escaláveis e otimizadas.</div>
+        <div class="timeline-tags"><span class="tag">Qlik → Power BI</span><span class="tag">Dataflows</span><span class="tag">Databricks</span><span class="tag">Agile</span></div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">ABR — AGO 2024</div>
+        <div class="timeline-company">Linha por Linha</div>
+        <div class="timeline-role">Dados · Big Data ENEM · 15 func.</div>
+        <div class="timeline-desc">Análise exploratória e descritiva dos Microdados do ENEM — maior exame nacional de ensino médio. Big Data: 86 milhões de linhas de inscritos, 15 anos de dados históricos. Dashboard demográfico, socioeconômico e de desempenho. Aplicativo de Formulários com Níveis de Acesso, responsivo Mobile/Desktop em NoCode.</div>
+        <div class="timeline-tags"><span class="tag">Big Data</span><span class="tag">86M linhas</span><span class="tag">ENEM</span><span class="tag">Power BI</span><span class="tag">Python</span><span class="tag">NoCode</span></div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">JAN — JUN 2024</div>
+        <div class="timeline-company">Quattrus</div>
+        <div class="timeline-role">Consultoria Estratégica · MVP &amp; LLMs · 40 func.</div>
+        <div class="timeline-desc">Desenvolvimento de MVP com infraestrutura de modelos LLM (GCP, ChatGPT). Chatbot de autoatendimento com recomendações, classificação de perfil e análise de sentimentos. Drag and drop para extração de dados estruturados/semiestruturados com insights de negócio. Automação Python: dashboards legados e geração automatizada de PPTs. Modelos para gráficos em múltiplos idiomas com categorização e rankings. Consultas SQL no Azure, revisão e melhoria de métricas em produção.</div>
+        <div class="timeline-tags"><span class="tag">GCP</span><span class="tag">ChatGPT API</span><span class="tag">LLMs</span><span class="tag">Python</span><span class="tag">Azure SQL</span><span class="tag">Power BI</span></div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">2024 · Sob Demanda</div>
+        <div class="timeline-company">Interop</div>
+        <div class="timeline-role">Dados RH/DP · Tecnologia · +1.000 func.</div>
+        <div class="timeline-desc">Estruturação e análise de dados da Folha de Pagamento para empresa de tecnologia com +1.000 funcionários. Modelagem de dados RH/DP garantindo consistência, rastreabilidade e conformidade com LGPD.</div>
+        <div class="timeline-tags"><span class="tag">Folha de Pagamento</span><span class="tag">RH/DP</span><span class="tag">LGPD</span><span class="tag">Estruturação de Dados</span></div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">OUT 2022 — JUN 2023</div>
+        <div class="timeline-company">Sistema FIERGS</div>
+        <div class="timeline-role">Analista Corp. Especialista de Dados Pleno</div>
+        <div class="timeline-desc">4.000+ colaboradores. Módulo de BI no backlog gerencial, integridade de KPIs entre sistemas legados e novos. Dashboards Power BI, análises Excel, notebooks Python. Perfis hierárquicos de acesso. Conformidade LGPD em dados sensíveis.</div>
+        <div class="timeline-tags"><span class="tag">Power BI</span><span class="tag">Python</span><span class="tag">Excel</span><span class="tag">LGPD</span><span class="tag">LG SaaS</span></div>
+        <div style="margin-top:16px">
+          <div class="video-thumb" onclick="loadVideo(this,'A2CN-4GOFcA','16/9')" style="margin-top:16px;max-width:320px">
+          <img src="https://i.ytimg.com/vi/A2CN-4GOFcA/hqdefault.jpg" alt="Institucional - FIERGS" loading="lazy" style="width:100%;display:block">
+          <div class="play-btn" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:48px;height:48px;background:rgba(0,0,0,.7);border:2px solid rgba(255,255,255,.8);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;color:#fff">▶</div>
+        </div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">SET 2021 — MAI 2022</div>
+        <div class="timeline-company">Futuro Previdência</div>
+        <div class="timeline-role">Analista de Dados · Financeiro / BACEN</div>
+        <div class="timeline-desc">Monitoramento de Milhões em Crédito Consignado em todo o Brasil. Balancete Financeiro e ciclo de centenas de dados tombados e validados para novo sistema. Dashboards em tempo real integrando APIs e SharePoint (crédito, inadimplência, financeiro, produção). VBA para automação de rotinas operacionais. Adequações regulatórias BACEN: CRM, SAC, gestão de reclamações. Chatbot com integrações WhatsApp e redes sociais.</div>
+        <div class="timeline-tags"><span class="tag">VBA</span><span class="tag">Power BI</span><span class="tag">SharePoint</span><span class="tag">BACEN</span><span class="tag">APIs</span></div>
+        <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:16px">
+          <div class="video-thumb" onclick="loadVideo(this,'wGfqoOgUfGA','16/9')" style="margin-top:16px;max-width:320px">
+          <img src="https://i.ytimg.com/vi/wGfqoOgUfGA/hqdefault.jpg" alt="Futuro Previdência - PoC" loading="lazy" style="width:100%;display:block">
+          <div class="play-btn" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:48px;height:48px;background:rgba(0,0,0,.7);border:2px solid rgba(255,255,255,.8);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;color:#fff">▶</div>
+        </div>
+          <div class="video-thumb" onclick="loadVideo(this,'9vzupnT5JB0','16/9')" style="margin-top:16px;max-width:320px">
+          <img src="https://i.ytimg.com/vi/9vzupnT5JB0/hqdefault.jpg" alt="Office Futuro" loading="lazy" style="width:100%;display:block">
+          <div class="play-btn" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:48px;height:48px;background:rgba(0,0,0,.7);border:2px solid rgba(255,255,255,.8);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;color:#fff">▶</div>
+        </div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">ABR — SET 2021</div>
+        <div class="timeline-company">Refrigeração Dufrio</div>
+        <div class="timeline-role">Analista de Inteligência de Negócios</div>
+        <div class="timeline-desc">Supply Chain em tempo real: milhares de pedidos rastreados e atualizados a cada 30 minutos para acompanhamento nos 4 CDs de Distribuição. +2 mil funcionários, +20 lojas nacionais. Ciclo completo de BI: extração, modelagem, visualização e automação. KPIs estratégicos de planejamento, vendas, logística, serviços e pessoas — reportados em nível executivo.</div>
+        <div class="timeline-tags"><span class="tag">SQL Server</span><span class="tag">Power BI</span><span class="tag">Dynamics 365</span><span class="tag">ERP</span></div>
+        <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:16px">
+          <div class="video-thumb" onclick="loadVideo(this,'JKwJLnXdWog','16/9')" style="margin-top:16px;max-width:320px">
+          <img src="https://i.ytimg.com/vi/JKwJLnXdWog/hqdefault.jpg" alt="Dufrio - PoC" loading="lazy" style="width:100%;display:block">
+          <div class="play-btn" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:48px;height:48px;background:rgba(0,0,0,.7);border:2px solid rgba(255,255,255,.8);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;color:#fff">▶</div>
+        </div>
+          <a href="https://vt.tiktok.com/ZS9GVVKSq/" target="_blank" style="display:inline-flex;align-items:center;gap:8px;margin-top:10px;padding:8px 16px;background:var(--bg2);border:1px solid var(--line);font-size:11px;letter-spacing:.15em;color:var(--muted);text-decoration:none;transition:border-color .2s" onmouseover="this.style.borderColor='#c9a84c';this.style.color='#c9a84c'" onmouseout="this.style.borderColor='#1e2530';this.style.color='#5a5650'">🎵 TikTok — Dufrio BI</a>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">FEV 2018 — OUT 2020</div>
+        <div class="timeline-company">Eichenberg<br>&amp; Lobato</div>
+        <div class="timeline-role">Analista de Relatórios · Advocacia</div>
+        <div class="timeline-desc">Ciclo completo de BI: ERP (SQL), XMLs públicos, APIs Banco Central. VBA para automação e limpeza de dados. Identificou +10 mil processos passíveis de honorários via Power BI — impacto direto no fluxo de caixa. Dashboards executivos para sócios e diretores.</div>
+        <div class="timeline-tags"><span class="tag">VBA</span><span class="tag">Power BI</span><span class="tag">SQL</span><span class="tag">APIs BCB</span><span class="tag">XML</span></div>
+        <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:16px">
+          <div class="video-thumb" onclick="loadVideo(this,'9GO23mmgzYc','16/9')" style="margin-top:16px;max-width:320px">
+          <img src="https://i.ytimg.com/vi/9GO23mmgzYc/hqdefault.jpg" alt="Excel e Power BI - Solução Agora" loading="lazy" style="width:100%;display:block">
+          <div class="play-btn" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:48px;height:48px;background:rgba(0,0,0,.7);border:2px solid rgba(255,255,255,.8);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;color:#fff">▶</div>
+        </div>
+          <a href="https://vt.tiktok.com/ZS9GVQ77F/" target="_blank" style="display:inline-flex;align-items:center;gap:8px;margin-top:10px;padding:8px 16px;background:var(--bg2);border:1px solid var(--line);font-size:11px;letter-spacing:.15em;color:var(--muted);text-decoration:none;transition:border-color .2s" onmouseover="this.style.borderColor='#c9a84c';this.style.color='#c9a84c'" onmouseout="this.style.borderColor='#1e2530';this.style.color='#5a5650'">🎵 TikTok — André Machado BI</a>
+          <a href="https://vt.tiktok.com/ZS9GV6mt1/" target="_blank" style="display:inline-flex;align-items:center;gap:8px;margin-top:10px;padding:8px 16px;background:var(--bg2);border:1px solid var(--line);font-size:11px;letter-spacing:.15em;color:var(--muted);text-decoration:none;transition:border-color .2s" onmouseover="this.style.borderColor='#c9a84c';this.style.color='#c9a84c'" onmouseout="this.style.borderColor='#1e2530';this.style.color='#5a5650'">🎵 TikTok — André Machado BI 2</a>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">2015 — 2018</div>
+        <div class="timeline-company">Estágios &amp; Formação</div>
+        <div class="timeline-role">Ball Corporation · Grupo Volpato · Graduação</div>
+        <div class="timeline-desc">Ball Corporation: controle de estoque e consumo via SAP, KPIs de produção para supervisores e gerência. Grupo Volpato: agenda comercial, indicadores de desempenho. Graduação em Administração com Prouni 100%.</div>
+        <div class="timeline-tags"><span class="tag">SAP</span><span class="tag">Excel</span><span class="tag">KPI</span><span class="tag">Prouni 100%</span></div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">2008 — 2015</div>
+        <div class="timeline-company">Carreira Comercial</div>
+        <div class="timeline-role">Banco Cacique · Agiplan Financeira · Tramonto Fiat</div>
+        <div class="timeline-desc">Crédito consignado e pré-análise documental (Banco Cacique). Retenção de contratos no setor público federal/estadual — reconhecido como top performer em receita (Agiplan). Gestão completa do ciclo de vendas automotivas (Tramonto Fiat).</div>
+        <div class="timeline-tags"><span class="tag">Crédito</span><span class="tag">Serasa/SPC</span><span class="tag">CRM</span><span class="tag">Vendas</span></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- EXPERTISE -->
+<section>
+  <div class="container">
+    <p class="section-tag">Especialidades</p>
+    <h2 class="section-title reveal">O que entrego.</h2>
+  </div>
+  <div class="expertise-grid">
+    <div class="expertise-card reveal"><span class="expertise-icon">⚡</span><div class="expertise-title">IA Generativa &amp; LLMs</div><div class="expertise-desc">Agentes conversacionais, pipelines de classificação automática de documentos, OCR e análise de cláusulas trabalhistas. Fundamentos MLOps, modelos open source, validação cruzada por múltiplos modelos.</div></div>
+    <div class="expertise-card reveal"><span class="expertise-icon">📊</span><div class="expertise-title">Business Intelligence</div><div class="expertise-desc">Power BI (DAX avançado, Dataflows, Direct Lake, Microsoft Fabric), Qlik. Migração Qlik → Power BI, modelagem star schema, relatórios para comitês executivos e dashboards em tempo real.</div></div>
+    <div class="expertise-card reveal"><span class="expertise-icon">🏗️</span><div class="expertise-title">Engenharia de Dados</div><div class="expertise-desc">Lakehouse Bronze/Silver/Gold, ETL/ELT, Databricks, BigQuery, PostgreSQL, SQL Server. Migração de ambientes analíticos legados e governança para bilhões de linhas de dados históricos.</div></div>
+    <div class="expertise-card reveal"><span class="expertise-icon">☁️</span><div class="expertise-title">Cloud &amp; Integração</div><div class="expertise-desc">Azure, GCP, Microsoft Fabric. Integrações SAP, SharePoint, ERP, APIs externas. Pipelines cloud-to-cloud e híbridos para suporte a decisões estratégicas.</div></div>
+    <div class="expertise-card reveal"><span class="expertise-icon">🔄</span><div class="expertise-title">Automação &amp; Scraping</div><div class="expertise-desc">Web scraping institucional (MTE, sindicatos, órgãos públicos) com Playwright/Selenium. VBA para rotinas operacionais. Pipelines inteligentes com IA adaptativa para extração de documentos.</div></div>
+    <div class="expertise-card reveal"><span class="expertise-icon">⚖️</span><div class="expertise-title">Compliance &amp; Governança</div><div class="expertise-desc">LGPD para dados sensíveis, adequação BACEN, análise comparativa de CCTs/ACTs. Perfis hierárquicos de acesso, rastreabilidade, auditoria e conformidade regulatória em ambientes de saúde e financeiro.</div></div>
+  </div>
+</section>
+
+<!-- STACK -->
+<section class="stack-section">
+  <div class="container">
+    <p class="section-tag">Stack Técnico</p>
+    <h2 class="section-title reveal">Ferramentas<br>de guerra.</h2>
+  </div>
+  <div class="stack-grid">
+    <div class="stack-group reveal">
+      <div class="stack-group-title">Linguagens &amp; Query</div>
+      <div class="stack-items">
+        <div class="stack-item">Python</div>
+        <div class="stack-item">SQL · PostgreSQL · BigQuery</div>
+        <div class="stack-item">DAX</div>
+        <div class="stack-item">VBA</div>
+        <div class="stack-item">TypeScript / React · Vibe Coding</div>
+      </div>
+    </div>
+    <div class="stack-group reveal">
+      <div class="stack-group-title">BI &amp; Analytics</div>
+      <div class="stack-items">
+        <div class="stack-item">Power BI (Direct Lake · Fabric)</div>
+        <div class="stack-item">Qlik</div>
+        <div class="stack-item">Excel Avançado</div>
+        <div class="stack-item">Dataflows</div>
+        <div class="stack-item">Databricks</div>
+      </div>
+    </div>
+    <div class="stack-group reveal">
+      <div class="stack-group-title">Cloud &amp; Plataformas</div>
+      <div class="stack-items">
+        <div class="stack-item">Microsoft Azure</div>
+        <div class="stack-item">Google Cloud (GCP)</div>
+        <div class="stack-item">Microsoft Fabric</div>
+        <div class="stack-item">SAP · Dynamics 365</div>
+      </div>
+    </div>
+    <div class="stack-group reveal">
+      <div class="stack-group-title">IA &amp; Automação</div>
+      <div class="stack-items">
+        <div class="stack-item">Gemini · Perplexity · LLMs</div>
+        <div class="stack-item">Playwright · Selenium</div>
+        <div class="stack-item">Supabase · Vercel</div>
+        <div class="stack-item">OCR · Docling · Jina AI</div>
+        <div class="stack-item">MLOps (fundamentos)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJETOS / VIDEOS -->
+<section class="projects-section">
+  <div class="container">
+    <p class="section-tag">Demos · Insightful Data Explorer</p>
+    <h2 class="section-title reveal">IA aplicada ao<br>direito<br>trabalhista.</h2>
+    <div class="projects-grid">
+      <div class="project-card reveal">
+        <div class="video-thumb" onclick="loadVideo(this,'ah895Kb3tHI','16/9')">
+          <img src="https://img.youtube.com/vi/ah895Kb3tHI/maxresdefault.jpg" alt="IA aplicada ao direito do trabalho" loading="lazy">
+          <div class="play-btn">▶</div>
+        </div>
+        <div class="project-info">
+          <div class="project-tag">LegalTech · IA</div>
+          <div class="project-title">IA Aplicada ao Direito do Trabalho</div>
+          <div class="project-desc">Análise automática de cláusulas trabalhistas, OCR de convenções coletivas e comparação inteligente de CCTs/ACTs com IA generativa.</div>
+          <a href="https://youtu.be/ah895Kb3tHI" target="_blank" class="project-link">Assistir demo →</a>
+        </div>
+      </div>
+      <div class="project-card reveal">
+        <div class="video-thumb-short" onclick="loadVideo(this,'QAlaylojosU','9/16')">
+          <img src="https://img.youtube.com/vi/QAlaylojosU/hq2.jpg" alt="Dados Sindicais e Trabalhistas" loading="lazy">
+          <div class="play-btn">▶</div>
+        </div>
+        <div class="project-info">
+          <div class="project-tag">Compliance · DP / RH</div>
+          <div class="project-title">Dados Sindicais e Trabalhistas</div>
+          <div class="project-desc">SaaS para monitoramento de acordos coletivos. Web scraping de portais MTE Mediador e sindicatos, classificação automática de documentos com IA.</div>
+          <a href="https://youtube.com/shorts/QAlaylojosU" target="_blank" class="project-link">Assistir short →</a>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:32px;padding:32px;background:var(--bg);border:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px" class="reveal">
+      <div>
+        <div class="project-tag" style="margin-bottom:6px">Plataforma ao vivo</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:22px;color:#fff">Insightful Data Explorer</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:16px;font-style:italic;color:var(--muted);margin-top:6px">Exploração e análise de dados com rapidez e contexto.</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:8px;letter-spacing:.05em">React · TypeScript · Supabase · Gemini API · Vercel</div>
+      </div>
+      <a href="http://insightful-data-explorer-27-sepia.vercel.app/site" target="_blank" class="btn btn-fill">Acessar Plataforma</a>
+    </div>
+  </div>
+</section>
+
+<!-- CERTS -->
+<section>
+  <div class="container">
+    <p class="section-tag">Certificações</p>
+    <h2 class="section-title reveal">Aprendizado<br>sem fim.</h2>
+    <div class="certs-list">
+      <div class="cert-item reveal"><div class="cert-num">01</div><div class="cert-name">Agile Management, Data Analytics e Marketing Intelligence</div></div>
+      <div class="cert-item reveal"><div class="cert-num">02</div><div class="cert-name">Aprender Para Liderar</div></div>
+      <div class="cert-item reveal"><div class="cert-num">03</div><div class="cert-name">Design Thinking para Disrupção e Experiência do Cliente</div></div>
+      <div class="cert-item reveal"><div class="cert-num">04</div><div class="cert-name">Mentalidade de Desenvolvimento Contínuo</div></div>
+      <div class="cert-item reveal"><div class="cert-num">05</div><div class="cert-name">Data Science e AI aplicados ao Marketing e Vendas</div></div>
+      <div class="cert-item reveal"><div class="cert-num">06</div><div class="cert-name">Inteligência Artificial e Marketing Digital</div></div>
+      <div class="cert-item reveal"><div class="cert-num">07</div><div class="cert-name">Produtividade, Gestão do Tempo e Propósito</div></div>
+      <div class="cert-item reveal"><div class="cert-num">08</div><div class="cert-name">Pós-graduação Ciências de Dados e IA · PUCRS</div></div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const cursor=document.getElementById('cursor'),ring=document.getElementById('cursorRing');
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px'});
+  (function anim(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(anim)})();
+  document.querySelectorAll('a,button,.expertise-card,.family-card,.sector,.partner-card,.project-card,.video-thumb,.video-thumb-short').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{cursor.style.width='16px';cursor.style.height='16px';ring.style.width='48px';ring.style.height='48px';ring.style.opacity='.9'});
+    el.addEventListener('mouseleave',()=>{cursor.style.width='8px';cursor.style.height='8px';ring.style.width='32px';ring.style.height='32px';ring.style.opacity='.45'});
+  });
+
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*70);obs.unobserve(e.target)}});
+  },{threshold:.1});
+  document.querySelectorAll('.reveal,.timeline-item').forEach(el=>obs.observe(el));
+
+  function loadVideo(el, id, ratio) {
+    el.classList.add('loaded');
+    const iframe=document.createElement('iframe');
+    iframe.src='https://www.youtube.com/embed/'+id+'?autoplay=1&rel=0&modestbranding=1';
+    iframe.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+    iframe.allowFullscreen=true;
+    iframe.style.aspectRatio=ratio;
+    iframe.style.width='100%';
+    iframe.style.border='none';
+    el.innerHTML='';
+    el.appendChild(iframe);
+  }
+</script>
+
+<footer>
+  <div class="footer-name">ANDRÉ<br>MACHADO</div>
+  <div class="footer-links">
+    <a href="https://github.com/andrelms" target="_blank">GitHub — andrelms</a>
+    <a href="https://www.linkedin.com/in/andr%C3%A9machado-b7475257" target="_blank">LinkedIn</a>
+    <a href="http://insightful-data-explorer-27-sepia.vercel.app/site" target="_blank">Insightful Data Explorer</a>
+    <a href="https://www.youtube.com/@andrelms" target="_blank">YouTube — @andrelms</a>
+  </div>
+</footer>
+</body>
+</html>
