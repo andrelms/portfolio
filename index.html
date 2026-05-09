@@ -27,7 +27,7 @@
 
   /* HERO */
   .hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;position:relative;overflow:hidden}
-  .hero-left{display:flex;flex-direction:column;justify-content:flex-end;padding:80px 60px;position:relative;z-index:2}
+  .hero-left{display:flex;flex-direction:column;justify-content:flex-end;padding:40px 60px 72px;position:relative;z-index:2;min-height:100vh}
   .hero-eyebrow{font-size:12px;letter-spacing:.3em;color:var(--gold);text-transform:uppercase;margin-bottom:24px;opacity:0;animation:fadeUp .8s .2s forwards;font-weight:500}
   .hero-name{font-family:'Bebas Neue',sans-serif;font-size:clamp(68px,10vw,140px);line-height:.88;color:#fff;letter-spacing:-.02em;opacity:0;animation:fadeUp .8s .4s forwards}
   .hero-name span{display:block;color:var(--gold)}
@@ -40,7 +40,7 @@
   .btn-fill:hover{background:var(--gold2);border-color:var(--gold2)}
   .hero-right{position:relative;overflow:hidden}
   .hero-bg-text{position:absolute;font-family:'Bebas Neue',sans-serif;font-size:360px;color:transparent;-webkit-text-stroke:1px var(--line);top:50%;left:50%;transform:translate(-50%,-50%);white-space:nowrap;pointer-events:none;animation:drift 20s ease-in-out infinite alternate}
-  .hero-stats{position:absolute;bottom:80px;right:60px;display:flex;flex-direction:column;gap:32px;z-index:2;opacity:0;animation:fadeUp .8s 1.2s forwards}
+  .hero-stats{position:absolute;bottom:72px;right:60px;display:flex;flex-direction:column;gap:24px;z-index:2;opacity:0;animation:fadeUp .8s 1.2s forwards}
   .stat{text-align:right}
   .stat-num{font-family:'Bebas Neue',sans-serif;font-size:48px;color:var(--gold);line-height:1}
   .stat-label{font-size:10px;letter-spacing:.25em;color:var(--muted);text-transform:uppercase}
