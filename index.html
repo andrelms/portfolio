@@ -196,27 +196,19 @@
       height:100svh;background:none;
       display:flex;flex-direction:column;
     }
-    /* 1. NOME — grande, junto com eyebrow */
-    .hero-name{order:1;padding-top:12px;font-size:clamp(52px,15vw,70px);line-height:.86;opacity:1;animation:none;margin:0;flex-shrink:0}
-    /* 2. EYEBROW — logo abaixo do nome */
-    .hero-eyebrow{order:2;display:block;font-size:10px;letter-spacing:.15em;margin:6px 0 0;opacity:1;animation:none;line-height:1.4;flex-shrink:0}
-    /* ESPAÇO ROSTO: flexível mas limitado */
-    /* 3. ROLE */
-    .hero-role{order:3;margin-top:auto;font-size:15px;opacity:1;animation:none;flex-shrink:0}
-    /* 4. SUB */
-    .hero-sub{order:4;font-size:12px;margin-top:5px;opacity:1;animation:none;flex-shrink:0;line-height:1.6}
-    /* 5. CTA */
-    .hero-cta{order:5;margin-top:10px;gap:10px;opacity:1;animation:none;flex-shrink:0}
+    .hero-name{order:1;padding-top:6px;font-size:clamp(52px,15vw,70px);line-height:.86;opacity:1;animation:none;margin:0;flex-shrink:0}
+    .hero-eyebrow{order:2;display:block;font-size:10px;letter-spacing:.15em;margin:5px 0 0;opacity:1;animation:none;line-height:1.4;flex-shrink:0}
+    .hero-left::after{content:"";order:3;flex-basis:0;flex-grow:1;max-height:28vh}
+    .hero-role{order:4;font-size:16px;opacity:1;animation:none;flex-shrink:0;margin-top:0}
+    .hero-sub{order:5;font-size:12px;margin-top:4px;opacity:1;animation:none;flex-shrink:0;line-height:1.6}
+    .hero-cta{order:6;margin-top:8px;gap:10px;opacity:1;animation:none;flex-shrink:0}
     .btn{padding:10px 18px;font-size:11px}
-    /* 6. STATS */
-    .hero-stats{order:6;position:static;transform:none;flex-shrink:0;display:flex;flex-direction:row;justify-content:space-around;opacity:1;animation:none;margin-top:12px;padding:8px 0 10px;border-top:1px solid rgba(201,168,76,.35)}
+    .hero-stats{order:7;position:static;transform:none;flex-shrink:0;display:flex;flex-direction:row;justify-content:space-around;opacity:1;animation:none;margin-top:10px;padding:8px 0 10px;border-top:1px solid rgba(201,168,76,.35)}
     .stat{text-align:center;flex:1}
     .stat-num{font-size:24px;line-height:1}
     .stat-label{font-size:7px;letter-spacing:.1em;margin-top:3px}
     .scroll-hint{display:none}
-    /* Limita espaço livre para o rosto não empurrar stats pra fora */
-    .hero-left::after{content:"";order:3;flex-basis:0;flex-grow:1;max-height:35vh}
-    .hero-photo-overlay{background:linear-gradient(to bottom,rgba(8,11,15,.82) 0%,rgba(8,11,15,.3) 18%,rgba(8,11,15,.0) 28%,rgba(8,11,15,.0) 50%,rgba(8,11,15,.52) 65%,rgba(8,11,15,.85) 80%,rgba(8,11,15,.97) 100%)}
+    .hero-photo-overlay{background:linear-gradient(to bottom,rgba(8,11,15,.82) 0%,rgba(8,11,15,.3) 15%,rgba(8,11,15,.0) 26%,rgba(8,11,15,.0) 46%,rgba(8,11,15,.55) 62%,rgba(8,11,15,.85) 78%,rgba(8,11,15,.97) 100%)}
     .about-grid,.projects-grid,.certs-list{grid-template-columns:1fr;gap:40px}
     .expertise-grid,.stack-grid,.numbers-grid,.partners-grid{grid-template-columns:1fr 1fr}
     .container{padding:0 24px}.consultoria-block{padding:32px}
