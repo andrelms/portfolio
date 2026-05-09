@@ -188,18 +188,20 @@
   @keyframes scrollPulse{0%,100%{opacity:.3}50%{opacity:1}}
 
   @media(max-width:900px){
-    .hero{grid-template-columns:1fr;position:relative}.hero-right{display:block;position:absolute;inset:0;z-index:0}.hero-left{padding:8px 24px 24px;position:relative;z-index:2;justify-content:flex-start;min-height:100vh;background:none;gap:0}
-    .hero-stats{position:static;transform:none;display:flex;flex-direction:row;justify-content:space-between;opacity:1;animation:none;margin-top:auto;padding-top:16px;border-top:1px solid rgba(201,168,76,.25)}
+    .hero{grid-template-columns:1fr;position:relative}
+    .hero-right{display:block;position:absolute;inset:0;z-index:0}
+    .hero-left{padding:0;position:relative;z-index:2;justify-content:space-between;min-height:100vh;background:none;display:flex;flex-direction:column}
+    .hero-eyebrow{margin-bottom:4px;opacity:1;animation:none;padding:16px 24px 0}
+    .hero-name{font-size:clamp(52px,15vw,84px);opacity:1;animation:none;padding:0 24px;line-height:.9}
+    .hero-role{font-size:15px;margin-top:6px;opacity:1;animation:none;padding:0 24px}
+    .hero-sub{font-size:10px;margin-top:4px;opacity:1;animation:none;padding:0 24px}
+    .hero-cta{margin-top:12px;gap:10px;opacity:1;animation:none;padding:0 24px 20px}
+    .btn{padding:10px 18px;font-size:10px}
+    .hero-stats{position:static;transform:none;display:flex;flex-direction:row;justify-content:space-around;opacity:1;animation:none;padding:14px 24px 24px;border-top:1px solid rgba(201,168,76,.3)}
     .stat{text-align:center;flex:1}
-    .stat-num{font-size:28px;line-height:1}
-    .stat-label{font-size:8px;letter-spacing:.12em;margin-top:2px}
+    .stat-num{font-size:26px;line-height:1}
+    .stat-label{font-size:8px;letter-spacing:.1em;margin-top:3px}
     .scroll-hint{display:none}
-    .hero-eyebrow{margin-bottom:6px;opacity:1;animation:none}
-    .hero-name{font-size:clamp(56px,16vw,90px);opacity:1;animation:none}
-    .hero-role{font-size:16px;margin-top:8px;opacity:1;animation:none}
-    .hero-sub{font-size:10px;margin-top:6px;opacity:1;animation:none}
-    .hero-cta{margin-top:16px;gap:12px;opacity:1;animation:none}
-    .btn{padding:10px 20px;font-size:10px}
     .about-grid,.projects-grid,.certs-list{grid-template-columns:1fr;gap:40px}
     .expertise-grid,.stack-grid,.numbers-grid,.partners-grid{grid-template-columns:1fr 1fr}
     .container{padding:0 24px}.consultoria-block{padding:32px}
