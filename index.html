@@ -26,15 +26,15 @@
   body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:1000;opacity:.4}
 
   /* HERO + PHOTO BACKDROP */
-  .photo-backdrop{position:relative}
-  .photo-backdrop-img{position:absolute;top:0;left:0;right:0;height:55vh;z-index:0;overflow:hidden}
-  .hero-photo{width:100%;height:100%;object-fit:contain;object-position:center top;transition:filter .6s}
-  .hero-photo-wide{object-position:center top;filter:grayscale(5%) brightness(.88)}
-  .hero-photo-portrait{display:none;object-position:center top;filter:grayscale(0%) brightness(.85)}
+  .photo-backdrop{position:relative;overflow:hidden}
+  .photo-backdrop-img{position:absolute;inset:0;z-index:0;overflow:hidden}
+  .hero-photo{width:100%;height:100%;transition:filter .6s;position:absolute;inset:0}
+  .hero-photo-wide{object-fit:contain;object-position:right center;filter:grayscale(5%) brightness(.88)}
+  .hero-photo-portrait{display:none;object-fit:cover;object-position:center top;filter:grayscale(0%) brightness(.7)}
   .photo-backdrop:hover .hero-photo{filter:grayscale(0%) brightness(.9)}
-  .hero-photo-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 60%,var(--bg) 100%);pointer-events:none;z-index:1}
-  .hero{min-height:100vh;display:grid;grid-template-rows:55vh auto;position:relative;z-index:2}
-  .hero-left{display:flex;flex-direction:column;justify-content:flex-start;padding:48px 60px 60px;position:relative;z-index:2;grid-row:2}
+  .hero-photo-overlay{position:absolute;inset:0;background:linear-gradient(to right,rgba(8,11,15,.98) 0%,rgba(8,11,15,.85) 30%,rgba(8,11,15,.3) 55%,transparent 70%),linear-gradient(to bottom,rgba(8,11,15,.1) 0%,rgba(8,11,15,.5) 85%,var(--bg) 100%);pointer-events:none;z-index:1}
+  .hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;position:relative;z-index:2}
+  .hero-left{display:flex;flex-direction:column;justify-content:flex-end;padding:80px 60px;position:relative;z-index:2;min-height:100vh}
   .hero-eyebrow{font-size:12px;letter-spacing:.3em;color:var(--gold);text-transform:uppercase;margin-bottom:24px;opacity:0;animation:fadeUp .8s .2s forwards;font-weight:500}
   .hero-name{font-family:'Bebas Neue',sans-serif;font-size:clamp(68px,10vw,140px);line-height:.88;color:#fff;letter-spacing:-.02em;opacity:0;animation:fadeUp .8s .4s forwards}
   .hero-name span{display:block;color:var(--gold)}
@@ -45,7 +45,7 @@
   .btn:hover{background:var(--gold);color:#000}
   .btn-fill{background:var(--gold);color:#000}
   .btn-fill:hover{background:var(--gold2);border-color:var(--gold2)}
-  .hero-stats{position:absolute;bottom:60px;right:60px;display:flex;flex-direction:column;gap:20px;z-index:3;opacity:0;animation:fadeUp .8s 1.2s forwards}
+  .hero-stats{position:absolute;bottom:80px;right:60px;display:flex;flex-direction:column;gap:24px;z-index:3;opacity:0;animation:fadeUp .8s 1.2s forwards}
   .stat{text-align:right;text-shadow:0 2px 16px rgba(0,0,0,.9)}
   .hero-bg-text{display:none}
   .stat-num{font-family:'Bebas Neue',sans-serif;font-size:48px;color:var(--gold);line-height:1}
@@ -194,10 +194,10 @@
   @keyframes scrollPulse{0%,100%{opacity:.3}50%{opacity:1}}
 
   @media(max-width:900px){
-    .hero{display:grid;grid-template-rows:50vh auto;min-height:100vh;position:relative}
-    .hero-left{width:100%;padding:40px 24px 48px;position:relative;z-index:2;justify-content:flex-start;grid-row:2;min-height:unset}
-    .hero-photo-wide{display:none}.hero-photo-portrait{display:block}.photo-backdrop-img{height:50vh}
-    .hero-photo-overlay{background:linear-gradient(to bottom,transparent 55%,var(--bg) 100%)}
+    .hero{display:flex;min-height:100vh;position:relative}
+    .hero-left{width:100%;padding:40px 24px 64px;position:relative;z-index:2;justify-content:flex-end;min-height:100vh}
+    .hero-photo-wide{display:none}.hero-photo-portrait{display:block}
+    .hero-photo-overlay{background:linear-gradient(to bottom,rgba(8,11,15,.05) 0%,rgba(8,11,15,.1) 30%,rgba(8,11,15,.78) 62%,rgba(8,11,15,.97) 85%,var(--bg) 100%)}
     .hero-stats{display:none}
     .about-grid,.projects-grid,.certs-list{grid-template-columns:1fr;gap:40px}
     .expertise-grid,.stack-grid,.numbers-grid,.partners-grid{grid-template-columns:1fr 1fr}
