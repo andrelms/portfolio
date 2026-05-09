@@ -27,7 +27,7 @@
 
   /* HERO */
   .hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;position:relative;overflow:hidden}
-  .hero-left{display:flex;flex-direction:column;justify-content:flex-end;padding:40px 60px 72px;position:relative;z-index:2;min-height:100vh}
+  .hero-left{display:flex;flex-direction:column;justify-content:center;padding:40px 60px;position:relative;z-index:2;min-height:100vh}
   .hero-eyebrow{font-size:12px;letter-spacing:.3em;color:var(--gold);text-transform:uppercase;margin-bottom:24px;opacity:0;animation:fadeUp .8s .2s forwards;font-weight:500}
   .hero-name{font-family:'Bebas Neue',sans-serif;font-size:clamp(68px,10vw,140px);line-height:.88;color:#fff;letter-spacing:-.02em;opacity:0;animation:fadeUp .8s .4s forwards}
   .hero-name span{display:block;color:var(--gold)}
@@ -39,6 +39,7 @@
   .btn-fill{background:var(--gold);color:#000}
   .btn-fill:hover{background:var(--gold2);border-color:var(--gold2)}
   .hero-right{position:relative;overflow:hidden}
+  .hero-photo{width:100%;height:100%;object-fit:cover;object-position:center top;display:block}
   .hero-bg-text{position:absolute;font-family:'Bebas Neue',sans-serif;font-size:360px;color:transparent;-webkit-text-stroke:1px var(--line);top:50%;left:50%;transform:translate(-50%,-50%);white-space:nowrap;pointer-events:none;animation:drift 20s ease-in-out infinite alternate}
   .hero-stats{position:absolute;bottom:72px;right:60px;display:flex;flex-direction:column;gap:24px;z-index:2;opacity:0;animation:fadeUp .8s 1.2s forwards}
   .stat{text-align:right}
@@ -190,16 +191,18 @@
   @media(max-width:900px){
     .hero{grid-template-columns:1fr;position:relative}
     .hero-right{display:block;position:absolute;inset:0;z-index:0}
+    .hero-photo-wrap img{object-position:85% top !important}
     .hero-left{
-      padding:0 20px 0;position:relative;z-index:2;
+      padding:8vh 24px 24px;position:relative;z-index:2;
       height:100svh;min-height:100svh;background:none;
       display:flex;flex-direction:column;
+      justify-content:flex-start;
       box-sizing:border-box;
     }
-    .hero-name{order:1;padding-top:2px;font-size:clamp(52px,15vw,70px);line-height:.86;opacity:1;animation:none;margin:0;flex-shrink:0}
+    .hero-name{order:1;padding-top:0;font-size:clamp(52px,15vw,70px);line-height:.86;opacity:1;animation:none;margin:0;flex-shrink:0}
     .hero-eyebrow{order:2;display:block;font-size:10px;letter-spacing:.15em;margin:4px 0 0;opacity:1;animation:none;line-height:1.4;flex-shrink:0}
     /* ESPAÇO LIVRE: rosto visível — flex-grow com limite */
-    .hero-role{order:3;margin-top:28vh;font-size:16px;opacity:1;animation:none;flex-shrink:0}
+    .hero-role{order:3;margin-top:6vh;font-size:16px;opacity:1;animation:none;flex-shrink:0}
     .hero-sub{order:4;font-size:12px;margin-top:4px;opacity:1;animation:none;flex-shrink:0;line-height:1.6}
     .hero-cta{order:5;margin-top:8px;gap:10px;opacity:1;animation:none;flex-shrink:0}
     .btn{padding:10px 18px;font-size:11px}
@@ -649,5 +652,162 @@
     <a href="https://www.youtube.com/@andrelms" target="_blank">YouTube — @andrelms</a>
   </div>
 </footer>
+
+  <!-- DESIGN MODE SCRIPT -->
+  <script>
+    window.addEventListener('load', () => {
+      // Create a visual toggle button
+      const btn = document.createElement('button');
+      btn.textContent = 'Ativar Modo Design (Arrastar/Redimensionar Textos)';
+      btn.style.cssText = 'position:fixed;top:20px;left:20px;z-index:9999;padding:10px 15px;background:var(--gold);color:#000;border:none;cursor:pointer;font-family:monospace;font-weight:bold;box-shadow: 0 4px 10px rgba(0,0,0,0.5);';
+      document.body.appendChild(btn);
+
+      // Create Save button
+      const saveBtn = document.createElement('button');
+      saveBtn.textContent = 'Salvar Posições (Copiar)';
+      saveBtn.style.cssText = 'position:fixed;top:70px;left:20px;z-index:9999;padding:10px 15px;background:#4CAF50;color:#fff;border:none;cursor:pointer;font-family:monospace;font-weight:bold;display:none;box-shadow: 0 4px 10px rgba(0,0,0,0.5);';
+      document.body.appendChild(saveBtn);
+
+      let designMode = false;
+      const elements = document.querySelectorAll('.hero-left > *, .hero-stats');
+      const originalStyles = new Map();
+
+      saveBtn.addEventListener('click', () => {
+        let output = '/* Posições Salvas do Modo Design */\\n';
+        elements.forEach(el => {
+          const leftPx = parseInt(el.style.left) || 0;
+          const topPx = parseInt(el.style.top) || 0;
+          const widthPx = parseInt(el.style.width) || 0;
+          
+          const leftVw = (leftPx / window.innerWidth * 100).toFixed(2);
+          const topVh = (topPx / window.innerHeight * 100).toFixed(2);
+          const widthVw = (widthPx / window.innerWidth * 100).toFixed(2);
+          
+          const className = el.className ? '.' + el.className.split(' ')[0] : el.tagName.toLowerCase();
+          output += `${className} {\\n  position: absolute;\\n  left: ${leftVw}vw;\\n  top: ${topVh}vh;\\n  width: ${widthVw}vw;\\n}\\n`;
+        });
+
+        navigator.clipboard.writeText(output).then(() => {
+          alert('Pronto! As posições foram copiadas. Cole tudo no chat para que eu possa salvar no código permanentemente!');
+        }).catch(err => {
+          alert('Não foi possível copiar automaticamente. Tire um print screen e mande no chat!');
+        });
+      });
+
+      btn.addEventListener('click', () => {
+        designMode = !designMode;
+        if (designMode) {
+          btn.textContent = 'Desativar Modo Design';
+          btn.style.background = '#ff4444';
+          btn.style.color = '#fff';
+          saveBtn.style.display = 'block';
+
+          // First pass: save computed positions to not break layout
+          const positions = Array.from(elements).map(el => {
+            const rect = el.getBoundingClientRect();
+            const parentRect = el.parentElement.getBoundingClientRect();
+            originalStyles.set(el, el.getAttribute('style') || '');
+            return { 
+              el, 
+              left: rect.left - parentRect.left, 
+              top: rect.top - parentRect.top,
+              width: rect.width,
+              height: rect.height
+            };
+          });
+
+          // Second pass: apply absolute styles
+          positions.forEach(({el, left, top, width, height}) => {
+            el.style.position = 'absolute';
+            el.style.left = left + 'px';
+            el.style.top = top + 'px';
+            el.style.width = width + 20 + 'px';
+            el.style.height = height + 20 + 'px';
+            el.style.overflow = 'auto'; 
+            el.style.resize = 'both'; 
+            el.style.cursor = 'move';
+            el.style.margin = '0';
+            el.style.border = '1px dashed rgba(255,215,0,0.5)';
+            el.style.backgroundColor = 'rgba(0,0,0,0.2)';
+            el.style.padding = '10px';
+            el.style.zIndex = '100';
+            el.style.boxSizing = 'border-box';
+            
+            // Allow clicking elements to bring them to front
+            el.onmousedown = () => {
+              elements.forEach(e => e.style.zIndex = '100');
+              el.style.zIndex = '999';
+            };
+          });
+
+          // Global drag handlers
+          let isDragging = false;
+          let currentEl = null;
+          let startX, startY, initialLeft, initialTop;
+
+          window.startDrag = (e) => {
+            if (!designMode) return;
+            const target = e.target.closest('.hero-left > *');
+            if (!target) return;
+            
+            // Ignore if clicking bottom-right corner (resize handle)
+            const rect = target.getBoundingClientRect();
+            if (e.clientX > rect.right - 20 && e.clientY > rect.bottom - 20) return;
+
+            isDragging = true;
+            currentEl = target;
+            startX = e.clientX || e.touches[0].clientX;
+            startY = e.clientY || e.touches[0].clientY;
+            initialLeft = parseInt(currentEl.style.left) || 0;
+            initialTop = parseInt(currentEl.style.top) || 0;
+          };
+
+          window.doDrag = (e) => {
+            if (!isDragging || !currentEl) return;
+            const x = e.clientX || (e.touches && e.touches[0].clientX);
+            const y = e.clientY || (e.touches && e.touches[0].clientY);
+            if (e.type === 'touchmove') e.preventDefault();
+            
+            currentEl.style.left = (initialLeft + x - startX) + 'px';
+            currentEl.style.top = (initialTop + y - startY) + 'px';
+          };
+
+          window.stopDrag = () => {
+            if (isDragging) {
+              console.log(`${currentEl.className} -> left: ${currentEl.style.left}, top: ${currentEl.style.top}`);
+            }
+            isDragging = false;
+            currentEl = null;
+          };
+
+          document.addEventListener('mousedown', window.startDrag);
+          document.addEventListener('mousemove', window.doDrag);
+          document.addEventListener('mouseup', window.stopDrag);
+          document.addEventListener('touchstart', window.startDrag, {passive: true});
+          document.addEventListener('touchmove', window.doDrag, {passive: false});
+          document.addEventListener('touchend', window.stopDrag);
+
+        } else {
+          // Disable Design Mode
+          btn.textContent = 'Ativar Modo Design (Arrastar/Redimensionar Textos)';
+          btn.style.background = 'var(--gold)';
+          btn.style.color = '#000';
+          saveBtn.style.display = 'none';
+          
+          elements.forEach(el => {
+            el.setAttribute('style', originalStyles.get(el));
+            el.onmousedown = null;
+          });
+          
+          document.removeEventListener('mousedown', window.startDrag);
+          document.removeEventListener('mousemove', window.doDrag);
+          document.removeEventListener('mouseup', window.stopDrag);
+          document.removeEventListener('touchstart', window.startDrag);
+          document.removeEventListener('touchmove', window.doDrag);
+          document.removeEventListener('touchend', window.stopDrag);
+        }
+      });
+    });
+  </script>
 </body>
 </html>
