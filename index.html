@@ -47,7 +47,7 @@
   .hero-line{position:absolute;bottom:0;left:50%;width:1px;height:100%;background:linear-gradient(to bottom,transparent,var(--line),transparent)}
   .scroll-hint{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;animation:fadeIn 1s 2s forwards;z-index:2}
   .scroll-hint span{font-size:10px;letter-spacing:.3em;color:var(--muted);text-transform:uppercase}
-  .scroll-arrow{width:1px;height:40px;background:linear-gradient(to bottom,var(--gold),transparent);animation:scrollPulse 2s ease-in-out infinite}
+  .scroll-arrow{width:2px;height:36px;background:linear-gradient(to bottom,var(--gold),transparent);animation:scrollPulse 2s ease-in-out infinite;border-radius:2px}
 
   /* SHARED */
   section{padding:120px 0;position:relative}
@@ -188,8 +188,12 @@
   @keyframes scrollPulse{0%,100%{opacity:.3}50%{opacity:1}}
 
   @media(max-width:900px){
-    .hero{grid-template-columns:1fr;position:relative}.hero-right{display:block;position:absolute;inset:0;z-index:0}.hero-left{padding:0 24px 48px;position:relative;z-index:2;justify-content:flex-end;min-height:100vh;background:none}
-    .hero-stats{display:none}
+    .hero{grid-template-columns:1fr;position:relative}.hero-right{display:block;position:absolute;inset:0;z-index:0}.hero-left{padding:52px 24px 40px;position:relative;z-index:2;justify-content:space-between;min-height:100vh;background:none}
+    .hero-stats{position:static;transform:none;display:flex;flex-direction:row;justify-content:space-between;gap:0;opacity:1;animation:none;padding:0 0 8px;border-top:1px solid rgba(201,168,76,.2)}
+    .stat{text-align:center;flex:1}
+    .stat-num{font-size:32px}
+    .stat-label{font-size:9px}
+    .scroll-hint{display:none}
     .about-grid,.projects-grid,.certs-list{grid-template-columns:1fr;gap:40px}
     .expertise-grid,.stack-grid,.numbers-grid,.partners-grid{grid-template-columns:1fr 1fr}
     .container{padding:0 24px}.consultoria-block{padding:32px}
@@ -217,7 +221,7 @@
     <p class="hero-sub">Databricks · Power BI · Python · Azure · GCP · Microsoft Fabric</p>
     <div class="hero-cta">
       <a href="http://insightful-data-explorer-27-sepia.vercel.app/site" target="_blank" class="btn btn-fill">Ver Projeto</a>
-      <a href="https://www.linkedin.com/in/andr%C3%A9machado-b7475257" target="_blank" class="btn">LinkedIn</a>
+      <a href="https://www.linkedin.com/in/andré-machado-b7475257" target="_blank" class="btn">LinkedIn</a>
     </div>
   </div>
   <div class="hero-right">
@@ -625,7 +629,7 @@
   <div class="footer-name">ANDRÉ<br>MACHADO</div>
   <div class="footer-links">
     <a href="https://github.com/andrelms" target="_blank">GitHub — andrelms</a>
-    <a href="https://www.linkedin.com/in/andr%C3%A9machado-b7475257" target="_blank">LinkedIn</a>
+    <a href="https://www.linkedin.com/in/andré-machado-b7475257" target="_blank">LinkedIn</a>
     <a href="http://insightful-data-explorer-27-sepia.vercel.app/site" target="_blank">Insightful Data Explorer</a>
     <a href="https://www.youtube.com/@andrelms" target="_blank">YouTube — @andrelms</a>
   </div>
