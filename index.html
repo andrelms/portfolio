@@ -924,14 +924,6 @@
     let rafId = null;
     let sized = false;
 
-    function size() {
-      const dpr = devicePixelRatio || 1;
-      canvas.width  = canvas.offsetWidth  * dpr;
-      canvas.height = canvas.offsetHeight * dpr;
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      sized = true;
-    }
-
     function draw(i) {
       const img = imgs[i];
       if(!img || !img.complete || !sized) return;
@@ -944,19 +936,36 @@
     }
 
     // Size immediately, draw frame 0 as soon as it loads
-    size();
-    window.addEventListener('resize', ()=>{ size(); draw(currentFrame); }, {passive:true});
+    // size called in sizeNow()
+    window.addEventListener('resize', ()=>{ sizeNow(); draw(currentFrame); }, {passive:true});
 
-    // Load frame 0 first, then rest
+    // Size canvas immediately from parent dimensions
+    function sizeNow() {
+      const parent = canvas.parentElement;
+      const w = parent.offsetWidth || window.innerWidth;
+      const h = parent.offsetHeight || window.innerHeight;
+      const dpr = devicePixelRatio || 1;
+      canvas.style.width  = w + 'px';
+      canvas.style.height = h + 'px';
+      canvas.width  = w * dpr;
+      canvas.height = h * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      sized = true;
+    }
+    sizeNow();
+    window.addEventListener('resize', ()=>{ sizeNow(); draw(currentFrame); }, {passive:true});
+
+    // Load frame 0 first, show immediately
     function loadImg(i) {
       const img = new Image();
-      img.onload = () => { if(i===0){ draw(0); } };
+      img.onload = () => {
+        if(i === 0) { sizeNow(); draw(0); }
+      };
       img.src = SCROLL_FRAMES[i];
       imgs[i] = img;
     }
     loadImg(0);
-    // Load rest with slight delay so frame 0 shows fast
-    setTimeout(()=>{ for(let i=1;i<SCROLL_FRAMES.length;i++) loadImg(i); }, 100);
+    setTimeout(()=>{ for(let i=1;i<SCROLL_FRAMES.length;i++) loadImg(i); }, 50);
 
     // scroll listener below
       const hero = document.querySelector('.hero');
