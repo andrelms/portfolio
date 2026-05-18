@@ -76,6 +76,14 @@
   .family-card:hover::before{transform:scaleY(1)}
   .family-name{font-family:'Bebas Neue',sans-serif;font-size:26px;color:#fff;letter-spacing:.05em}
   .family-detail{font-size:11px;color:var(--muted);letter-spacing:.2em;text-transform:uppercase;margin-top:4px}
+  .photo-wrap{position:relative;overflow:hidden;background:#000}
+  .photo-wrap img{width:100%;height:100%;object-fit:cover;display:block}
+  .photo-fume{position:absolute;inset:0;pointer-events:none;background:linear-gradient(to top,rgba(8,11,15,.65) 0%,rgba(8,11,15,.15) 40%,transparent 70%)}
+  .photo-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px;align-items:start}
+  .formatura-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-bottom:16px}
+  .cert-images{display:flex;flex-direction:row;gap:8px;max-width:600px;margin-top:8px}
+  .cert-images img{flex:1;width:50%;border:1px solid var(--line);display:block;height:auto}
+  .diploma-img{width:100%;max-width:300px;border:1px solid var(--line);display:block;margin-top:8px;height:auto}
 
   /* NUMBERS */
   .numbers-section{background:#000;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
@@ -196,6 +204,7 @@
     .hero{grid-template-columns:1fr;position:relative;height:100vh;min-height:unset;overflow:hidden}.hero-right{display:block;position:absolute;inset:0;z-index:0}.hero-left{padding:0 24px;position:absolute;left:0;right:0;top:0;bottom:0;z-index:2;background:none;display:flex;flex-direction:column;justify-content:flex-end;gap:12px;padding-bottom:260px;overflow:hidden}.hero{height:1000vh !important;padding:0 !important;overflow:visible !important}.hero-sticky{position:sticky !important;top:0 !important;height:100vh !important;overflow:hidden !important;display:grid !important;grid-template-columns:1fr !important}.smoke-layer{display:block !important;z-index:1 !important}.hero-canvas{display:none !important}.hero-canvas-mobile{display:block !important;position:absolute;inset:0;width:100%;height:100%}.hero-mobile-img{display:none !important}
     .hero-line{display:none}.hero-photo-wrap{height:130vh}.scroll-hint{bottom:18px}.hero-eyebrow{top:24px;left:24px;right:24px}.hero-name{top:14vh;left:24px;right:24px}.hero-photo{object-position:5% 20%}.hero-stats{position:absolute;bottom:95px;left:24px;right:auto;flex-direction:row;gap:20px;z-index:3}.hero-stats .stat{text-align:left}.hero-stats .stat-num{font-size:28px}.hero-photo-overlay{background:linear-gradient(to bottom,rgba(8,11,15,.2) 0%,rgba(8,11,15,.45) 50%,rgba(8,11,15,.85) 100%)}
     .about-grid,.projects-grid,.certs-list{grid-template-columns:1fr;gap:40px}
+    .formatura-grid{grid-template-columns:1fr 1fr}
     .expertise-grid,.stack-grid,.numbers-grid,.partners-grid{grid-template-columns:1fr 1fr}
     .container{padding:0 24px}.consultoria-block{padding:32px}
     footer{flex-direction:column;gap:32px}.footer-links{text-align:left}
@@ -324,13 +333,43 @@
       </div>
       <div class="reveal">
         <p class="section-tag">Família</p>
-        <div class="family-cards">
-          <div class="family-card"><div class="family-name">Bernardo</div><div class="family-detail">4 anos</div></div>
-          <div class="family-card"><div class="family-name">Joaquim</div><div class="family-detail">2 anos</div></div>
-          <div class="family-card" style="grid-column:span 2"><div class="family-name">Floki &amp; Ragnar</div><div class="family-detail">Os gatos da casa</div></div>
+        <div class="photo-grid">
+          <div class="photo-wrap" style="aspect-ratio:2/3">
+            <img src="assets/family-andre.jpg" alt="Bernardo e Joaquim" loading="lazy" decoding="async" style="object-position:center">
+            <div class="photo-fume"></div>
+            <div style="position:absolute;bottom:12px;left:12px;display:flex;gap:8px">
+              <div style="background:var(--bg2);border:1px solid var(--line);padding:10px 14px"><div class="family-name" style="font-size:18px">Bernardo</div><div class="family-detail">4 anos</div></div>
+              <div style="background:var(--bg2);border:1px solid var(--line);padding:10px 14px"><div class="family-name" style="font-size:18px">Joaquim</div><div class="family-detail">2 anos</div></div>
+            </div>
+          </div>
+          <div class="photo-wrap" style="aspect-ratio:2/3">
+            <img src="assets/family-joaquim.jpg" alt="Floki e Ragnar" loading="lazy" decoding="async" style="object-position:bottom">
+            <div class="photo-fume"></div>
+            <div style="position:absolute;bottom:12px;left:12px">
+              <div style="background:var(--bg2);border:1px solid var(--line);padding:10px 14px;display:inline-block"><div class="family-name" style="font-size:18px">Ragnar &amp; Floki</div><div class="family-detail">Os gatos da casa</div></div>
+            </div>
+          </div>
         </div>
         <div style="margin-top:20px;padding:24px;background:var(--bg2);border:1px solid var(--line)">
           <p class="section-tag" style="margin-bottom:10px">Formação</p>
+          <div class="formatura-grid">
+            <div class="photo-wrap" style="aspect-ratio:9/16">
+              <img src="assets/formatura-1.jpg" alt="Formação 1" loading="lazy" decoding="async" style="object-position:center 20%;transform:scale(1.25) translateX(8%)">
+              <div class="photo-fume"></div>
+            </div>
+            <div class="photo-wrap" style="aspect-ratio:9/16">
+              <img src="assets/formatura-2.jpg" alt="Formação 2" loading="lazy" decoding="async">
+              <div class="photo-fume"></div>
+            </div>
+            <div class="photo-wrap" style="aspect-ratio:9/16">
+              <img src="assets/formatura-3.jpg" alt="Formação 3" loading="lazy" decoding="async">
+              <div class="photo-fume"></div>
+            </div>
+            <div class="photo-wrap" style="aspect-ratio:9/16">
+              <img src="assets/formatura-4.jpg" alt="Formação 4" loading="lazy" decoding="async">
+              <div class="photo-fume"></div>
+            </div>
+          </div>
           <p style="font-size:14px;color:#fff;line-height:1.9;font-weight:400">
             🎓 Pós-grad. Ciências de Dados &amp; IA — PUCRS (2022–2023)<br>
             🎓 Bacharel em Administração — UNIASSELVI (2015–2019)<br>
@@ -348,7 +387,7 @@
   <div class="container">
     <div class="numbers-grid">
       <div class="number-item reveal"><span class="number-val">+10k</span><div class="number-label">Processos Revisados<br><small style="opacity:.9;font-size:10px;color:var(--text)">+10 mil processos revisados com automação para recuperação de ativos · Eichenberg &amp; Lobato</small></div></div>
-      <div class="number-item reveal"><span class="number-val">30min</span><div class="number-label">Atualização em Tempo Real<br><small style="opacity:.9;font-size:10px;color:var(--text)">Supply Chain · Dufrio CDs de Distribuição</small></div></div>
+      <div class="number-item reveal"><span class="number-val">30min</span><div class="number-label">Atualização em Tempo Real<br><small style="opacity:.9;font-size:10px;color:var(--text)">Dashboards em tempo real: milhares de pedidos rastreados e atualizados a cada 30 minutos para acompanhamento nos 4 CDs de Distribuição. +2 mil funcionários, +20 lojas nacionais · Refrigeração Dufrio</small></div></div>
       <div class="number-item reveal"><span class="number-val">R$M+</span><div class="number-label">Crédito Consignado<br><small style="opacity:.9;font-size:10px;color:var(--text)">Monitoramento de milhões em Crédito Consignado em todo o Brasil. Balancete Financeiro e ciclo de centenas de dados tombado · Futuro Previdência</small></div></div>
       <div class="number-item reveal"><span class="number-val">~1,5B</span><div class="number-label">Linhas Migradas<br><small style="opacity:.9;font-size:10px;color:var(--text)">Migração de sistemas legados para Databricks e Dataflow · Qlik para Power BI · Lakehouse Bronze/Silver/Gold · Infinilabs</small></div></div>
     </div>
@@ -469,6 +508,39 @@
 
       <div class="timeline-item">
         <div class="timeline-dot"></div>
+        <div class="timeline-year">JUN 2022 — SET 2023</div>
+        <div class="timeline-company">PUCRS — Escola Politécnica</div>
+        <div class="timeline-role">Especialização em Ciência de Dados e Inteligência Artificial</div>
+        <div class="timeline-desc">Especialização lato sensu — Computação e Tecnologias da Informação e Comunicação. 24 créditos · 364 horas. TCC: <em>O Impacto das IAs como o ChatGPT na Sociedade e Iniciativas de Regulamentação</em> (nota 9,5) — <a href="https://drive.google.com/file/d/18lzRLCeu3987X1dlGtB7_gBcFpevgs4U/view?usp=sharing" target="_blank" rel="noopener" style="color:var(--gold);text-decoration:underline">acessar no Google Drive</a>.</div>
+        <div class="timeline-tags"><span class="tag">Data Science</span><span class="tag">IA</span><span class="tag">Machine Learning</span><span class="tag">Deep Learning</span><span class="tag">Python</span><span class="tag">PUCRS</span></div>
+        <div style="margin-top:20px">
+          <div style="font-size:10px;letter-spacing:.3em;color:var(--gold);text-transform:uppercase;margin-bottom:12px">Certificado PUCRS</div>
+          <div class="cert-images">
+            <img src="assets/pucrs-p1.jpg" alt="PUCRS Certificado p.1" loading="lazy" decoding="async">
+            <img src="assets/pucrs-p2.jpg" alt="PUCRS Certificado p.2" loading="lazy" decoding="async">
+          </div>
+          <div style="margin-top:16px;display:flex;flex-wrap:wrap;gap:12px">
+            <div class="cert-grid" style="margin-top:8px;display:flex;flex-direction:column;gap:6px">
+              <div style="font-size:10px;letter-spacing:.3em;color:var(--gold);text-transform:uppercase;margin-bottom:8px">Certificações 2023</div>
+              <div style="font-size:13px;color:var(--muted)">· Agile Management &amp; Scrum</div>
+              <div style="font-size:13px;color:var(--muted)">· Growth por canais próprios e inbound</div>
+              <div style="font-size:13px;color:var(--muted)">· Design Thinking para disrupção e experiência do cliente</div>
+              <div style="font-size:13px;color:var(--muted)">· DS e AI para potencializar Marketing e aumentar vendas</div>
+              <div style="font-size:13px;color:var(--muted)">· Inteligência Artificial e Marketing Digital</div>
+            </div>
+          </div>
+          <div style="margin-top:16px;max-width:600px">
+            <div style="font-size:10px;letter-spacing:.3em;color:var(--gold);text-transform:uppercase;margin-bottom:10px">Certificados</div>
+            <div class="cert-images" style="margin-top:0">
+              <img src="assets/certificados-p1.jpg" alt="Certificações p.1" loading="lazy" decoding="async">
+              <img src="assets/certificados-p2.jpg" alt="Certificações p.2" loading="lazy" decoding="async">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
         <div class="timeline-year">SET 2021 — MAI 2022</div>
         <div class="timeline-company">Futuro Previdência</div>
         <div class="timeline-role">Analista de Dados · Financeiro / BACEN</div>
@@ -527,6 +599,10 @@
         <div class="timeline-role">Ball Corporation · Grupo Volpato · Graduação</div>
         <div class="timeline-desc">Ball Corporation: controle de estoque e consumo via SAP, KPIs de produção para supervisores e gerência. Grupo Volpato: agenda comercial, indicadores de desempenho. Graduação em Administração com Prouni 100%.</div>
         <div class="timeline-tags"><span class="tag">SAP</span><span class="tag">Excel</span><span class="tag">KPI</span><span class="tag">Prouni 100%</span></div>
+        <div style="margin-top:20px">
+          <div style="font-size:10px;letter-spacing:.3em;color:var(--gold);text-transform:uppercase;margin-bottom:12px">Diploma</div>
+          <img class="diploma-img" src="assets/diploma.jpg" alt="Diploma Administração UNIASSELVI" loading="lazy" decoding="async">
+        </div>
       </div>
 
       <div class="timeline-item">
