@@ -924,22 +924,6 @@
     let rafId = null;
     let sized = false;
 
-    function draw(i) {
-      const img = imgs[i];
-      if(!img || !img.complete || !sized) return;
-      const cw = canvas.offsetWidth, ch = canvas.offsetHeight;
-      const iw = img.naturalWidth,   ih = img.naturalHeight;
-      const scale = Math.max(cw/iw, ch/ih);
-      const dx = (cw - iw*scale)/2,  dy = (ch - ih*scale)/2;
-      ctx.clearRect(0,0,cw,ch);
-      ctx.drawImage(img, dx, dy, iw*scale, ih*scale);
-    }
-
-    // Size immediately, draw frame 0 as soon as it loads
-    // size called in sizeNow()
-    window.addEventListener('resize', ()=>{ sizeNow(); draw(currentFrame); }, {passive:true});
-
-    // Size canvas immediately from parent dimensions
     function sizeNow() {
       const parent = canvas.parentElement;
       const w = parent.offsetWidth || window.innerWidth;
@@ -952,27 +936,36 @@
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       sized = true;
     }
+
+    function draw(i) {
+      const img = imgs[i];
+      if(!img || !img.complete || !sized) return;
+      const cw = canvas.offsetWidth, ch = canvas.offsetHeight;
+      const iw = img.naturalWidth, ih = img.naturalHeight;
+      const scale = Math.max(cw/iw, ch/ih);
+      const dx = (cw - iw*scale)/2, dy = (ch - ih*scale)/2;
+      ctx.clearRect(0, 0, cw, ch);
+      ctx.drawImage(img, dx, dy, iw*scale, ih*scale);
+    }
+
     sizeNow();
     window.addEventListener('resize', ()=>{ sizeNow(); draw(currentFrame); }, {passive:true});
 
-    // Load frame 0 first, show immediately
     function loadImg(i) {
       const img = new Image();
-      img.onload = () => {
-        if(i === 0) { sizeNow(); draw(0); }
-      };
+      img.onload = () => { if(i === 0) { sizeNow(); draw(0); } };
       img.src = SCROLL_FRAMES[i];
       imgs[i] = img;
     }
     loadImg(0);
     setTimeout(()=>{ for(let i=1;i<SCROLL_FRAMES.length;i++) loadImg(i); }, 50);
 
-    // scroll listener below
+    window.addEventListener('scroll', ()=>{
       const hero = document.querySelector('.hero');
       if(!hero) return;
       const rect = hero.getBoundingClientRect();
-      const vh = window.innerHeight;
-      const progress = Math.max(0, Math.min(1, -rect.top / Math.max(1, rect.height - vh)));
+      const scrollable = hero.offsetHeight - window.innerHeight;
+      const progress = Math.max(0, Math.min(1, -rect.top / Math.max(1, scrollable)));
       const idx = Math.min(SCROLL_FRAMES.length-1, Math.round(progress*(SCROLL_FRAMES.length-1)));
       if(idx !== currentFrame) {
         currentFrame = idx;
