@@ -213,6 +213,9 @@
   .formatura-grid{grid-template-columns:repeat(4,1fr)}
   .photo-fume{position:absolute;inset:0;background:rgba(8,11,15,.35);pointer-events:none;transition:opacity .4s}
   .photo-wrap:hover .photo-fume{opacity:0}
+
+  /* MOBILE SCROLL CANVAS */
+  @media(max-width:900px){.mobile-scroll-hero{position:absolute;top:0;left:0;width:100vw;height:100svh;z-index:0;overflow:hidden}#scrollCanvas{display:block;width:100vw!important;height:100svh!important}}
 </style>
 </head>
 <body>
@@ -925,9 +928,8 @@
     let sized = false;
 
     function sizeNow() {
-      const parent = canvas.parentElement;
-      const w = parent.offsetWidth || window.innerWidth;
-      const h = parent.offsetHeight || window.innerHeight;
+      const w = window.innerWidth;
+      const h = window.innerHeight;
       const dpr = devicePixelRatio || 1;
       canvas.style.width  = w + 'px';
       canvas.style.height = h + 'px';
