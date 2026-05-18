@@ -7,6 +7,8 @@
 <title>André Machado — Senior Data & AI Professional</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Mono:wght@300;400;500&family=Bebas+Neue&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="frames/frame_0001.jpg" fetchpriority="high" media="(min-width: 900px)">
+<link rel="preload" as="image" href="frames-mobile/frame_0001.jpg" fetchpriority="high" media="(max-width: 899px)">
 <style>
   :root {
     --bg: #080b0f;
@@ -701,8 +703,7 @@
     if (!canvas) return;
     function isDesktop(){ return window.innerWidth >= 900; }
     var ctx = canvas.getContext('2d');
-    var frames = [];
-    var loaded = 0;
+    var frames = new Array(TOTAL);
     var currentIdx = 0;
     var targetIdx = 0;
     var rafId = null;
@@ -713,9 +714,21 @@
       drawFrame(currentIdx);
     }
 
+    function pickNearestLoaded(target){
+      var img = frames[target];
+      if(img && img.complete && img.naturalWidth) return img;
+      for(var d=1; d<TOTAL; d++){
+        var a = target-d>=0 ? frames[target-d] : null;
+        if(a && a.complete && a.naturalWidth) return a;
+        var b = target+d<TOTAL ? frames[target+d] : null;
+        if(b && b.complete && b.naturalWidth) return b;
+      }
+      return null;
+    }
+
     function drawFrame(idx){
-      var img = frames[Math.round(idx)];
-      if(!img || !img.complete) return;
+      var img = pickNearestLoaded(Math.round(idx));
+      if(!img) return;
       var cw = canvas.width, ch = canvas.height;
       var iw = img.naturalWidth, ih = img.naturalHeight;
       var scale = Math.max(cw/iw, ch/ih);
@@ -765,17 +778,45 @@
     window.addEventListener('resize', resize, {passive:true});
     window.addEventListener('scroll', onScroll, {passive:true});
 
-    for(var i=1; i<=TOTAL; i++){
-      (function(n, pos){
+    // Priority queue: frame 0 first, then anchor frames every `stride`,
+    // then the rest. Caps in-flight requests so the browser doesn't
+    // stall the first frame behind 500+ siblings.
+    var queue = [];
+    var seen = new Array(TOTAL);
+    function enqueue(i){ if(i>=0 && i<TOTAL && !seen[i]){ seen[i]=1; queue.push(i); } }
+    enqueue(0);
+    var stride = 12;
+    for(var s=stride; s<TOTAL; s+=stride) enqueue(s);
+    for(var k=1; k<TOTAL; k++) enqueue(k);
+
+    var CONCURRENCY = 8;
+    var HIGH_PRIORITY_COUNT = 24;
+    var inFlight = 0;
+    var qi = 0;
+    function pump(){
+      while(inFlight < CONCURRENCY && qi < queue.length){
+        var pos = queue[qi];
+        var n = pos+1;
         var img = new Image();
-        img.onload = function(){
-          loaded++;
-          if(pos===0){ currentIdx=0; targetIdx=0; drawFrame(0); }
-        };
+        img.decoding = 'async';
+        if('fetchPriority' in img){ img.fetchPriority = qi < HIGH_PRIORITY_COUNT ? 'high' : 'low'; }
+        qi++;
+        inFlight++;
+        (function(pos, img){
+          var done = function(){
+            inFlight--;
+            if(pos===0){ currentIdx=0; targetIdx=0; drawFrame(0); }
+            else if(!rafId){ drawFrame(currentIdx); }
+            pump();
+          };
+          img.onload = done;
+          img.onerror = done;
+        })(pos, img);
         img.src = 'frames/frame_' + String(n).padStart(4,'0') + '.jpg';
         frames[pos] = img;
-      })(i, i-1);
+      }
     }
+    pump();
   })();
 
   // Hero scroll-driven canvas (mobile only)
@@ -785,7 +826,7 @@
     if (!canvas) return;
     function isMobile(){ return window.innerWidth < 900; }
     var ctx = canvas.getContext('2d');
-    var frames = [];
+    var frames = new Array(TOTAL);
     var currentIdx = 0;
     var targetIdx = 0;
     var rafId = null;
@@ -796,9 +837,21 @@
       drawFrame(currentIdx);
     }
 
+    function pickNearestLoaded(target){
+      var img = frames[target];
+      if(img && img.complete && img.naturalWidth) return img;
+      for(var d=1; d<TOTAL; d++){
+        var a = target-d>=0 ? frames[target-d] : null;
+        if(a && a.complete && a.naturalWidth) return a;
+        var b = target+d<TOTAL ? frames[target+d] : null;
+        if(b && b.complete && b.naturalWidth) return b;
+      }
+      return null;
+    }
+
     function drawFrame(idx){
-      var img = frames[Math.round(idx)];
-      if(!img || !img.complete) return;
+      var img = pickNearestLoaded(Math.round(idx));
+      if(!img) return;
       var cw = canvas.width, ch = canvas.height;
       var iw = img.naturalWidth, ih = img.naturalHeight;
       var scale = Math.max(cw/iw, ch/ih);
@@ -843,14 +896,42 @@
     window.addEventListener('resize', resize, {passive:true});
     window.addEventListener('scroll', onScroll, {passive:true});
 
-    for(var i=1; i<=TOTAL; i++){
-      (function(n, pos){
+    var queue = [];
+    var seen = new Array(TOTAL);
+    function enqueue(i){ if(i>=0 && i<TOTAL && !seen[i]){ seen[i]=1; queue.push(i); } }
+    enqueue(0);
+    var stride = 24;
+    for(var s=stride; s<TOTAL; s+=stride) enqueue(s);
+    for(var k=1; k<TOTAL; k++) enqueue(k);
+
+    var CONCURRENCY = 6;
+    var HIGH_PRIORITY_COUNT = 24;
+    var inFlight = 0;
+    var qi = 0;
+    function pump(){
+      while(inFlight < CONCURRENCY && qi < queue.length){
+        var pos = queue[qi];
+        var n = pos+1;
         var img = new Image();
-        img.onload = function(){ if(pos===0){ currentIdx=0; targetIdx=0; drawFrame(0); } };
+        img.decoding = 'async';
+        if('fetchPriority' in img){ img.fetchPriority = qi < HIGH_PRIORITY_COUNT ? 'high' : 'low'; }
+        qi++;
+        inFlight++;
+        (function(pos, img){
+          var done = function(){
+            inFlight--;
+            if(pos===0){ currentIdx=0; targetIdx=0; drawFrame(0); }
+            else if(!rafId){ drawFrame(currentIdx); }
+            pump();
+          };
+          img.onload = done;
+          img.onerror = done;
+        })(pos, img);
         img.src = 'frames-mobile/frame_' + String(n).padStart(4,'0') + '.jpg';
         frames[pos] = img;
-      })(i, i-1);
+      }
     }
+    pump();
   })();
 </script>
 
