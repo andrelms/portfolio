@@ -100,8 +100,8 @@
   .timeline-section{background:var(--bg2)}
   .timeline{position:relative;padding-left:60px}
   .timeline::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,transparent,var(--gold) 5%,var(--gold) 95%,transparent)}
-  .timeline-item{position:relative;padding-bottom:64px;opacity:0;transform:translateX(-20px);transition:opacity .6s,transform .6s}
-  .timeline-item.visible{opacity:1;transform:translateX(0)}
+  .timeline-item{position:relative;padding-bottom:64px;opacity:0;transform:translateX(-20px);transition:opacity .6s,transform .6s;pointer-events:none}
+  .timeline-item.visible{opacity:1;transform:translateX(0);pointer-events:auto}
   .timeline-dot{position:absolute;left:-64px;top:8px;width:10px;height:10px;border-radius:50%;background:var(--bg2);border:2px solid var(--gold);transition:background .3s,transform .3s}
   .timeline-item:hover .timeline-dot{background:var(--gold);transform:scale(1.5)}
   .timeline-year{font-family:'Bebas Neue',sans-serif;font-size:12px;letter-spacing:.35em;color:var(--gold);margin-bottom:6px}
@@ -195,8 +195,8 @@
   .footer-links a:hover{color:var(--gold)}
 
   /* REVEAL */
-  .reveal{opacity:0;transform:translateY(36px);transition:opacity .7s ease,transform .7s ease}
-  .reveal.visible{opacity:1;transform:translateY(0)}
+  .reveal{opacity:0;transform:translateY(36px);transition:opacity .7s ease,transform .7s ease;pointer-events:none}
+  .reveal.visible{opacity:1;transform:translateY(0);pointer-events:auto}
 
   @keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
   @keyframes fadeIn{from{opacity:0}to{opacity:1}}
