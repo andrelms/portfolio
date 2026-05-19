@@ -50,7 +50,7 @@
   .stat-num{font-family:'Bebas Neue',sans-serif;font-size:48px;color:var(--gold);line-height:1}
   .stat-label{font-size:10px;letter-spacing:.25em;color:var(--muted);text-transform:uppercase}
   .hero-line{position:absolute;bottom:0;left:50%;width:1px;height:100%;background:linear-gradient(to bottom,transparent,var(--line),transparent)}
-  .scroll-hint{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;animation:fadeIn 1s 2s forwards;z-index:2}
+  .scroll-hint{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;pointer-events:none;animation:fadeIn 1s 2s forwards;z-index:2}
   .scroll-hint span{font-size:10px;letter-spacing:.3em;color:var(--muted);text-transform:uppercase}
   .scroll-arrow{width:1px;height:40px;background:linear-gradient(to bottom,var(--gold),transparent);animation:scrollPulse 2s ease-in-out infinite}
 
@@ -198,8 +198,8 @@
   .reveal{opacity:0;transform:translateY(36px);transition:opacity .7s ease,transform .7s ease;pointer-events:none}
   .reveal.visible{opacity:1;transform:translateY(0);pointer-events:auto}
 
-  @keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
-  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(30px);pointer-events:none}to{opacity:1;transform:translateY(0);pointer-events:auto}}
+  @keyframes fadeIn{from{opacity:0;pointer-events:none}to{opacity:1;pointer-events:auto}}
   @keyframes drift{from{transform:translate(-50%,-50%) rotate(-3deg)}to{transform:translate(-48%,-52%) rotate(3deg)}}
   @keyframes scrollPulse{0%,100%{opacity:.3}50%{opacity:1}}
 
@@ -225,11 +225,13 @@
       opacity:0 !important;
       transform:translateY(36px) !important;
       transition:opacity .7s ease, transform .7s ease !important;
+      pointer-events:none !important;
     }
     .hero-eyebrow.scroll-in,.hero-name.scroll-in,.hero-role.scroll-in,
     .hero-sub.scroll-in,.hero-cta.scroll-in,.hero-stats.scroll-in{
       opacity:1 !important;
       transform:translateY(0) !important;
+      pointer-events:auto !important;
     }
   }
 
@@ -238,11 +240,13 @@
     opacity:0 !important;
     transform:translateY(36px) !important;
     transition:opacity .8s ease, transform .8s ease !important;
+    pointer-events:none !important;
   }
   .hero-eyebrow.scroll-in,.hero-name.scroll-in,.hero-role.scroll-in,
   .hero-sub.scroll-in,.hero-cta.scroll-in,.hero-stats.scroll-in{
     opacity:1 !important;
     transform:translateY(0) !important;
+    pointer-events:auto !important;
   }
 
   @keyframes smokeA{
