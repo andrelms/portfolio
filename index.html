@@ -79,6 +79,9 @@
   .photo-wrap{position:relative;overflow:hidden;background:#000}
   .photo-wrap img{width:100%;height:100%;object-fit:cover;display:block}
   .photo-fume{position:absolute;inset:0;pointer-events:none;background:linear-gradient(to top,rgba(8,11,15,.65) 0%,rgba(8,11,15,.15) 40%,transparent 70%)}
+  .photo-tags{position:absolute;bottom:10px;left:10px;display:flex;flex-wrap:wrap;gap:6px}
+  .photo-tag{font-size:11px;letter-spacing:.05em;color:#fff;background:rgba(8,11,15,.55);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);border:1px solid rgba(201,168,76,.35);padding:4px 8px;line-height:1.2;white-space:nowrap}
+  .photo-tag b{font-weight:600;color:var(--gold2)}
   .photo-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px;align-items:start}
   .formatura-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-bottom:16px}
   .cert-images{display:flex;flex-direction:row;gap:8px;max-width:600px;margin-top:8px}
@@ -337,16 +340,16 @@
           <div class="photo-wrap" style="aspect-ratio:2/3">
             <img src="assets/family-andre.jpg" alt="Bernardo e Joaquim" loading="lazy" decoding="async" style="object-position:center">
             <div class="photo-fume"></div>
-            <div style="position:absolute;bottom:12px;left:12px;display:flex;gap:8px">
-              <div style="background:var(--bg2);border:1px solid var(--line);padding:10px 14px"><div class="family-name" style="font-size:18px">Bernardo</div><div class="family-detail">4 anos</div></div>
-              <div style="background:var(--bg2);border:1px solid var(--line);padding:10px 14px"><div class="family-name" style="font-size:18px">Joaquim</div><div class="family-detail">2 anos</div></div>
+            <div class="photo-tags">
+              <span class="photo-tag"><b>Bernardo</b> · 4</span>
+              <span class="photo-tag"><b>Joaquim</b> · 2</span>
             </div>
           </div>
           <div class="photo-wrap" style="aspect-ratio:2/3">
             <img src="assets/family-joaquim.jpg" alt="Floki e Ragnar" loading="lazy" decoding="async" style="object-position:bottom">
             <div class="photo-fume"></div>
-            <div style="position:absolute;bottom:12px;left:12px">
-              <div style="background:var(--bg2);border:1px solid var(--line);padding:10px 14px;display:inline-block"><div class="family-name" style="font-size:18px">Ragnar &amp; Floki</div><div class="family-detail">Os gatos da casa</div></div>
+            <div class="photo-tags">
+              <span class="photo-tag"><b>Ragnar &amp; Floki</b></span>
             </div>
           </div>
         </div>
@@ -480,15 +483,6 @@
         <div class="timeline-role">Consultoria Estratégica · MVP &amp; LLMs · 40 func.</div>
         <div class="timeline-desc">Desenvolvimento de MVP com infraestrutura de modelos LLM (GCP, ChatGPT). Chatbot de autoatendimento com recomendações, classificação de perfil e análise de sentimentos. Drag and drop para extração de dados estruturados/semiestruturados com insights de negócio. Automação Python: dashboards legados e geração automatizada de PPTs. Modelos para gráficos em múltiplos idiomas com categorização e rankings. Consultas SQL no Azure, revisão e melhoria de métricas em produção.</div>
         <div class="timeline-tags"><span class="tag">GCP</span><span class="tag">ChatGPT API</span><span class="tag">LLMs</span><span class="tag">Python</span><span class="tag">Azure SQL</span><span class="tag">Power BI</span></div>
-      </div>
-
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div class="timeline-year">2024 · Sob Demanda</div>
-        <div class="timeline-company">Interop</div>
-        <div class="timeline-role">Dados RH/DP · Tecnologia · +1.000 func.</div>
-        <div class="timeline-desc">Estruturação e análise de dados da Folha de Pagamento para empresa de tecnologia com +1.000 funcionários. Modelagem de dados RH/DP garantindo consistência, rastreabilidade e conformidade com LGPD.</div>
-        <div class="timeline-tags"><span class="tag">Folha de Pagamento</span><span class="tag">RH/DP</span><span class="tag">LGPD</span><span class="tag">Estruturação de Dados</span></div>
       </div>
 
       <div class="timeline-item">
