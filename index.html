@@ -187,6 +187,33 @@
   .cert-num{font-family:'Bebas Neue',sans-serif;font-size:36px;color:var(--gold);opacity:.5;line-height:1;min-width:44px}
   .cert-name{font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:400;color:#fff;line-height:1.3;align-self:center}
 
+  /* PAPER (TCC) */
+  .paper-section{background:#000;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .paper-section .container{max-width:920px}
+  .paper-header{margin-bottom:48px}
+  .paper-title{font-family:'Cormorant Garamond',serif;font-size:clamp(34px,5vw,68px);font-weight:300;line-height:1.08;color:#fff;margin:18px 0 28px;letter-spacing:-.01em}
+  .paper-title em{color:var(--gold2);font-style:italic;font-weight:400}
+  .paper-meta{display:flex;flex-wrap:wrap;margin:0 0 32px}
+  .paper-meta-item{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.3em;color:var(--muted);text-transform:uppercase;padding:8px 18px;border:1px solid var(--line);margin:0 -1px -1px 0;background:rgba(8,11,15,.5)}
+  .paper-meta-item b{color:var(--gold);font-weight:500}
+  .paper-actions{display:flex;flex-wrap:wrap;gap:10px}
+  .paper-btn{position:relative;display:inline-flex;align-items:center;gap:12px;padding:14px 22px;border:1px solid var(--line);background:var(--bg2);color:#fff;text-decoration:none;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.25em;text-transform:uppercase;overflow:hidden;transition:background .25s,color .25s,border-color .25s}
+  .paper-btn:hover{background:var(--gold);color:#000;border-color:var(--gold)}
+  .paper-btn svg{width:16px;height:18px;fill:currentColor;flex-shrink:0}
+  .paper-article{padding:36px 0;border-top:1px dashed rgba(36,44,56,.85)}
+  .paper-article:last-child{padding-bottom:0}
+  .paper-cat{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.4em;color:var(--gold);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:14px}
+  .paper-cat::after{content:'';flex:1;height:1px;background:linear-gradient(to right,var(--line),transparent);max-width:120px}
+  .paper-desc{font-family:'Cormorant Garamond',serif;font-size:19px;line-height:1.75;color:#fff;font-weight:400}
+  .paper-desc b{color:var(--gold2);font-weight:600}
+  .paper-desc .paper-highlight{color:var(--gold2);font-style:italic}
+  .paper-desc .paper-todo{color:var(--muted);font-style:italic;font-size:14px;display:block;margin-top:6px;letter-spacing:.05em}
+  .paper-bibtex{font-family:'DM Mono',monospace;font-size:13px;line-height:1.75;color:var(--text);background:var(--bg2);border:1px solid var(--line);padding:24px 28px;overflow-x:auto;white-space:pre;letter-spacing:.01em;tab-size:2}
+  .paper-bibtex .b-key{color:var(--gold)}
+  .paper-bibtex .b-str{color:#f4f0eb}
+  .paper-quote{font-family:'Cormorant Garamond',serif;font-size:22px;font-style:italic;line-height:1.55;color:#fff}
+  .paper-quote-attr{display:block;margin-top:14px;font-family:'DM Mono',monospace;font-style:normal;font-size:11px;letter-spacing:.25em;color:var(--muted);text-transform:uppercase}
+
   /* FOOTER */
   footer{padding:80px 60px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:flex-end}
   .footer-name{font-family:'Bebas Neue',sans-serif;font-size:56px;color:#fff;line-height:1;opacity:.25}
@@ -214,6 +241,9 @@
     .partners-inner{padding:80px 24px}.partners-year{display:none}
     .arch-grid{grid-template-columns:1fr !important;gap:16px !important}
     .arch-arrow{transform:rotate(90deg);padding:8px 0 !important}
+    .paper-actions{flex-direction:column;align-items:stretch}
+    .paper-btn{justify-content:center}
+    .paper-bibtex{font-size:11px;padding:18px 16px}
   }
   @media(max-width:500px){
     .expertise-grid,.stack-grid,.numbers-grid,.partners-grid{grid-template-columns:1fr}
@@ -613,6 +643,70 @@
       </div>
 
     </div>
+  </div>
+</section>
+
+<!-- PAPER (TCC PUCRS) -->
+<section id="paper" class="paper-section">
+  <div class="container">
+    <div class="paper-header reveal">
+      <p class="section-tag">Trabalho de Conclusão · PUCRS Escola Politécnica</p>
+      <h2 class="paper-title">O Impacto das IAs como o <em>ChatGPT</em> na Sociedade e <em>Iniciativas de Regulamentação</em></h2>
+      <div class="paper-meta">
+        <span class="paper-meta-item">André Machado</span>
+        <span class="paper-meta-item">Set 2023</span>
+        <span class="paper-meta-item">Conceito <b>9,5</b></span>
+        <span class="paper-meta-item">364h · 24 créditos</span>
+        <span class="paper-meta-item">Especialização lato sensu</span>
+      </div>
+      <div class="paper-actions">
+        <a class="paper-btn" href="https://drive.google.com/file/d/18lzRLCeu3987X1dlGtB7_gBcFpevgs4U/view?usp=sharing" target="_blank" rel="noopener">
+          <svg viewBox="0 0 15 20" aria-hidden="true"><path d="M3 0h2.228c1.093 0 2.245.393 3.327.987 1.09.598 2.159 1.428 3.098 2.368.94.94 1.767 2.006 2.364 3.092.591 1.077.983 2.221.983 3.303v6.75a3 3 0 0 1-3 3H3a3 3 0 0 1-3-3V3a3 3 0 0 1 3-3Zm7.592 4.415a12.928 12.928 0 0 0-2.38-1.894c.025.156.038.316.038.479v2.25a1.5 1.5 0 0 0 1.5 1.5H12c.164 0 .325.013.481.038a12.956 12.956 0 0 0-1.889-2.373ZM4.5 10.5a.75.75 0 1 0 0 1.5h4a.75.75 0 1 0 0-1.5h-4Zm0 3a.75.75 0 1 0 0 1.5h6a.75.75 0 1 0 0-1.5h-6Z"/></svg>
+          <span>Paper (PDF)</span>
+        </a>
+        <a class="paper-btn" href="#paper-bibtex">
+          <svg viewBox="0 0 19 20" aria-hidden="true"><path d="M17.206 3.783a2.664 2.664 0 0 1 .018-.356c.024-.23.063-.472.104-.736.024-.154.05-.316.073-.487.056-.397.12-.907.049-1.298-.034-.185-.133-.554-.49-.77-.39-.234-.79-.118-1.016-.013-.546.254-1.19.536-1.79.725-.3.094-.572.16-.8.188-.238.03-.382.016-.454-.005-.98-.29-2.042-.447-3.15-.447-.961 0-1.89.12-2.757.34-.394.1-.811.05-1.31-.115A10.72 10.72 0 0 1 4.629.373c-.182-.083-.374-.17-.582-.26-.285-.12-.65-.168-1.001.022-.314.17-.472.457-.553.662-.161.402-.2.93-.214 1.355-.008.255-.008.56-.01.83l-.001.452c-.001.137-.01.274-.023.41v.004C1.465 4.848 1 6.036 1 7.322c0 1.917 1.03 3.803 2.644 5.011.789.59 1.71 1.015 2.709 1.294a2.83 2.83 0 0 0-.352 1.327v.858H4.664c-.347 0-.801-.275-1.296-.817-.462-.506-.814-1.082-.976-1.348-.347-.572-.894-.894-1.55-.974a.75.75 0 0 0-.182 1.49c.243.03.363.12.45.263l.002.004c.166.272.58.956 1.148 1.576.535.587 1.375 1.306 2.404 1.306H6v1.438c0 .414.337.75.75.75h6.497a.75.75 0 0 0 .748-.75v-3.765c0-.492-.142-.983-.388-1.468.886-.275 1.708-.663 2.404-1.184 1.65-1.235 2.488-3.139 2.488-5.01 0-1.316-.485-2.527-1.294-3.54Z"/></svg>
+          <span>Citar (BibTeX)</span>
+        </a>
+      </div>
+    </div>
+
+    <article class="paper-article reveal">
+      <h5 class="paper-cat">Abstract</h5>
+      <p class="paper-desc">
+        Investigação sobre o impacto da popularização de modelos generativos de linguagem natural — com foco em <span class="paper-highlight">ChatGPT</span> e congêneres — sobre setores produtivos, educação, mercado de trabalho e formação de opinião. Mapeia <span class="paper-highlight">iniciativas regulatórias em curso</span> no Brasil e no exterior (PL 2338/23, AI Act da União Europeia, executive orders dos EUA), discute princípios de governança aplicáveis e propõe um arcabouço de avaliação de risco para adoção corporativa.
+        <span class="paper-todo">[Resumo escrito a partir do título — substituir pelo abstract oficial do TCC]</span>
+      </p>
+    </article>
+
+    <article class="paper-article reveal">
+      <h5 class="paper-cat">Defesa</h5>
+      <p class="paper-desc">
+        Defendido em <b>setembro de 2023</b> no programa de Especialização em Ciência de Dados e Inteligência Artificial — Computação e Tecnologias da Informação e Comunicação, PUCRS Escola Politécnica. <b>24 créditos · 364 horas</b>. Conceito final <b>9,5</b>.
+      </p>
+    </article>
+
+    <article class="paper-article reveal">
+      <h5 class="paper-cat">Áreas Cobertas</h5>
+      <p class="paper-desc">
+        <b>Modelos generativos &amp; LLMs</b> — arquitetura, treinamento, ajuste e limitações. <b>Ética &amp; risco</b> — viés, hallucination, propriedade intelectual, deepfakes. <b>Regulamentação</b> — comparativo Brasil/UE/EUA, princípios da OCDE, frameworks NIST e ISO. <b>Aplicação prática</b> — adoção responsável em organizações, controle de dados sensíveis, LGPD.
+      </p>
+    </article>
+
+    <article class="paper-article reveal">
+      <h5 class="paper-cat">Citar (BibTeX)</h5>
+<pre id="paper-bibtex" class="paper-bibtex">@misc{machado2023chatgpt,
+  title   = {O Impacto das IAs como o ChatGPT na Sociedade
+             e Iniciativas de Regulamentação},
+  author  = {Machado, André},
+  year    = {2023},
+  school  = {PUCRS — Escola Politécnica},
+  type    = {Trabalho de Conclusão de Curso,
+             Especialização em Ciência de Dados e IA},
+  note    = {Conceito 9{,}5. 24 créditos / 364h.},
+  url     = {https://drive.google.com/file/d/18lzRLCeu3987X1dlGtB7_gBcFpevgs4U/view}
+}</pre>
+    </article>
   </div>
 </section>
 
