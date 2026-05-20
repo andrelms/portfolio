@@ -264,7 +264,38 @@
   .qs-dot{width:6px;height:6px;border-radius:50%;background:var(--line);transition:background .3s,width .3s}
   .qs-dot.active{background:var(--gold);width:24px;border-radius:3px}
 
-  .qs-mobile-fallback{display:none}
+
+  /* Mobile Quem sou: horizontal swipe carousel (Oryzo social-content pattern) */
+  .qs-mobile-tiles{display:none}
+  @media(max-width:900px){
+    .qs-mobile-tiles{display:block;position:relative;width:100%;height:100vh;overflow:hidden;background:#000}
+    .qs-tiles-track{display:flex;width:100%;height:100%;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+    .qs-tiles-track::-webkit-scrollbar{display:none}
+    .qs-tile{flex:0 0 100vw;width:100vw;height:100vh;scroll-snap-align:start;position:relative;overflow:hidden;background:#0e1318}
+    .qs-tile-bg{position:absolute;inset:0;z-index:0}
+    .qs-tile-bg img{width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(15%) brightness(.85)}
+    .qs-tile-bg.qs-tile-bg-gradient{background:linear-gradient(135deg,#1a1815 0%,#0a0d11 50%,#0c0a08 100%)}
+    .qs-tile-bg.qs-tile-bg-gradient-warm{background:linear-gradient(135deg,#2a1f12 0%,#100904 100%)}
+    .qs-tile-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,11,15,.92) 0%,rgba(8,11,15,.4) 35%,transparent 65%);z-index:1;pointer-events:none}
+    .qs-tile-content{position:absolute;bottom:96px;left:24px;right:24px;z-index:2;color:#fff}
+    .qs-tile-eyebrow{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.4em;color:var(--gold);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:10px}
+    .qs-tile-eyebrow::before{content:'';display:block;width:24px;height:1px;background:var(--gold)}
+    .qs-tile-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,11vw,72px);line-height:.95;letter-spacing:-.02em;margin-bottom:14px;color:#fff}
+    .qs-tile-title em{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold);font-weight:300;letter-spacing:0;display:block;font-size:.9em;line-height:1}
+    .qs-tile-note{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.2em;color:var(--muted);text-transform:uppercase;line-height:1.5}
+    .qs-tile-text{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:300;line-height:1.45;color:#fff;margin-top:6px}
+    .qs-tile-text em{color:var(--gold2);font-style:italic}
+    .qs-tile-text b{color:#fff;font-weight:500}
+    .qs-tile-contacts{display:flex;flex-direction:column;gap:8px;margin-top:18px}
+    .qs-tile-contacts a{color:#fff;text-decoration:none;font-family:'DM Mono',monospace;font-size:13px;letter-spacing:.08em;padding:10px 16px;border:1px solid var(--line);background:rgba(14,19,24,.6);text-align:center;transition:color .2s,border-color .2s,background .2s}
+    .qs-tile-contacts a:hover{color:var(--gold);border-color:var(--gold);background:rgba(201,168,76,.05)}
+    .qs-tiles-progress{position:absolute;bottom:48px;left:50%;transform:translateX(-50%);display:flex;gap:6px;z-index:3;width:calc(100vw - 48px);max-width:280px;justify-content:space-between}
+    .qs-tiles-progress-dot{flex:1;height:2px;background:rgba(255,255,255,.18);transition:background .35s}
+    .qs-tiles-progress-dot.is-active{background:var(--gold)}
+    .qs-tile-hint{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.3em;color:var(--muted);text-transform:uppercase;z-index:3;transition:opacity .4s;pointer-events:none}
+    .qs-tile-hint.is-hidden{opacity:0}
+    .quem-sou-section{border:none}
+  }
 
   /* REVEAL */
   .reveal{opacity:0;transform:translateY(36px);transition:opacity .7s ease,transform .7s ease;pointer-events:none}
@@ -286,16 +317,7 @@
     .partners-inner{padding:80px 24px}.partners-year{display:none}
     .arch-grid{grid-template-columns:1fr !important;gap:16px !important}
     .arch-arrow{transform:rotate(90deg);padding:8px 0 !important}
-    .quem-sou-section{border:none}
     .quem-sou-stage{display:none}
-    .qs-mobile-fallback{display:block;padding:80px 24px 60px}
-    .qs-mobile-fallback .qs-title{font-size:clamp(48px,12vw,84px);text-align:left;margin-bottom:24px}
-    .qs-mobile-fallback .qs-text{font-size:clamp(18px,5vw,22px);text-align:left;max-width:none;margin-bottom:28px}
-    .qs-mobile-fallback .qs-photos{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:32px 0}
-    .qs-mobile-fallback .qs-photos .photo-wrap{aspect-ratio:9/16;overflow:hidden;background:#000;border:1px solid var(--line);position:relative}
-    .qs-mobile-fallback .qs-photos img{width:100%;height:100%;object-fit:cover;display:block}
-    .qs-mobile-fallback .qs-contacts{align-items:stretch}
-    .qs-mobile-fallback .qs-contacts a{min-width:0;text-align:center}
     .stats-pin-stage{padding:0 24px}
     .stat-slide{padding:0 24px}
     .stat-big{font-size:clamp(80px,28vw,180px)}
@@ -488,23 +510,93 @@
     </div>
   </div>
 
-  <!-- Mobile fallback: stacked content with photos grid -->
-  <div class="qs-mobile-fallback">
-    <p class="section-tag">Quem sou</p>
-    <h1 class="qs-title">Dados.<br><em>Família.</em><br>Propósito.</h1>
-    <p class="qs-text">Profissional Senior em Data &amp; Analytics com experiência end-to-end em <em>BI, Engenharia de Dados, Data Science e IA</em> aplicada ao negócio. Especialista em <em>Ciência de Dados &amp; IA</em> pela PUCRS (TCC nota <b>9,5</b>) e Bacharel em Administração pela UNIASSELVI (Prouni 100%).</p>
-    <div class="qs-photos">
-      <div class="photo-wrap"><img src="assets/family-andre.jpg" alt="Bernardo e Joaquim" loading="lazy" decoding="async"></div>
-      <div class="photo-wrap"><img src="assets/family-joaquim.jpg" alt="Ragnar e Floki" loading="lazy" decoding="async"></div>
-      <div class="photo-wrap"><img src="assets/formatura-2.jpg" alt="Formatura" loading="lazy" decoding="async"></div>
-      <div class="photo-wrap"><img src="assets/formatura-4.jpg" alt="Formatura" loading="lazy" decoding="async"></div>
+  <!-- Mobile: horizontal swipe carousel (Oryzo social-content pattern) -->
+  <div class="qs-mobile-tiles">
+    <div class="qs-tiles-track">
+      <div class="qs-tile">
+        <div class="qs-tile-bg qs-tile-bg-gradient-warm"></div>
+        <div class="qs-tile-overlay"></div>
+        <div class="qs-tile-content">
+          <p class="qs-tile-eyebrow">Quem sou</p>
+          <h1 class="qs-tile-title">Dados.<em>Família.</em>Propósito.</h1>
+          <p class="qs-tile-note">15+ anos · 1,5 B linhas migradas · 7 setores</p>
+        </div>
+      </div>
+
+      <div class="qs-tile">
+        <div class="qs-tile-bg qs-tile-bg-gradient"></div>
+        <div class="qs-tile-overlay"></div>
+        <div class="qs-tile-content">
+          <p class="qs-tile-eyebrow">Sobre</p>
+          <p class="qs-tile-text">Profissional Senior em Data &amp; Analytics com experiência end-to-end em <em>BI, Engenharia de Dados, Data Science e IA</em> aplicada ao negócio.</p>
+        </div>
+      </div>
+
+      <div class="qs-tile">
+        <div class="qs-tile-bg"><img src="assets/family-andre.jpg" alt="Bernardo e Joaquim" loading="lazy" decoding="async"></div>
+        <div class="qs-tile-overlay"></div>
+        <div class="qs-tile-content">
+          <p class="qs-tile-eyebrow">Família</p>
+          <h2 class="qs-tile-title">Bernardo &amp; <em>Joaquim</em></h2>
+          <p class="qs-tile-note">4 anos · 2 anos</p>
+        </div>
+      </div>
+
+      <div class="qs-tile">
+        <div class="qs-tile-bg"><img src="assets/family-joaquim.jpg" alt="Ragnar e Floki" loading="lazy" decoding="async" style="object-position:bottom"></div>
+        <div class="qs-tile-overlay"></div>
+        <div class="qs-tile-content">
+          <p class="qs-tile-eyebrow">Casa</p>
+          <h2 class="qs-tile-title">Ragnar &amp; <em>Floki</em></h2>
+          <p class="qs-tile-note">Os gatos da casa</p>
+        </div>
+      </div>
+
+      <div class="qs-tile">
+        <div class="qs-tile-bg"><img src="assets/formatura-2.jpg" alt="Formatura PUCRS" loading="lazy" decoding="async"></div>
+        <div class="qs-tile-overlay"></div>
+        <div class="qs-tile-content">
+          <p class="qs-tile-eyebrow">Formação</p>
+          <h2 class="qs-tile-title">PUCRS<em>Esp. DS &amp; IA</em></h2>
+          <p class="qs-tile-note">2022 — 2023 · TCC nota 9,5 · 364h</p>
+        </div>
+      </div>
+
+      <div class="qs-tile">
+        <div class="qs-tile-bg"><img src="assets/formatura-4.jpg" alt="Formatura UNIASSELVI" loading="lazy" decoding="async"></div>
+        <div class="qs-tile-overlay"></div>
+        <div class="qs-tile-content">
+          <p class="qs-tile-eyebrow">Formação</p>
+          <h2 class="qs-tile-title">UNIASSELVI<em>Administração</em></h2>
+          <p class="qs-tile-note">2015 — 2019 · Prouni 100%</p>
+        </div>
+      </div>
+
+      <div class="qs-tile">
+        <div class="qs-tile-bg qs-tile-bg-gradient-warm"></div>
+        <div class="qs-tile-overlay"></div>
+        <div class="qs-tile-content">
+          <p class="qs-tile-eyebrow">Onde me encontra</p>
+          <h2 class="qs-tile-title">Vamos<em>conversar.</em></h2>
+          <div class="qs-tile-contacts">
+            <a href="tel:+5551998837555">(51) 99883-7555</a>
+            <a href="mailto:andrelms_@hotmail.com">andrelms_@hotmail.com</a>
+            <a href="https://github.com/andrelms" target="_blank" rel="noopener">github.com/andrelms</a>
+          </div>
+        </div>
+      </div>
     </div>
-    <p class="qs-text"><b>Bernardo</b> (4), <b>Joaquim</b> (2) e os gatos <em>Ragnar &amp; Floki</em> — o propósito que ancora tudo o resto.</p>
-    <div class="qs-contacts" style="margin-top:24px">
-      <a href="tel:+5551998837555">(51) 99883-7555</a>
-      <a href="mailto:andrelms_@hotmail.com">andrelms_@hotmail.com</a>
-      <a href="https://github.com/andrelms" target="_blank" rel="noopener">github.com/andrelms</a>
+
+    <div class="qs-tiles-progress" aria-hidden="true">
+      <span class="qs-tiles-progress-dot is-active"></span>
+      <span class="qs-tiles-progress-dot"></span>
+      <span class="qs-tiles-progress-dot"></span>
+      <span class="qs-tiles-progress-dot"></span>
+      <span class="qs-tiles-progress-dot"></span>
+      <span class="qs-tiles-progress-dot"></span>
+      <span class="qs-tiles-progress-dot"></span>
     </div>
+    <div class="qs-tile-hint">arraste →</div>
   </div>
 </section>
 
@@ -1027,6 +1119,28 @@
     entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*70);obs.unobserve(e.target)}});
   },{threshold:.1});
   document.querySelectorAll('.reveal,.timeline-item,.clip-reveal').forEach(el=>obs.observe(el));
+
+  // Mobile Quem sou — horizontal carousel: sync progress dots + hide hint after first swipe
+  (function(){
+    var track = document.querySelector('.qs-tiles-track');
+    if (!track) return;
+    var dots = document.querySelectorAll('.qs-tiles-progress-dot');
+    var hint = document.querySelector('.qs-tile-hint');
+    var hintHidden = false;
+    function update(){
+      var w = track.clientWidth || 1;
+      var idx = Math.round(track.scrollLeft / w);
+      idx = Math.max(0, Math.min(dots.length - 1, idx));
+      dots.forEach(function(d, i){ d.classList.toggle('is-active', i === idx); });
+      if (!hintHidden && idx > 0 && hint) {
+        hint.classList.add('is-hidden');
+        hintHidden = true;
+      }
+    }
+    track.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update, { passive: true });
+    update();
+  })();
 
   function loadVideo(el, id, ratio) {
     el.classList.add('loaded');
