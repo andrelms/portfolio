@@ -1069,21 +1069,25 @@
       var p = Math.max(0, Math.min(1, (-rect.top) / scrollable));
       var fp = Math.max(0, Math.min(1, p / SPAN));
 
-      // The frame layer is fixed to the viewport so the watch never leaves its
-      // spot. It fades in to cover the hero as the section rises (so the two
-      // never show at once), holds through the frame span, then fades out to
-      // reveal the photo chapters.
-      var vis;
-      if (rect.top >= vh)     vis = 0;                                   // section still below the fold
-      else if (rect.top > 0)  vis = Math.min(1, (vh - rect.top) / (vh * 0.6)); // rising in: cover the hero
-      else if (p <= SPAN)     vis = 1;                                   // pinned, inside frame span
-      else                    vis = Math.max(0, 1 - (p - SPAN) / 0.04);  // pinned, past span: hand to photos
+      // The frame layer is fixed to the viewport so the watch stays in the exact
+      // same spot — it never rises. The hero finishes its frames precisely when
+      // the section is one viewport away (rect.top === vh), so we snap the OPAQUE
+      // layer on there to fully cover the departing hero: no cross-fade, no two
+      // watches at once. It holds through the frame span, then fades to the photos.
+      var canvasVis;
+      if (rect.top > vh)   canvasVis = 0;                                  // hero still animating its frames
+      else if (p <= SPAN)  canvasVis = 1;                                  // covering hero + playing frame span
+      else                 canvasVis = Math.max(0, 1 - (p - SPAN) / 0.04); // past span: hand to photos
+
+      // Only the text moves: it eases in just after the takeover so the title
+      // doesn't pop, then scrolls upward over the static frames.
+      var textEnter = rect.top > vh ? 0 : (rect.top > 0 ? Math.min(1, (vh - rect.top) / (vh * 0.35)) : 1);
 
       curIdx = cfg.start + fp * (cfg.end - cfg.start);
       draw(curIdx);
-      canvas.style.opacity = vis;
-      canvas.style.visibility = vis <= 0 ? 'hidden' : 'visible';
-      driveFrameText(fp, vis);
+      canvas.style.opacity = canvasVis;
+      canvas.style.visibility = canvasVis <= 0 ? 'hidden' : 'visible';
+      driveFrameText(fp, canvasVis * textEnter);
     }
 
     cfg = buildConfig();
