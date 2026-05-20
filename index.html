@@ -242,7 +242,9 @@
   .qs2-chapter{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 60px;opacity:0;transform:translateY(28px);filter:blur(8px);transition:opacity .55s ease,transform .55s ease,filter .55s ease;pointer-events:none}
   .qs2-chapter.qs2-chapter-active{opacity:1;transform:translateY(0);filter:blur(0);pointer-events:auto}
   /* Frame chapters (Quem sou + Sobre) ride a viewport-fixed layer above the frames — JS drives transform/opacity */
-  .qs2-chapter.qs2-frame-chapter{position:fixed;inset:0;z-index:901;filter:none;transition:none;pointer-events:none;will-change:transform,opacity}
+  .qs2-chapter.qs2-frame-chapter{position:fixed;inset:0;z-index:902;filter:none;transition:none;pointer-events:none;will-change:transform,opacity}
+  /* Smoke overlay for quem-sou/sobre frame chapters — same atmosphere as hero */
+  #qs2-smoke{position:fixed;inset:0;z-index:901;pointer-events:none;overflow:hidden;opacity:0;visibility:hidden}
   .qs2-frame-chapter .qs2-title,.qs2-frame-chapter .qs2-text,.qs2-frame-chapter .qs2-eyebrow{text-shadow:0 2px 28px rgba(0,0,0,.6),0 1px 4px rgba(0,0,0,.5)}
   .qs2-eyebrow{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.4em;color:var(--gold);text-transform:uppercase;margin-bottom:28px;display:flex;align-items:center;gap:14px;justify-content:center}
   .qs2-eyebrow::before,.qs2-eyebrow::after{content:'';display:block;width:36px;height:1px;background:var(--gold);opacity:.5}
@@ -873,6 +875,13 @@
      scripts so they exist at init) so no overflow:hidden ancestor — e.g. the
      .qs2-sticky on iOS Safari — can clip them. -->
 <canvas id="qs2-canvas" class="qs2-canvas"></canvas>
+<!-- Smoke / atmosphere overlay for the frame continuation (Quem sou + Sobre) — same puffs as hero -->
+<div id="qs2-smoke">
+  <div class="smoke-layer smoke-1"></div>
+  <div class="smoke-layer smoke-2"></div>
+  <div class="smoke-layer smoke-3"></div>
+  <div class="smoke-layer smoke-4"></div>
+</div>
 <div class="qs2-chapter qs2-frame-chapter" data-ch="0">
   <p class="qs2-eyebrow">Quem sou</p>
   <h1 class="qs2-title">Dados.<br><em>Família.</em><br>Propósito.</h1>
@@ -977,6 +986,7 @@
   (function(){
     var section = document.getElementById('quem-sou');
     var canvas = document.getElementById('qs2-canvas');
+    var smokeEl = document.getElementById('qs2-smoke');
     if (!section || !canvas) return;
     var ctx = canvas.getContext('2d');
     // TAIL is computed proportionally inside buildConfig() as cfg.tail
@@ -1104,6 +1114,10 @@
       draw(curIdx);
       canvas.style.opacity = canvasVis;
       canvas.style.visibility = canvasVis <= 0 ? 'hidden' : 'visible';
+      if (smokeEl) {
+        smokeEl.style.opacity = canvasVis;
+        smokeEl.style.visibility = canvasVis <= 0 ? 'hidden' : 'visible';
+      }
       driveFrameText(jp, canvasVis);
     }
 
