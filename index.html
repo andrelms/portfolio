@@ -423,9 +423,6 @@
     <!-- Base dark gradient -->
     <div class="qs2-bg-layer"></div>
 
-    <!-- Frame continuation — last 192 hero frames play across ch0 (Quem sou) + ch1 (Sobre) -->
-    <canvas id="qs2-canvas" class="qs2-canvas"></canvas>
-
     <!-- Photo layers — each slides in laterally as its chapter activates -->
     <div class="qs2-photo" data-ch="2"><img src="assets/family-andre.jpg" alt="Bernardo e Joaquim" loading="lazy" decoding="async" style="object-position:center 28%"></div>
     <div class="qs2-photo" data-ch="3"><img src="assets/family-joaquim.jpg" alt="Ragnar e Floki" loading="lazy" decoding="async" style="object-position:center 38%"></div>
@@ -439,17 +436,7 @@
     <!-- Chapter text blocks -->
     <div class="qs2-center">
 
-      <!-- ch0: Quem sou -->
-      <div class="qs2-chapter qs2-frame-chapter qs2-chapter-active" data-ch="0">
-        <p class="qs2-eyebrow">Quem sou</p>
-        <h1 class="qs2-title">Dados.<br><em>Família.</em><br>Propósito.</h1>
-      </div>
-
-      <!-- ch1: Sobre mim -->
-      <div class="qs2-chapter qs2-frame-chapter" data-ch="1">
-        <p class="qs2-eyebrow">Sobre</p>
-        <p class="qs2-text">Profissional Senior em Data &amp; Analytics com experiência end-to-end em <em>BI, Engenharia de Dados, Data Science e IA</em> aplicada ao negócio. Pipeline, governança, Lakehouse Bronze/Silver/Gold e modernização analítica que vira <b>decisão executiva</b>.</p>
-      </div>
+      <!-- ch0 and ch1 are now at body level to avoid Safari overflow:hidden clip -->
 
       <!-- ch2: Família -->
       <div class="qs2-chapter" data-ch="2">
@@ -981,7 +968,9 @@
     var ctx = canvas.getContext('2d');
     // TAIL is computed proportionally inside buildConfig() as cfg.tail
     var SPAN = 2 / 7;        // ch0 + ch1 occupy the first 2 of 7 chapters
-    var frameChapters = section.querySelectorAll('.qs2-frame-chapter');
+    // Elements are at body level (not inside the section) to avoid
+    // overflow:hidden clipping in iOS Safari with sticky ancestors.
+    var frameChapters = document.querySelectorAll('.qs2-frame-chapter');
     var cfg = null;
     var curIdx = 0;
 
@@ -1415,6 +1404,18 @@
     pump();
   })();
 </script>
+
+<!-- Fixed frame-layer: canvas + text panels live at body level so no
+     overflow:hidden ancestor (e.g. .qs2-sticky on iOS Safari) can clip them -->
+<canvas id="qs2-canvas" class="qs2-canvas"></canvas>
+<div class="qs2-chapter qs2-frame-chapter" data-ch="0">
+  <p class="qs2-eyebrow">Quem sou</p>
+  <h1 class="qs2-title">Dados.<br><em>Família.</em><br>Propósito.</h1>
+</div>
+<div class="qs2-chapter qs2-frame-chapter" data-ch="1">
+  <p class="qs2-eyebrow">Sobre</p>
+  <p class="qs2-text">Profissional Senior em Data &amp; Analytics com experiência end-to-end em <em>BI, Engenharia de Dados, Data Science e IA</em> aplicada ao negócio. Pipeline, governança, Lakehouse Bronze/Silver/Gold e modernização analítica que vira <b>decisão executiva</b>.</p>
+</div>
 
 <footer>
   <div class="footer-name">ANDRÉ<br>MACHADO</div>
