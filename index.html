@@ -264,6 +264,8 @@
   .qs-dot{width:6px;height:6px;border-radius:50%;background:var(--line);transition:background .3s,width .3s}
   .qs-dot.active{background:var(--gold);width:24px;border-radius:3px}
 
+  .qs-mobile-fallback{display:none}
+
   /* REVEAL */
   .reveal{opacity:0;transform:translateY(36px);transition:opacity .7s ease,transform .7s ease;pointer-events:none}
   .reveal.visible{opacity:1;transform:translateY(0);pointer-events:auto}
@@ -284,17 +286,16 @@
     .partners-inner{padding:80px 24px}.partners-year{display:none}
     .arch-grid{grid-template-columns:1fr !important;gap:16px !important}
     .arch-arrow{transform:rotate(90deg);padding:8px 0 !important}
-    /* Quem sou mobile: pin highlights-style sem os strips laterais */
-    .quem-sou-stage{grid-template-columns:1fr;height:100vh}
-    .qs-strip{display:none}
-    .quem-sou-stage::before,.quem-sou-stage::after{display:none}
-    .qs-center{padding:0 24px}
-    .qs-chapter{padding:0 24px}
-    .qs-title{font-size:clamp(42px,12vw,84px)}
-    .qs-text{font-size:clamp(18px,5vw,22px);line-height:1.4}
-    .qs-eyebrow{font-size:10px;margin-bottom:20px}
-    .qs-contacts a{min-width:0;font-size:13px;padding:10px 18px;width:100%;text-align:center}
-    .qs-progress{bottom:24px;gap:10px}
+    .quem-sou-section{border:none}
+    .quem-sou-stage{display:none}
+    .qs-mobile-fallback{display:block;padding:80px 24px 60px}
+    .qs-mobile-fallback .qs-title{font-size:clamp(48px,12vw,84px);text-align:left;margin-bottom:24px}
+    .qs-mobile-fallback .qs-text{font-size:clamp(18px,5vw,22px);text-align:left;max-width:none;margin-bottom:28px}
+    .qs-mobile-fallback .qs-photos{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:32px 0}
+    .qs-mobile-fallback .qs-photos .photo-wrap{aspect-ratio:9/16;overflow:hidden;background:#000;border:1px solid var(--line);position:relative}
+    .qs-mobile-fallback .qs-photos img{width:100%;height:100%;object-fit:cover;display:block}
+    .qs-mobile-fallback .qs-contacts{align-items:stretch}
+    .qs-mobile-fallback .qs-contacts a{min-width:0;text-align:center}
     .stats-pin-stage{padding:0 24px}
     .stat-slide{padding:0 24px}
     .stat-big{font-size:clamp(80px,28vw,180px)}
@@ -346,40 +347,6 @@
     .parallax-img{transform:none !important}
   }
 
-  /* MOVIE SECTIONS — scroll-bound frame chain (replaces single hero) */
-  .movie-section{position:relative;background:#000}
-  .movie-sticky{position:sticky;top:0;height:100vh;overflow:hidden;display:block}
-  .movie-canvas,.movie-canvas-mobile{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:0;background:#000}
-  .movie-canvas-mobile{display:none}
-  .movie-overlay{position:absolute;inset:0;z-index:2;padding:80px 60px;display:flex;flex-direction:column;justify-content:flex-end;pointer-events:none}
-  .movie-overlay > *,.movie-overlay a,.movie-overlay button{pointer-events:auto}
-  .movie-overlay-gradient{position:absolute;inset:0;background:linear-gradient(to right,rgba(8,11,15,.85) 0%,rgba(8,11,15,.4) 50%,rgba(8,11,15,.1) 100%),linear-gradient(to top,rgba(8,11,15,.7) 0%,transparent 45%);z-index:1;pointer-events:none}
-  .movie-eyebrow{font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.3em;color:var(--gold);text-transform:uppercase;margin-bottom:20px;font-weight:500}
-  .movie-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(68px,10vw,160px);line-height:.88;color:#fff;letter-spacing:-.02em;margin-bottom:20px}
-  .movie-title em{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold);font-weight:300;letter-spacing:0;display:block}
-  .movie-role{font-family:'Cormorant Garamond',serif;font-size:clamp(20px,2vw,28px);font-style:italic;font-weight:400;color:#fff;margin-bottom:8px}
-  .movie-sub{font-size:13px;letter-spacing:.15em;color:#fff;font-weight:400;margin-bottom:32px;text-transform:uppercase}
-  .movie-cta{display:flex;gap:16px;margin-bottom:32px}
-  .movie-stats{position:absolute;bottom:80px;right:60px;display:flex;flex-direction:column;gap:24px;z-index:3}
-  .movie-stats .stat{text-align:right;text-shadow:0 2px 12px rgba(0,0,0,.8)}
-  .movie-stats .stat-num{font-family:'Bebas Neue',sans-serif;font-size:42px;color:var(--gold);line-height:1}
-  .movie-stats .stat-label{font-size:10px;letter-spacing:.25em;color:var(--muted);text-transform:uppercase}
-  .movie-progress{position:absolute;bottom:32px;right:60px;display:flex;align-items:center;gap:14px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.3em;color:var(--muted);text-transform:uppercase;z-index:4}
-  .movie-progress-bar{width:160px;height:1px;background:var(--line);position:relative;overflow:hidden}
-  .movie-progress-fill{position:absolute;left:0;top:0;height:100%;background:var(--gold);width:0%;will-change:width}
-  .movie-scroll-hint{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;z-index:4;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.3em;color:var(--muted);text-transform:uppercase}
-  .movie-scroll-hint-arrow{width:1px;height:36px;background:linear-gradient(to bottom,var(--gold),transparent);animation:scrollPulse 2s ease-in-out infinite}
-
-  /* Variant: center-aligned big numeric showcase */
-  .movie-overlay.movie-overlay-center{justify-content:center;align-items:center;text-align:center;padding:80px 40px 120px}
-  .movie-title-mega{font-family:'Bebas Neue',sans-serif;font-size:clamp(120px,18vw,280px);line-height:.85;color:var(--gold);letter-spacing:-.03em;margin-bottom:32px}
-  .movie-title-mega em{font-family:'Cormorant Garamond',serif;font-style:italic;color:#fff;font-weight:300;font-size:.7em;letter-spacing:0;display:inline-block;margin-left:.1em}
-
-  /* Variant: bridge into Quem sou */
-  .movie-overlay.movie-overlay-bridge{justify-content:center;align-items:center;text-align:center;padding:80px 40px 120px}
-  .movie-title-bridge{font-family:'Cormorant Garamond',serif;font-size:clamp(48px,6vw,96px);font-weight:300;line-height:1.05;color:#fff;letter-spacing:-.01em;max-width:920px}
-  .movie-title-bridge em{font-style:italic;color:var(--gold2)}
-
   @keyframes smokeA{
     0%{transform:translateY(0) translateX(0) scale(1);opacity:0}
     20%{opacity:.9}
@@ -418,70 +385,39 @@
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
 
-<!-- MOVIE CHAIN — 3 pinned scroll-bound sections, one per video clip -->
-<section class="movie-section" data-frames-start="1" data-frames-end="192" data-frames-start-mobile="1" data-frames-end-mobile="320">
-  <div class="movie-sticky">
-    <canvas class="movie-canvas"></canvas>
-    <canvas class="movie-canvas-mobile"></canvas>
-    <div class="smoke-layer smoke-1"></div>
-    <div class="smoke-layer smoke-2"></div>
-    <div class="smoke-layer smoke-3"></div>
-    <div class="smoke-layer smoke-4"></div>
-    <div class="movie-overlay-gradient"></div>
-    <div class="movie-overlay">
-      <p class="movie-eyebrow">Senior Data &amp; AI · Porto Alegre, Brasil</p>
-      <h1 class="movie-title">ANDRÉ<em>MACHADO</em></h1>
-      <p class="movie-role">Data Engineering · Analytics · LLMs · Cloud</p>
-      <p class="movie-sub">Databricks · Power BI · Python · Azure · GCP · Microsoft Fabric</p>
-      <div class="movie-cta">
-        <a href="http://insightful-data-explorer-27-sepia.vercel.app/site" target="_blank" class="btn btn-fill">Ver Projeto</a>
-        <a href="https://www.linkedin.com/in/andr%C3%A9-machado-b7475257/" target="_blank" class="btn">LinkedIn</a>
-      </div>
-    </div>
-    <div class="movie-stats">
-      <div class="stat"><div class="stat-num">15+</div><div class="stat-label">Anos de Carreira</div></div>
-      <div class="stat"><div class="stat-num">1,5B</div><div class="stat-label">Linhas Migradas</div></div>
-      <div class="stat"><div class="stat-num">7</div><div class="stat-label">Setores Atendidos</div></div>
-    </div>
-    <div class="movie-progress">
-      <span>01 / 03</span>
-      <span class="movie-progress-bar"><span class="movie-progress-fill"></span></span>
-    </div>
-    <div class="movie-scroll-hint"><span>Scroll</span><div class="movie-scroll-hint-arrow"></div></div>
-  </div>
-</section>
-
-<section class="movie-section" data-frames-start="193" data-frames-end="384" data-frames-start-mobile="321" data-frames-end-mobile="640">
-  <div class="movie-sticky">
-    <canvas class="movie-canvas"></canvas>
-    <canvas class="movie-canvas-mobile"></canvas>
-    <div class="movie-overlay-gradient"></div>
-    <div class="movie-overlay movie-overlay-center">
-      <p class="movie-eyebrow">Capítulo II · Escala</p>
-      <h2 class="movie-title-mega">~1,5<em>bilhão</em></h2>
-      <p class="movie-sub">de linhas migradas · Bronze · Silver · Gold</p>
-    </div>
-    <div class="movie-progress">
-      <span>02 / 03</span>
-      <span class="movie-progress-bar"><span class="movie-progress-fill"></span></span>
+<!-- HERO -->
+<section class="hero">
+<div class="hero-sticky">
+  <p class="hero-eyebrow">Senior Data &amp; AI Professional · Porto Alegre, Brasil</p>
+  <h1 class="hero-name">ANDRÉ<span>MACHADO</span></h1>
+  <div class="hero-left">
+    <p class="hero-role">Data Engineering · Analytics · LLMs · Cloud</p>
+    <p class="hero-sub">Databricks · Power BI · Python · Azure · GCP · Microsoft Fabric</p>
+    <div class="hero-cta">
+      <a href="http://insightful-data-explorer-27-sepia.vercel.app/site" target="_blank" class="btn btn-fill">Ver Projeto</a>
+      <a href="https://www.linkedin.com/in/andr%C3%A9-machado-b7475257/" target="_blank" class="btn">LinkedIn</a>
     </div>
   </div>
-</section>
-
-<section class="movie-section" data-frames-start="385" data-frames-end="504" data-frames-start-mobile="641" data-frames-end-mobile="960">
-  <div class="movie-sticky">
-    <canvas class="movie-canvas"></canvas>
-    <canvas class="movie-canvas-mobile"></canvas>
-    <div class="movie-overlay-gradient"></div>
-    <div class="movie-overlay movie-overlay-bridge">
-      <p class="movie-eyebrow">Próximo capítulo</p>
-      <h2 class="movie-title-bridge">Conhece quem está<br>por trás <em>desses dados</em>.</h2>
-    </div>
-    <div class="movie-progress">
-      <span>03 / 03</span>
-      <span class="movie-progress-bar"><span class="movie-progress-fill"></span></span>
+  <div class="hero-right">
+    <div class="hero-photo-wrap">
+      <canvas id="hero-canvas" class="hero-canvas"></canvas>
+      <canvas id="hero-canvas-mobile" class="hero-canvas-mobile"></canvas>
+      <div class="smoke-layer smoke-1"></div>
+      <div class="smoke-layer smoke-2"></div>
+      <div class="smoke-layer smoke-3"></div>
+      <div class="smoke-layer smoke-4"></div>
+      <img src="frames/frame_0001.jpg" class="hero-photo hero-mobile-img" style="display:none" alt="André Machado">
+      <div class="hero-photo-overlay"></div>
     </div>
   </div>
+  <div class="hero-line"></div>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num">15+</div><div class="stat-label">Anos de Carreira</div></div>
+    <div class="stat"><div class="stat-num">1,5B</div><div class="stat-label">Linhas Migradas</div></div>
+    <div class="stat"><div class="stat-num">7</div><div class="stat-label">Setores Atendidos</div></div>
+  </div>
+  <div class="scroll-hint"><span>Scroll</span><div class="scroll-arrow"></div></div>
+</div>
 </section>
 
 <!-- ABOUT -->
@@ -552,6 +488,24 @@
     </div>
   </div>
 
+  <!-- Mobile fallback: stacked content with photos grid -->
+  <div class="qs-mobile-fallback">
+    <p class="section-tag">Quem sou</p>
+    <h1 class="qs-title">Dados.<br><em>Família.</em><br>Propósito.</h1>
+    <p class="qs-text">Profissional Senior em Data &amp; Analytics com experiência end-to-end em <em>BI, Engenharia de Dados, Data Science e IA</em> aplicada ao negócio. Especialista em <em>Ciência de Dados &amp; IA</em> pela PUCRS (TCC nota <b>9,5</b>) e Bacharel em Administração pela UNIASSELVI (Prouni 100%).</p>
+    <div class="qs-photos">
+      <div class="photo-wrap"><img src="assets/family-andre.jpg" alt="Bernardo e Joaquim" loading="lazy" decoding="async"></div>
+      <div class="photo-wrap"><img src="assets/family-joaquim.jpg" alt="Ragnar e Floki" loading="lazy" decoding="async"></div>
+      <div class="photo-wrap"><img src="assets/formatura-2.jpg" alt="Formatura" loading="lazy" decoding="async"></div>
+      <div class="photo-wrap"><img src="assets/formatura-4.jpg" alt="Formatura" loading="lazy" decoding="async"></div>
+    </div>
+    <p class="qs-text"><b>Bernardo</b> (4), <b>Joaquim</b> (2) e os gatos <em>Ragnar &amp; Floki</em> — o propósito que ancora tudo o resto.</p>
+    <div class="qs-contacts" style="margin-top:24px">
+      <a href="tel:+5551998837555">(51) 99883-7555</a>
+      <a href="mailto:andrelms_@hotmail.com">andrelms_@hotmail.com</a>
+      <a href="https://github.com/andrelms" target="_blank" rel="noopener">github.com/andrelms</a>
+    </div>
+  </div>
 </section>
 
 <div class="divider"></div>
@@ -1023,25 +977,27 @@
       });
     }
 
-    // 4. Quem sou cinematic — pin on all devices (highlights style), strips desktop only
+    // 4. Quem sou cinematic — pin, cycle chapters, slide lateral strips
     var qsSection = document.querySelector('#quem-sou');
-    if (qsSection) {
+    if (qsSection && isDesktop) {
       var chapters = gsap.utils.toArray('#quem-sou .qs-chapter');
       var qsDots = gsap.utils.toArray('#quem-sou .qs-dot');
-      var stripL = isDesktop ? qsSection.querySelector('.qs-strip-left .qs-strip-inner') : null;
-      var stripR = isDesktop ? qsSection.querySelector('.qs-strip-right .qs-strip-inner') : null;
+      var stripL = qsSection.querySelector('.qs-strip-left .qs-strip-inner');
+      var stripR = qsSection.querySelector('.qs-strip-right .qs-strip-inner');
       var activateChapter = function(idx){
         chapters.forEach(function(c, i){ c.classList.toggle('active', i === idx); });
         qsDots.forEach(function(d, i){ d.classList.toggle('active', i === idx); });
       };
+      // Strip travel = half the inner height (since we duplicated content for seamless loop)
       var leftTravel = function(){ return stripL ? stripL.scrollHeight / 2 : 0; };
       var rightTravel = function(){ return stripR ? stripR.scrollHeight / 2 : 0; };
+      // Pre-position right strip so it has room to scroll down into
       if (stripR) gsap.set(stripR, { y: -rightTravel() });
       ScrollTrigger.create({
         trigger: '#quem-sou',
         pin: '.quem-sou-stage',
         start: 'top top',
-        end: '+=' + (chapters.length * (isDesktop ? 90 : 75)) + '%',
+        end: '+=' + (chapters.length * 90) + '%',
         scrub: 0.45,
         anticipatePin: 1,
         invalidateOnRefresh: true,
@@ -1085,133 +1041,242 @@
     el.appendChild(iframe);
   }
 
-  // Movie sections — scroll-bound frame chain, one canvas per video clip
+  // Hero scroll-driven canvas (desktop only)
   (function(){
-    if (typeof window.gsap === 'undefined' || typeof window.ScrollTrigger === 'undefined') return;
-    var isDesktop = window.innerWidth >= 900;
-    var TOTAL = isDesktop ? 504 : 960;
-    var PATH = isDesktop ? 'frames/' : 'frames-mobile/';
+    var TOTAL = 504;
+    var canvas = document.getElementById('hero-canvas');
+    if (!canvas) return;
+    function isDesktop(){ return window.innerWidth >= 900; }
+    var ctx = canvas.getContext('2d');
     var frames = new Array(TOTAL);
-    var sections = [];
+    var currentIdx = 0;
+    var targetIdx = 0;
+    var rafId = null;
+
+    function resize(){
+      canvas.width = canvas.offsetWidth * (window.devicePixelRatio||1);
+      canvas.height = canvas.offsetHeight * (window.devicePixelRatio||1);
+      drawFrame(currentIdx);
+    }
 
     function pickNearestLoaded(target){
       var img = frames[target];
-      if (img && img.complete && img.naturalWidth) return img;
-      for (var d=1; d<TOTAL; d++){
-        var a = target-d >= 0 ? frames[target-d] : null;
-        if (a && a.complete && a.naturalWidth) return a;
-        var b = target+d < TOTAL ? frames[target+d] : null;
-        if (b && b.complete && b.naturalWidth) return b;
+      if(img && img.complete && img.naturalWidth) return img;
+      for(var d=1; d<TOTAL; d++){
+        var a = target-d>=0 ? frames[target-d] : null;
+        if(a && a.complete && a.naturalWidth) return a;
+        var b = target+d<TOTAL ? frames[target+d] : null;
+        if(b && b.complete && b.naturalWidth) return b;
       }
       return null;
     }
-    function drawCover(canvas, img){
-      if (!img) return;
-      var ctx = canvas.getContext('2d');
+
+    function drawFrame(idx){
+      var img = pickNearestLoaded(Math.round(idx));
+      if(!img) return;
       var cw = canvas.width, ch = canvas.height;
-      if (!cw || !ch) return;
       var iw = img.naturalWidth, ih = img.naturalHeight;
       var scale = Math.max(cw/iw, ch/ih);
       var w = iw*scale, h = ih*scale;
       ctx.clearRect(0,0,cw,ch);
       ctx.drawImage(img, (cw-w)/2, (ch-h)/2, w, h);
     }
-    function fitCanvas(canvas){
-      var dpr = window.devicePixelRatio || 1;
-      canvas.width = canvas.offsetWidth * dpr;
-      canvas.height = canvas.offsetHeight * dpr;
+
+    function animate(){
+      var diff = targetIdx - currentIdx;
+      if(Math.abs(diff) < 0.3){
+        currentIdx = targetIdx;
+        drawFrame(currentIdx);
+        rafId = null;
+        return;
+      }
+      currentIdx += diff * 0.12;
+      drawFrame(currentIdx);
+      rafId = requestAnimationFrame(animate);
     }
-    function redrawSection(st){
-      var range = st.end - st.start;
-      var idx = st.start + Math.round(st.progress * range);
-      drawCover(st.canvas, pickNearestLoaded(idx));
-    }
 
-    document.querySelectorAll('.movie-section').forEach(function(section){
-      var startAttr = isDesktop ? section.dataset.framesStart : section.dataset.framesStartMobile;
-      var endAttr   = isDesktop ? section.dataset.framesEnd   : section.dataset.framesEndMobile;
-      var start = parseInt(startAttr || '1', 10);
-      var end   = parseInt(endAttr   || String(TOTAL), 10);
-      var canvas = section.querySelector(isDesktop ? '.movie-canvas' : '.movie-canvas-mobile');
-      var progFill = section.querySelector('.movie-progress-fill');
-      if (!canvas) return;
-      fitCanvas(canvas);
-
-      var st = {
-        section: section,
-        canvas: canvas,
-        progFill: progFill,
-        start: start - 1,
-        end: end - 1,
-        progress: 0,
-      };
-      sections.push(st);
-
-      ScrollTrigger.create({
-        trigger: section,
-        pin: '.movie-sticky',
-        start: 'top top',
-        end: '+=150%',
-        scrub: 0.3,
-        anticipatePin: 1,
-        invalidateOnRefresh: true,
-        onUpdate: function(self){
-          st.progress = self.progress;
-          redrawSection(st);
-          if (progFill) progFill.style.width = (self.progress * 100) + '%';
-        },
-        onRefresh: function(){
-          fitCanvas(canvas);
-          redrawSection(st);
-        }
+        var textElsD = [
+      {sel:'.hero-eyebrow', t:0.02},
+      {sel:'.hero-name',    t:0.04},
+      {sel:'.hero-role',    t:0.08},
+      {sel:'.hero-sub',     t:0.12},
+      {sel:'.hero-cta',     t:0.16},
+      {sel:'.hero-stats',   t:0.20}
+    ];
+    function onScroll(){
+      if(!isDesktop()) return;
+      var hero = document.querySelector('.hero');
+      var scrolled = window.scrollY - hero.offsetTop;
+      var scrollable = hero.offsetHeight - window.innerHeight;
+      var p = Math.max(0, Math.min(1, scrolled / scrollable));
+      targetIdx = Math.min(TOTAL-1, p * (TOTAL-1));
+      if(!rafId) rafId = requestAnimationFrame(animate);
+      textElsD.forEach(function(item){
+        var el = document.querySelector(item.sel);
+        if(!el) return;
+        if(p >= item.t){ el.classList.add('scroll-in'); }
+        else { el.classList.remove('scroll-in'); }
       });
-    });
+    }
 
-    // Priority-ordered loader (shared cache across all sections)
+    resize();
+    window.addEventListener('resize', resize, {passive:true});
+    window.addEventListener('scroll', onScroll, {passive:true});
+
+    // Priority queue: frame 0 first, then anchor frames every `stride`,
+    // then the rest. Caps in-flight requests so the browser doesn't
+    // stall the first frame behind 500+ siblings.
     var queue = [];
     var seen = new Array(TOTAL);
-    function enqueue(i){ if (i>=0 && i<TOTAL && !seen[i]){ seen[i]=1; queue.push(i); } }
-    // First: every section's first + last frame so each section has anchors immediately
-    sections.forEach(function(st){ enqueue(st.start); enqueue(st.end); });
+    function enqueue(i){ if(i>=0 && i<TOTAL && !seen[i]){ seen[i]=1; queue.push(i); } }
     enqueue(0);
-    var stride = isDesktop ? 12 : 24;
-    for (var s=stride; s<TOTAL; s+=stride) enqueue(s);
-    for (var k=1; k<TOTAL; k++) enqueue(k);
+    var stride = 12;
+    for(var s=stride; s<TOTAL; s+=stride) enqueue(s);
+    for(var k=1; k<TOTAL; k++) enqueue(k);
 
-    var CONCURRENCY = isDesktop ? 8 : 6;
+    var CONCURRENCY = 8;
     var HIGH_PRIORITY_COUNT = 24;
     var inFlight = 0;
     var qi = 0;
     function pump(){
-      while (inFlight < CONCURRENCY && qi < queue.length){
+      while(inFlight < CONCURRENCY && qi < queue.length){
         var pos = queue[qi];
-        var n = pos + 1;
+        var n = pos+1;
         var img = new Image();
         img.decoding = 'async';
-        if ('fetchPriority' in img) img.fetchPriority = qi < HIGH_PRIORITY_COUNT ? 'high' : 'low';
+        if('fetchPriority' in img){ img.fetchPriority = qi < HIGH_PRIORITY_COUNT ? 'high' : 'low'; }
         qi++;
         inFlight++;
-        (function(pos){
+        (function(pos, img){
           var done = function(){
             inFlight--;
-            sections.forEach(function(st){
-              if (pos >= st.start && pos <= st.end) redrawSection(st);
-            });
+            if(pos===0){ currentIdx=0; targetIdx=0; drawFrame(0); }
+            else if(!rafId){ drawFrame(currentIdx); }
             pump();
           };
           img.onload = done;
           img.onerror = done;
-        })(pos);
-        img.src = PATH + 'frame_' + String(n).padStart(4, '0') + '.jpg';
+        })(pos, img);
+        img.src = 'frames/frame_' + String(n).padStart(4,'0') + '.jpg';
         frames[pos] = img;
       }
     }
     pump();
+  })();
 
-    window.addEventListener('resize', function(){
-      sections.forEach(function(st){ fitCanvas(st.canvas); redrawSection(st); });
-      if (window.ScrollTrigger) ScrollTrigger.refresh();
-    }, { passive: true });
+  // Hero scroll-driven canvas (mobile only)
+  (function(){
+    var TOTAL = 960;
+    var canvas = document.getElementById('hero-canvas-mobile');
+    if (!canvas) return;
+    function isMobile(){ return window.innerWidth < 900; }
+    var ctx = canvas.getContext('2d');
+    var frames = new Array(TOTAL);
+    var currentIdx = 0;
+    var targetIdx = 0;
+    var rafId = null;
+
+    function resize(){
+      canvas.width = canvas.offsetWidth * (window.devicePixelRatio||1);
+      canvas.height = canvas.offsetHeight * (window.devicePixelRatio||1);
+      drawFrame(currentIdx);
+    }
+
+    function pickNearestLoaded(target){
+      var img = frames[target];
+      if(img && img.complete && img.naturalWidth) return img;
+      for(var d=1; d<TOTAL; d++){
+        var a = target-d>=0 ? frames[target-d] : null;
+        if(a && a.complete && a.naturalWidth) return a;
+        var b = target+d<TOTAL ? frames[target+d] : null;
+        if(b && b.complete && b.naturalWidth) return b;
+      }
+      return null;
+    }
+
+    function drawFrame(idx){
+      var img = pickNearestLoaded(Math.round(idx));
+      if(!img) return;
+      var cw = canvas.width, ch = canvas.height;
+      var iw = img.naturalWidth, ih = img.naturalHeight;
+      var scale = Math.max(cw/iw, ch/ih);
+      var w = iw*scale, h = ih*scale;
+      ctx.clearRect(0,0,cw,ch);
+      ctx.drawImage(img, (cw-w)/2, (ch-h)/2, w, h);
+    }
+
+    function animate(){
+      var diff = targetIdx - currentIdx;
+      if(Math.abs(diff) < 0.3){ currentIdx=targetIdx; drawFrame(currentIdx); rafId=null; return; }
+      currentIdx += diff * 0.12;
+      drawFrame(currentIdx);
+      rafId = requestAnimationFrame(animate);
+    }
+
+        var textEls = [
+      {sel:'.hero-eyebrow', t:0.03},
+      {sel:'.hero-name',    t:0.06},
+      {sel:'.hero-role',    t:0.12},
+      {sel:'.hero-sub',     t:0.18},
+      {sel:'.hero-cta',     t:0.24},
+      {sel:'.hero-stats',   t:0.30}
+    ];
+    function onScroll(){
+      if(!isMobile()) return;
+      var hero = document.querySelector('.hero');
+      var scrolled = window.scrollY - hero.offsetTop;
+      var scrollable = hero.offsetHeight - window.innerHeight;
+      var p = Math.max(0, Math.min(1, scrolled / scrollable));
+      targetIdx = Math.min(TOTAL-1, p * (TOTAL-1));
+      if(!rafId) rafId = requestAnimationFrame(animate);
+      textEls.forEach(function(item){
+        var el = document.querySelector(item.sel);
+        if(!el) return;
+        if(p >= item.t){ el.classList.add('scroll-in'); }
+        else { el.classList.remove('scroll-in'); }
+      });
+    }
+
+    resize();
+    window.addEventListener('resize', resize, {passive:true});
+    window.addEventListener('scroll', onScroll, {passive:true});
+
+    var queue = [];
+    var seen = new Array(TOTAL);
+    function enqueue(i){ if(i>=0 && i<TOTAL && !seen[i]){ seen[i]=1; queue.push(i); } }
+    enqueue(0);
+    var stride = 24;
+    for(var s=stride; s<TOTAL; s+=stride) enqueue(s);
+    for(var k=1; k<TOTAL; k++) enqueue(k);
+
+    var CONCURRENCY = 6;
+    var HIGH_PRIORITY_COUNT = 24;
+    var inFlight = 0;
+    var qi = 0;
+    function pump(){
+      while(inFlight < CONCURRENCY && qi < queue.length){
+        var pos = queue[qi];
+        var n = pos+1;
+        var img = new Image();
+        img.decoding = 'async';
+        if('fetchPriority' in img){ img.fetchPriority = qi < HIGH_PRIORITY_COUNT ? 'high' : 'low'; }
+        qi++;
+        inFlight++;
+        (function(pos, img){
+          var done = function(){
+            inFlight--;
+            if(pos===0){ currentIdx=0; targetIdx=0; drawFrame(0); }
+            else if(!rafId){ drawFrame(currentIdx); }
+            pump();
+          };
+          img.onload = done;
+          img.onerror = done;
+        })(pos, img);
+        img.src = 'frames-mobile/frame_' + String(n).padStart(4,'0') + '.jpg';
+        frames[pos] = img;
+      }
+    }
+    pump();
   })();
 </script>
 
