@@ -269,7 +269,6 @@
     /* Match the hero's mobile canvas geometry exactly (100vw x 130vh, top-aligned)
        so the watch keeps the same zoom/crop across the hero -> quem-sou seam. */
     .qs2-canvas{height:130vh;top:0;bottom:auto}
-    #qs2-smoke{height:130vh;top:0;bottom:auto}
     .qs2-center{padding:0 24px}
     .qs2-chapter{padding:0 24px}
     .qs2-title{font-size:clamp(38px,11vw,80px)}
@@ -1046,7 +1045,9 @@
         folder: mobile ? 'frames-mobile/' : 'frames/',
         total: total,
         tail: tail,
-        start: total - tail,   // 0-based index of first continued frame
+        // Start ON the hero's last frame (total-tail-1) so the cross-fade
+        // overlap blends two identical frames -> seamless takeover.
+        start: total - tail - 1,
         end: total - 1,
         frames: new Array(total)
       };
@@ -1119,10 +1120,16 @@
       var traveled = vh - rect.top;          // 0 at takeover -> journeyLen at span end
       var jp = Math.max(0, Math.min(1, traveled / journeyLen));
 
+      // Cross-fade overlap: the fixed layer fades IN over the last stretch
+      // before the seam, while the hero is still showing (nearly) the same
+      // frame. Both watches dissolve through each other on identical frames,
+      // so there is no snap — quem-sou eases in fluidly, then continues forward.
+      var preFade = 0.28 * vh;               // overlap distance before the seam
       var canvasVis;
-      if (rect.top > vh) canvasVis = 0;      // hero still owns the frames
-      else if (jp < 1)   canvasVis = 1;      // continuous frame journey
-      else               canvasVis = Math.max(0, 1 - (traveled - journeyLen) / (0.025 * scrollable)); // fast hand-off to photos
+      if (traveled <= -preFade)      canvasVis = 0;                                   // hero still owns the frames
+      else if (traveled < 0)         canvasVis = (traveled + preFade) / preFade;      // 0 -> 1 cross-fade into the seam
+      else if (jp < 1)               canvasVis = 1;                                   // continuous frame journey
+      else                           canvasVis = Math.max(0, 1 - (traveled - journeyLen) / (0.025 * scrollable)); // hand-off to photos
 
       curIdx = cfg.start + jp * (cfg.end - cfg.start);
       draw(curIdx);
