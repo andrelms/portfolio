@@ -208,21 +208,21 @@
   .stats-pin-progress .dot{width:6px;height:6px;border-radius:50%;background:var(--line);transition:background .3s,transform .3s,width .3s}
   .stats-pin-progress .dot.active{background:var(--gold);width:24px;border-radius:3px}
 
-  .expertise-section-h{position:relative;padding:0;background:var(--bg)}
-  .expertise-pin{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;justify-content:center;padding:80px 0 60px;overflow:hidden}
-  .expertise-pin-header{padding:0 60px;margin-bottom:48px;max-width:1200px;width:100%;margin-left:auto;margin-right:auto}
-  .expertise-pin-header .section-title{margin-bottom:0}
-  .expertise-track-wrapper{flex:1;display:flex;align-items:center;overflow:hidden}
-  .expertise-track{display:flex;gap:24px;padding:0 60px;will-change:transform}
-  .expertise-card-h{flex:0 0 420px;background:var(--bg2);border:1px solid var(--line);padding:48px 40px;display:flex;flex-direction:column;justify-content:flex-start;position:relative;overflow:hidden;min-height:460px;transition:border-color .35s,background .35s,transform .35s}
-  .expertise-card-h:hover{background:var(--bg3);border-color:var(--gold);transform:translateY(-4px)}
-  .expertise-card-h::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:2px;background:linear-gradient(to right,var(--gold),transparent);transform:scaleX(0);transform-origin:left;transition:transform .4s}
-  .expertise-card-h:hover::after{transform:scaleX(1)}
-  .expertise-card-h .expertise-icon{font-size:36px;margin-bottom:28px;display:block}
-  .expertise-card-h .expertise-title{font-family:'Cormorant Garamond',serif;font-size:28px;color:#fff;margin-bottom:16px;font-weight:400;line-height:1.15}
-  .expertise-card-h .expertise-desc{font-size:14px;color:var(--text);line-height:1.75;font-weight:400}
-  .expertise-card-h .expertise-num{position:absolute;top:24px;right:32px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.3em;color:var(--muted)}
-  @media(min-width:901px){.expertise-section-h{height:320vh}}
+  .expertise-section-v{position:relative;padding:120px 0;background:var(--bg)}
+  .expertise-vgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-top:48px}
+  .expertise-card-v{background:var(--bg2);border:1px solid var(--line);padding:48px 40px;position:relative;overflow:hidden;min-height:240px;transition:border-color .35s,background .35s,transform .35s,opacity .7s cubic-bezier(.22,.61,.36,1)}
+  .expertise-card-v:hover{background:var(--bg3);border-color:var(--gold)}
+  .expertise-card-v::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:2px;background:linear-gradient(to right,var(--gold),transparent);transform:scaleX(0);transform-origin:left;transition:transform .4s}
+  .expertise-card-v:hover::after{transform:scaleX(1)}
+  .expertise-card-v .expertise-icon{font-size:36px;margin-bottom:24px;display:block}
+  .expertise-card-v .expertise-title{font-family:'Cormorant Garamond',serif;font-size:28px;color:#fff;margin-bottom:16px;font-weight:400;line-height:1.15}
+  .expertise-card-v .expertise-desc{font-size:14px;color:var(--text);line-height:1.75;font-weight:400}
+  .expertise-card-v .expertise-num{position:absolute;top:24px;right:32px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.3em;color:var(--muted)}
+  /* Lateral slide-in as each card scrolls into view */
+  .exp-slide{opacity:0;will-change:transform,opacity;transition:opacity .7s cubic-bezier(.22,.61,.36,1),transform .7s cubic-bezier(.22,.61,.36,1),border-color .35s,background .35s}
+  .exp-slide.exp-from-l{transform:translateX(-90px)}
+  .exp-slide.exp-from-r{transform:translateX(90px)}
+  .exp-slide.visible{opacity:1;transform:translateX(0)}
 
   .parallax-img{will-change:transform}
   .clip-reveal{clip-path:inset(0 100% 0 0);transition:clip-path 1.1s cubic-bezier(.65,.05,.2,1)}
@@ -295,12 +295,13 @@
     .stat-slide{padding:0 24px}
     .stat-big{font-size:clamp(80px,28vw,180px)}
     .stats-pin-progress{bottom:24px}
-    .expertise-pin{height:auto;padding:80px 0}
-    .expertise-pin-header{padding:0 24px;margin-bottom:32px}
-    .expertise-track-wrapper{overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none}
-    .expertise-track-wrapper::-webkit-scrollbar{display:none}
-    .expertise-track{padding:0 24px;transform:none !important}
-    .expertise-card-h{flex:0 0 84vw;min-height:380px;padding:36px 28px}
+    .expertise-section-v{padding:80px 0}
+    .expertise-vgrid{grid-template-columns:1fr;gap:16px;margin-top:32px}
+    .expertise-card-v{min-height:unset;padding:36px 28px}
+    /* lighter lateral travel on small screens to avoid horizontal overflow */
+    .exp-slide.exp-from-l{transform:translateX(-40px)}
+    .exp-slide.exp-from-r{transform:translateX(40px)}
+    .exp-slide.visible{transform:translateX(0)}
   }
   @media(max-width:500px){
     .expertise-grid,.stack-grid,.numbers-grid,.partners-grid{grid-template-columns:1fr}
@@ -755,22 +756,18 @@
   </div>
 </section>
 
-<!-- EXPERTISE (horizontal scroll) -->
-<section class="expertise-section-h">
-  <div class="expertise-pin">
-    <div class="expertise-pin-header">
-      <p class="section-tag">Especialidades</p>
-      <h2 class="section-title clip-reveal">O que entrego.</h2>
-    </div>
-    <div class="expertise-track-wrapper">
-      <div class="expertise-track">
-        <div class="expertise-card-h"><div class="expertise-num">01 / 06</div><span class="expertise-icon">⚡</span><div class="expertise-title">IA Generativa &amp; LLMs</div><div class="expertise-desc">Agentes conversacionais, pipelines de classificação automática de documentos, OCR e análise de cláusulas trabalhistas. Fundamentos MLOps, modelos open source, validação cruzada por múltiplos modelos.</div></div>
-        <div class="expertise-card-h"><div class="expertise-num">02 / 06</div><span class="expertise-icon">📊</span><div class="expertise-title">Business Intelligence</div><div class="expertise-desc">Power BI (DAX avançado, Dataflows, Direct Lake, Microsoft Fabric), Qlik. Migração Qlik → Power BI, modelagem star schema, relatórios para comitês executivos e dashboards em tempo real.</div></div>
-        <div class="expertise-card-h"><div class="expertise-num">03 / 06</div><span class="expertise-icon">🏗️</span><div class="expertise-title">Engenharia de Dados</div><div class="expertise-desc">Lakehouse Bronze/Silver/Gold, ETL/ELT, Databricks, BigQuery, PostgreSQL, SQL Server. Migração de ambientes analíticos legados e governança para bilhões de linhas de dados históricos.</div></div>
-        <div class="expertise-card-h"><div class="expertise-num">04 / 06</div><span class="expertise-icon">☁️</span><div class="expertise-title">Cloud &amp; Integração</div><div class="expertise-desc">Azure, GCP, Microsoft Fabric. Integrações SAP, SharePoint, ERP, APIs externas. Pipelines cloud-to-cloud e híbridos para suporte a decisões estratégicas.</div></div>
-        <div class="expertise-card-h"><div class="expertise-num">05 / 06</div><span class="expertise-icon">🔄</span><div class="expertise-title">Automação &amp; Scraping</div><div class="expertise-desc">Web scraping institucional (MTE, sindicatos, órgãos públicos) com Playwright/Selenium. VBA para rotinas operacionais. Pipelines inteligentes com IA adaptativa para extração de documentos.</div></div>
-        <div class="expertise-card-h"><div class="expertise-num">06 / 06</div><span class="expertise-icon">⚖️</span><div class="expertise-title">Compliance &amp; Governança</div><div class="expertise-desc">LGPD para dados sensíveis, adequação BACEN, análise comparativa de CCTs/ACTs. Perfis hierárquicos de acesso, rastreabilidade, auditoria e conformidade regulatória em ambientes de saúde e financeiro.</div></div>
-      </div>
+<!-- EXPERTISE — vertical scroll, cards slide in from the side -->
+<section class="expertise-section-v">
+  <div class="container">
+    <p class="section-tag">Especialidades</p>
+    <h2 class="section-title clip-reveal">O que entrego.</h2>
+    <div class="expertise-vgrid">
+      <div class="expertise-card-v exp-slide exp-from-l"><div class="expertise-num">01 / 06</div><span class="expertise-icon">⚡</span><div class="expertise-title">IA Generativa &amp; LLMs</div><div class="expertise-desc">Agentes conversacionais, pipelines de classificação automática de documentos, OCR e análise de cláusulas trabalhistas. Fundamentos MLOps, modelos open source, validação cruzada por múltiplos modelos.</div></div>
+        <div class="expertise-card-v exp-slide exp-from-r"><div class="expertise-num">02 / 06</div><span class="expertise-icon">📊</span><div class="expertise-title">Business Intelligence</div><div class="expertise-desc">Power BI (DAX avançado, Dataflows, Direct Lake, Microsoft Fabric), Qlik. Migração Qlik → Power BI, modelagem star schema, relatórios para comitês executivos e dashboards em tempo real.</div></div>
+        <div class="expertise-card-v exp-slide exp-from-l"><div class="expertise-num">03 / 06</div><span class="expertise-icon">🏗️</span><div class="expertise-title">Engenharia de Dados</div><div class="expertise-desc">Lakehouse Bronze/Silver/Gold, ETL/ELT, Databricks, BigQuery, PostgreSQL, SQL Server. Migração de ambientes analíticos legados e governança para bilhões de linhas de dados históricos.</div></div>
+        <div class="expertise-card-v exp-slide exp-from-r"><div class="expertise-num">04 / 06</div><span class="expertise-icon">☁️</span><div class="expertise-title">Cloud &amp; Integração</div><div class="expertise-desc">Azure, GCP, Microsoft Fabric. Integrações SAP, SharePoint, ERP, APIs externas. Pipelines cloud-to-cloud e híbridos para suporte a decisões estratégicas.</div></div>
+        <div class="expertise-card-v exp-slide exp-from-l"><div class="expertise-num">05 / 06</div><span class="expertise-icon">🔄</span><div class="expertise-title">Automação &amp; Scraping</div><div class="expertise-desc">Web scraping institucional (MTE, sindicatos, órgãos públicos) com Playwright/Selenium. VBA para rotinas operacionais. Pipelines inteligentes com IA adaptativa para extração de documentos.</div></div>
+        <div class="expertise-card-v exp-slide exp-from-r"><div class="expertise-num">06 / 06</div><span class="expertise-icon">⚖️</span><div class="expertise-title">Compliance &amp; Governança</div><div class="expertise-desc">LGPD para dados sensíveis, adequação BACEN, análise comparativa de CCTs/ACTs. Perfis hierárquicos de acesso, rastreabilidade, auditoria e conformidade regulatória em ambientes de saúde e financeiro.</div></div>
     </div>
   </div>
 </section>
@@ -1129,34 +1126,6 @@
     onScroll();
   })();
 
-  // 6. Expertise — native sticky, scroll-driven horizontal track (desktop only)
-  (function(){
-    var section = document.querySelector('.expertise-section-h');
-    var track = document.querySelector('.expertise-track');
-    if (!section || !track) return;
-    function isDesktop(){ return window.innerWidth >= 901; }
-    function getDistance(){ return Math.max(0, track.scrollWidth - window.innerWidth + 120); }
-    function layout(){
-      if (!isDesktop()) { section.style.height = ''; track.style.transform = ''; return; }
-      // Section height = one viewport + exactly the horizontal travel, so the
-      // pin releases the moment the last card is reached (no dead scroll).
-      section.style.height = (window.innerHeight + getDistance()) + 'px';
-    }
-    function onScroll(){
-      if (!isDesktop()) { track.style.transform = ''; return; }
-      var rect = section.getBoundingClientRect();
-      var scrolled = -rect.top;
-      var scrollable = section.offsetHeight - window.innerHeight;
-      if (scrollable <= 0) { track.style.transform = ''; return; }
-      var p = Math.max(0, Math.min(1, scrolled / scrollable));
-      track.style.transform = 'translateX(' + (-getDistance() * p) + 'px)';
-    }
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', function(){ layout(); onScroll(); }, { passive: true });
-    layout();
-    onScroll();
-  })();
-
   const cursor=document.getElementById('cursor'),ring=document.getElementById('cursorRing');
   let mx=0,my=0,rx=0,ry=0;
   document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px'});
@@ -1169,7 +1138,7 @@
   const obs=new IntersectionObserver(entries=>{
     entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*70);obs.unobserve(e.target)}});
   },{threshold:.1});
-  document.querySelectorAll('.reveal,.timeline-item,.clip-reveal').forEach(el=>obs.observe(el));
+  document.querySelectorAll('.reveal,.timeline-item,.clip-reveal,.exp-slide').forEach(el=>obs.observe(el));
 
   function loadVideo(el, id, ratio) {
     el.classList.add('loaded');
