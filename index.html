@@ -195,8 +195,8 @@
   .footer-links a:hover{color:var(--gold)}
 
   /* MOTION STACK: pinned stats, horizontal track, parallax, clip-reveal */
-  .stats-pin-section{position:relative;background:#000;border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden}
-  .stats-pin-stage{position:relative;height:100vh;display:flex;align-items:center;justify-content:center;padding:0 60px}
+  .stats-pin-section{position:relative;height:320vh;padding:0;background:#000;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .stats-pin-stage{position:sticky;top:0;height:100vh;display:flex;align-items:center;justify-content:center;padding:0 60px;overflow:hidden}
   .stat-slide{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 60px;opacity:0;transform:translateY(28px);filter:blur(10px);transition:opacity .6s ease,transform .6s ease,filter .6s ease;pointer-events:none}
   .stat-slide.active{opacity:1;transform:translateY(0);filter:blur(0);pointer-events:auto}
   .stat-eyebrow{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.4em;color:var(--gold);text-transform:uppercase;margin-bottom:32px;display:flex;align-items:center;gap:14px}
@@ -208,8 +208,8 @@
   .stats-pin-progress .dot{width:6px;height:6px;border-radius:50%;background:var(--line);transition:background .3s,transform .3s,width .3s}
   .stats-pin-progress .dot.active{background:var(--gold);width:24px;border-radius:3px}
 
-  .expertise-section-h{position:relative;background:var(--bg);overflow:hidden}
-  .expertise-pin{height:100vh;display:flex;flex-direction:column;justify-content:center;padding:80px 0 60px}
+  .expertise-section-h{position:relative;padding:0;background:var(--bg)}
+  .expertise-pin{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;justify-content:center;padding:80px 0 60px;overflow:hidden}
   .expertise-pin-header{padding:0 60px;margin-bottom:48px;max-width:1200px;width:100%;margin-left:auto;margin-right:auto}
   .expertise-pin-header .section-title{margin-bottom:0}
   .expertise-track-wrapper{flex:1;display:flex;align-items:center;overflow:hidden}
@@ -222,13 +222,14 @@
   .expertise-card-h .expertise-title{font-family:'Cormorant Garamond',serif;font-size:28px;color:#fff;margin-bottom:16px;font-weight:400;line-height:1.15}
   .expertise-card-h .expertise-desc{font-size:14px;color:var(--text);line-height:1.75;font-weight:400}
   .expertise-card-h .expertise-num{position:absolute;top:24px;right:32px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.3em;color:var(--muted)}
+  @media(min-width:901px){.expertise-section-h{height:320vh}}
 
   .parallax-img{will-change:transform}
   .clip-reveal{clip-path:inset(0 100% 0 0);transition:clip-path 1.1s cubic-bezier(.65,.05,.2,1)}
   .clip-reveal.visible{clip-path:inset(0 0% 0 0)}
 
   /* QUEM SOU 2 — native sticky, 7 chapters, lateral photo slide-in */
-  .qs2-section{position:relative;height:700vh;background:var(--bg);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .qs2-section{position:relative;height:700vh;padding:0;background:var(--bg);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
   .qs2-sticky{position:sticky;top:0;height:100vh;overflow:hidden}
   .qs2-bg-layer{position:absolute;inset:0;background:linear-gradient(135deg,#0d1015 0%,#080b0f 60%,#0c0a08 100%);z-index:0}
   .qs2-photo{position:absolute;inset:0;z-index:1;transform:translateX(105%);transition:transform .75s cubic-bezier(.77,0,.18,1);will-change:transform}
@@ -418,11 +419,11 @@
     <div class="qs2-bg-layer"></div>
 
     <!-- Photo layers — each slides in laterally as its chapter activates -->
-    <div class="qs2-photo" data-ch="2"><img src="assets/family-andre.jpg" alt="Bernardo e Joaquim" loading="lazy" decoding="async" style="object-position:center top"></div>
-    <div class="qs2-photo" data-ch="3"><img src="assets/family-joaquim.jpg" alt="Ragnar e Floki" loading="lazy" decoding="async" style="object-position:bottom"></div>
-    <div class="qs2-photo" data-ch="4"><img src="assets/formatura-2.jpg" alt="Formatura PUCRS" loading="lazy" decoding="async"></div>
-    <div class="qs2-photo" data-ch="5"><img src="assets/formatura-4.jpg" alt="Formatura UNIASSELVI" loading="lazy" decoding="async"></div>
-    <div class="qs2-photo" data-ch="6"><img src="assets/formatura-1.jpg" alt="Onde me encontra" loading="lazy" decoding="async" style="object-position:center 20%"></div>
+    <div class="qs2-photo" data-ch="2"><img src="assets/family-andre.jpg" alt="Bernardo e Joaquim" loading="lazy" decoding="async" style="object-position:center 28%"></div>
+    <div class="qs2-photo" data-ch="3"><img src="assets/family-joaquim.jpg" alt="Ragnar e Floki" loading="lazy" decoding="async" style="object-position:center 38%"></div>
+    <div class="qs2-photo" data-ch="4"><img src="assets/formatura-2.jpg" alt="Formatura PUCRS" loading="lazy" decoding="async" style="object-position:center 22%"></div>
+    <div class="qs2-photo" data-ch="5"><img src="assets/formatura-4.jpg" alt="Formatura UNIASSELVI" loading="lazy" decoding="async" style="object-position:center 22%"></div>
+    <div class="qs2-photo" data-ch="6"><img src="assets/formatura-1.jpg" alt="Onde me encontra" loading="lazy" decoding="async" style="object-position:center 22%"></div>
 
     <!-- Dark overlay on top of photos -->
     <div class="qs2-overlay"></div>
@@ -453,7 +454,7 @@
       <div class="qs2-chapter" data-ch="3">
         <p class="qs2-eyebrow">Casa</p>
         <h2 class="qs2-title">Ragnar &amp;<br><em>Floki.</em></h2>
-        <p class="qs2-note">Os gatos da casa · Florianópolis</p>
+        <p class="qs2-note">Os gatos da casa · Porto Alegre</p>
       </div>
 
       <!-- ch4: Formação PUCRS -->
@@ -526,9 +527,9 @@
       <h3 class="stat-headline">Linhas migradas<br>para Lakehouse</h3>
       <p class="stat-context">Sistemas legados migrados para Databricks e Dataflow · Qlik → Power BI · Lakehouse Bronze/Silver/Gold · Infinilabs</p>
     </div>
-  </div>
-  <div class="stats-pin-progress">
-    <span class="dot active"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
+    <div class="stats-pin-progress">
+      <span class="dot active"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
+    </div>
   </div>
 </section>
 
@@ -903,49 +904,6 @@
       document.documentElement.classList.add('has-lenis');
     }
 
-    // 1. Pinned stats showcase — one big number/headline at a time
-    var statsSection = document.querySelector('#stats-pin');
-    if (statsSection) {
-      var slides = gsap.utils.toArray('#stats-pin .stat-slide');
-      var dots = gsap.utils.toArray('#stats-pin .stats-pin-progress .dot');
-      var activateSlide = function(idx){
-        slides.forEach(function(s, i){ s.classList.toggle('active', i === idx); });
-        dots.forEach(function(d, i){ d.classList.toggle('active', i === idx); });
-      };
-      ScrollTrigger.create({
-        trigger: '#stats-pin',
-        pin: true,
-        start: 'top top',
-        end: '+=' + (slides.length * 80) + '%',
-        scrub: 0.4,
-        anticipatePin: 1,
-        onUpdate: function(self){
-          var idx = Math.min(slides.length - 1, Math.floor(self.progress * slides.length * 0.999));
-          activateSlide(idx);
-        }
-      });
-    }
-
-    // 2. Horizontal scroll on expertise (desktop only)
-    var expSection = document.querySelector('.expertise-section-h');
-    var expTrack = document.querySelector('.expertise-track');
-    if (expSection && expTrack && isDesktop) {
-      var getDistance = function(){ return Math.max(0, expTrack.scrollWidth - window.innerWidth + 120); };
-      gsap.to(expTrack, {
-        x: function(){ return -getDistance(); },
-        ease: 'none',
-        scrollTrigger: {
-          trigger: expSection,
-          pin: '.expertise-pin',
-          start: 'top top',
-          end: function(){ return '+=' + (getDistance() + 200); },
-          scrub: 0.5,
-          anticipatePin: 1,
-          invalidateOnRefresh: true,
-        }
-      });
-    }
-
     // 3. Subtle parallax on tagged images
     if (!prefersReduced) {
       gsap.utils.toArray('.parallax-img').forEach(function(el){
@@ -1007,6 +965,60 @@
 
     window.addEventListener('scroll', onQs2Scroll, { passive: true });
     onQs2Scroll();
+  })();
+
+  // 5. Stats showcase — native sticky, scroll-driven slide activation
+  (function(){
+    var section = document.getElementById('stats-pin');
+    if (!section) return;
+    var slides = section.querySelectorAll('.stat-slide');
+    var dots = section.querySelectorAll('.stats-pin-progress .dot');
+    var N = slides.length;
+    var cur = -1;
+    function activate(idx){
+      if (idx === cur) return;
+      cur = idx;
+      slides.forEach(function(s, i){ s.classList.toggle('active', i === idx); });
+      dots.forEach(function(d, i){ d.classList.toggle('active', i === idx); });
+    }
+    function onScroll(){
+      var rect = section.getBoundingClientRect();
+      var scrolled = -rect.top;
+      var scrollable = section.offsetHeight - window.innerHeight;
+      if (scrollable <= 0) return;
+      var p = Math.max(0, Math.min(1, scrolled / scrollable));
+      activate(Math.min(N - 1, Math.floor(p * N * 0.9999)));
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+
+  // 6. Expertise — native sticky, scroll-driven horizontal track (desktop only)
+  (function(){
+    var section = document.querySelector('.expertise-section-h');
+    var track = document.querySelector('.expertise-track');
+    if (!section || !track) return;
+    function isDesktop(){ return window.innerWidth >= 901; }
+    function getDistance(){ return Math.max(0, track.scrollWidth - window.innerWidth + 120); }
+    function layout(){
+      if (!isDesktop()) { section.style.height = ''; track.style.transform = ''; return; }
+      // Section height = one viewport + exactly the horizontal travel, so the
+      // pin releases the moment the last card is reached (no dead scroll).
+      section.style.height = (window.innerHeight + getDistance()) + 'px';
+    }
+    function onScroll(){
+      if (!isDesktop()) { track.style.transform = ''; return; }
+      var rect = section.getBoundingClientRect();
+      var scrolled = -rect.top;
+      var scrollable = section.offsetHeight - window.innerHeight;
+      if (scrollable <= 0) { track.style.transform = ''; return; }
+      var p = Math.max(0, Math.min(1, scrolled / scrollable));
+      track.style.transform = 'translateX(' + (-getDistance() * p) + 'px)';
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', function(){ layout(); onScroll(); }, { passive: true });
+    layout();
+    onScroll();
   })();
 
   const cursor=document.getElementById('cursor'),ring=document.getElementById('cursorRing');
