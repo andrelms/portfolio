@@ -869,6 +869,19 @@
   </div>
 </section>
 
+<!-- Fixed frame-layer: canvas + text panels live at body level (and BEFORE the
+     scripts so they exist at init) so no overflow:hidden ancestor — e.g. the
+     .qs2-sticky on iOS Safari — can clip them. -->
+<canvas id="qs2-canvas" class="qs2-canvas"></canvas>
+<div class="qs2-chapter qs2-frame-chapter" data-ch="0">
+  <p class="qs2-eyebrow">Quem sou</p>
+  <h1 class="qs2-title">Dados.<br><em>Família.</em><br>Propósito.</h1>
+</div>
+<div class="qs2-chapter qs2-frame-chapter" data-ch="1">
+  <p class="qs2-eyebrow">Sobre</p>
+  <p class="qs2-text">Profissional Senior em Data &amp; Analytics com experiência end-to-end em <em>BI, Engenharia de Dados, Data Science e IA</em> aplicada ao negócio. Pipeline, governança, Lakehouse Bronze/Silver/Gold e modernização analítica que vira <b>decisão executiva</b>.</p>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
@@ -930,10 +943,10 @@
     function activateChapter(idx) {
       if (idx === curIdx) return;
       curIdx = idx;
-      chapters.forEach(function(c, i) {
-        // ch0 + ch1 ride the scroll-linked frame transform, not the discrete fade
-        if (c.classList.contains('qs2-frame-chapter')) return;
-        c.classList.toggle('qs2-chapter-active', i === idx);
+      chapters.forEach(function(c) {
+        // Match by data-ch (ch0/ch1 live at body level and aren't in this list)
+        var ch = parseInt(c.dataset.ch, 10);
+        c.classList.toggle('qs2-chapter-active', ch === idx);
       });
       photos.forEach(function(ph) {
         var ch = parseInt(ph.dataset.ch, 10);
@@ -1404,18 +1417,6 @@
     pump();
   })();
 </script>
-
-<!-- Fixed frame-layer: canvas + text panels live at body level so no
-     overflow:hidden ancestor (e.g. .qs2-sticky on iOS Safari) can clip them -->
-<canvas id="qs2-canvas" class="qs2-canvas"></canvas>
-<div class="qs2-chapter qs2-frame-chapter" data-ch="0">
-  <p class="qs2-eyebrow">Quem sou</p>
-  <h1 class="qs2-title">Dados.<br><em>Família.</em><br>Propósito.</h1>
-</div>
-<div class="qs2-chapter qs2-frame-chapter" data-ch="1">
-  <p class="qs2-eyebrow">Sobre</p>
-  <p class="qs2-text">Profissional Senior em Data &amp; Analytics com experiência end-to-end em <em>BI, Engenharia de Dados, Data Science e IA</em> aplicada ao negócio. Pipeline, governança, Lakehouse Bronze/Silver/Gold e modernização analítica que vira <b>decisão executiva</b>.</p>
-</div>
 
 <footer>
   <div class="footer-name">ANDRÉ<br>MACHADO</div>
