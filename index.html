@@ -1042,14 +1042,12 @@
       // so the split point falls at the same visual moment regardless of resolution.
       var tail = Math.round(192 * total / 504);
       return {
-        folder: mobile ? 'frames-mobile/' : 'frames/',
         total: total,
         tail: tail,
         // Start ON the hero's last frame (total-tail-1) so the cross-fade
         // overlap blends two identical frames -> seamless takeover.
         start: total - tail - 1,
-        end: total - 1,
-        frames: new Array(total)
+        end: total - 1
       };
     }
 
@@ -1059,12 +1057,21 @@
       draw(curIdx);
     }
 
+    // Reuse the hero's already-loaded frames (same URLs, same Image objects) —
+    // no second download, no redundant decode. Falls back gracefully while the
+    // hero is still filling its cache.
+    function sharedFrames(){
+      var store = window.__heroFrames;
+      if (!store) return null;
+      return (window.innerWidth < 900) ? store.m : store.d;
+    }
+
     function pickNearest(target){
-      if (!cfg) return null;
-      var f = cfg.frames;
+      var f = sharedFrames();
+      if (!f) return null;
       var img = f[target];
       if (img && img.complete && img.naturalWidth) return img;
-      for (var d = 1; d <= cfg.tail; d++){
+      for (var d = 1; d <= (cfg ? cfg.tail : 200); d++){
         var a = f[target - d]; if (a && a.complete && a.naturalWidth) return a;
         var b = f[target + d]; if (b && b.complete && b.naturalWidth) return b;
       }
@@ -1082,26 +1089,6 @@
       ctx.drawImage(img, (cw - w) / 2, (ch - h) / 2, w, h);
     }
 
-    function loadFrames(){
-      // Only the proportional tail; the hero already pre-loaded the full set,
-      // so most of these will be instant cache hits.
-      var i = cfg.start, inFlight = 0, CONC = 6;
-      function pump(){
-        while (inFlight < CONC && i <= cfg.end){
-          var pos = i++, n = pos + 1;
-          var img = new Image();
-          img.decoding = 'async';
-          inFlight++;
-          (function(img){
-            var done = function(){ inFlight--; draw(curIdx); pump(); };
-            img.onload = done; img.onerror = done;
-          })(img);
-          img.src = cfg.folder + 'frame_' + String(n).padStart(4, '0') + '.jpg';
-          cfg.frames[pos] = img;
-        }
-      }
-      pump();
-    }
 
     function update(){
       if (!cfg) return;
@@ -1144,12 +1131,11 @@
 
     cfg = buildConfig();
     resize();
-    loadFrames();
     update();
     window.addEventListener('scroll', update, { passive: true });
     window.addEventListener('resize', function(){
       var mobileNow = window.innerWidth < 900;
-      if ((cfg.total === 960) !== mobileNow){ cfg = buildConfig(); loadFrames(); }
+      if ((cfg.total === 960) !== mobileNow){ cfg = buildConfig(); }
       resize();
       update();
     }, { passive: true });
@@ -1268,6 +1254,8 @@
     function isDesktop(){ return window.innerWidth >= 900; }
     var ctx = canvas.getContext('2d');
     var frames = new Array(TOTAL);
+    // Share the cache so #quem-sou reuses these exact Image objects.
+    (window.__heroFrames = window.__heroFrames || {}).d = frames;
     var currentIdx = 0;
     var targetIdx = 0;
     var rafId = null;
@@ -1383,7 +1371,12 @@
         frames[pos] = img;
       }
     }
-    pump();
+    // Only download the desktop set on desktop — mobile gets its own lighter
+    // folder. (Previously both sets loaded on every device: ~139MB total.)
+    var started = false;
+    function maybeLoad(){ if(started || !isDesktop()) return; started = true; pump(); }
+    maybeLoad();
+    window.addEventListener('resize', maybeLoad, {passive:true});
   })();
 
   // Hero scroll-driven canvas (mobile only)
@@ -1394,6 +1387,8 @@
     function isMobile(){ return window.innerWidth < 900; }
     var ctx = canvas.getContext('2d');
     var frames = new Array(TOTAL);
+    // Share the cache so #quem-sou reuses these exact Image objects.
+    (window.__heroFrames = window.__heroFrames || {}).m = frames;
     var currentIdx = 0;
     var targetIdx = 0;
     var rafId = null;
@@ -1507,7 +1502,11 @@
         frames[pos] = img;
       }
     }
-    pump();
+    // Only download the mobile set on mobile.
+    var started = false;
+    function maybeLoad(){ if(started || !isMobile()) return; started = true; pump(); }
+    maybeLoad();
+    window.addEventListener('resize', maybeLoad, {passive:true});
   })();
 </script>
 
