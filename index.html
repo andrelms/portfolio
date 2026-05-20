@@ -232,8 +232,7 @@
   .qs2-section{position:relative;height:700vh;padding:0;background:var(--bg);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
   .qs2-sticky{position:sticky;top:0;height:100vh;overflow:hidden}
   .qs2-bg-layer{position:absolute;inset:0;background:linear-gradient(135deg,#0d1015 0%,#080b0f 60%,#0c0a08 100%);z-index:0}
-  .qs2-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:1;transition:opacity .6s ease}
-  .qs2-canvas.qs2-canvas-hidden{opacity:0}
+  .qs2-canvas{position:fixed;inset:0;width:100%;height:100%;display:block;z-index:900;opacity:0;visibility:hidden;pointer-events:none}
   .qs2-photo{position:absolute;inset:0;z-index:2;transform:translateX(105%);transition:transform .75s cubic-bezier(.77,0,.18,1);will-change:transform}
   .qs2-photo.qs2-past{transform:translateX(-12%)}
   .qs2-photo.qs2-active{transform:translateX(0)}
@@ -242,8 +241,9 @@
   .qs2-center{position:absolute;inset:0;z-index:4;display:flex;align-items:center;justify-content:center;padding:0 60px;text-align:center}
   .qs2-chapter{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 60px;opacity:0;transform:translateY(28px);filter:blur(8px);transition:opacity .55s ease,transform .55s ease,filter .55s ease;pointer-events:none}
   .qs2-chapter.qs2-chapter-active{opacity:1;transform:translateY(0);filter:blur(0);pointer-events:auto}
-  /* Frame chapters (Quem sou + Sobre) scroll up over the sticky frames — JS drives transform/opacity */
-  .qs2-chapter.qs2-frame-chapter{filter:none;transition:opacity .12s linear;pointer-events:none;will-change:transform,opacity}
+  /* Frame chapters (Quem sou + Sobre) ride a viewport-fixed layer above the frames — JS drives transform/opacity */
+  .qs2-chapter.qs2-frame-chapter{position:fixed;inset:0;z-index:901;filter:none;transition:none;pointer-events:none;will-change:transform,opacity}
+  .qs2-frame-chapter .qs2-title,.qs2-frame-chapter .qs2-text,.qs2-frame-chapter .qs2-eyebrow{text-shadow:0 2px 28px rgba(0,0,0,.6),0 1px 4px rgba(0,0,0,.5)}
   .qs2-eyebrow{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.4em;color:var(--gold);text-transform:uppercase;margin-bottom:28px;display:flex;align-items:center;gap:14px;justify-content:center}
   .qs2-eyebrow::before,.qs2-eyebrow::after{content:'';display:block;width:36px;height:1px;background:var(--gold);opacity:.5}
   .qs2-title{font-family:'Cormorant Garamond',serif;font-size:clamp(52px,8vw,140px);font-weight:300;line-height:.95;color:#fff;letter-spacing:-.02em}
@@ -988,18 +988,13 @@
     var cfg = null;
     var curIdx = 0;
 
-    // Quem sou + Sobre slide vertically up over the sticky frames as the user scrolls.
-    function driveFrameText(fp, inFrames){
+    // Quem sou + Sobre slide vertically up over the fixed frame layer as the user scrolls.
+    function driveFrameText(fp, vis){
       var S = fp * frameChapters.length; // virtual scroll position across the text panels
       frameChapters.forEach(function(el, i){
-        if (inFrames){
-          var offset = i - S;            // panel i is centered when S === i
-          el.style.transform = 'translateY(' + (offset * 100) + 'vh)';
-          el.style.opacity = Math.max(0, Math.min(1, 1 - Math.abs(offset)));
-        } else {
-          el.style.transform = 'translateY(-120vh)';
-          el.style.opacity = '0';
-        }
+        var offset = i - S;              // panel i is centered when S === i
+        el.style.transform = 'translateY(' + (offset * 100) + 'vh)';
+        el.style.opacity = vis * Math.max(0, Math.min(1, 1 - Math.abs(offset)));
       });
     }
 
@@ -1066,17 +1061,29 @@
     }
 
     function update(){
+      if (!cfg) return;
       var rect = section.getBoundingClientRect();
-      var scrolled = -rect.top;
-      var scrollable = section.offsetHeight - window.innerHeight;
+      var vh = window.innerHeight;
+      var scrollable = section.offsetHeight - vh;
       if (scrollable <= 0) return;
-      var p = Math.max(0, Math.min(1, scrolled / scrollable));
+      var p = Math.max(0, Math.min(1, (-rect.top) / scrollable));
       var fp = Math.max(0, Math.min(1, p / SPAN));
-      var inFrames = p <= SPAN + 0.002;
+
+      // The frame layer is fixed to the viewport so the watch never leaves its
+      // spot. It fades in to cover the hero as the section rises (so the two
+      // never show at once), holds through the frame span, then fades out to
+      // reveal the photo chapters.
+      var vis;
+      if (rect.top >= vh)     vis = 0;                                   // section still below the fold
+      else if (rect.top > 0)  vis = Math.min(1, (vh - rect.top) / (vh * 0.6)); // rising in: cover the hero
+      else if (p <= SPAN)     vis = 1;                                   // pinned, inside frame span
+      else                    vis = Math.max(0, 1 - (p - SPAN) / 0.04);  // pinned, past span: hand to photos
+
       curIdx = cfg.start + fp * (cfg.end - cfg.start);
       draw(curIdx);
-      canvas.classList.toggle('qs2-canvas-hidden', !inFrames);
-      driveFrameText(fp, inFrames);
+      canvas.style.opacity = vis;
+      canvas.style.visibility = vis <= 0 ? 'hidden' : 'visible';
+      driveFrameText(fp, vis);
     }
 
     cfg = buildConfig();
