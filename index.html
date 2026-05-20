@@ -979,29 +979,48 @@
     var canvas = document.getElementById('qs2-canvas');
     if (!section || !canvas) return;
     var ctx = canvas.getContext('2d');
-    var TAIL = 192;          // number of frames continued here
+    // TAIL is computed proportionally inside buildConfig() as cfg.tail
     var SPAN = 2 / 7;        // ch0 + ch1 occupy the first 2 of 7 chapters
     var frameChapters = section.querySelectorAll('.qs2-frame-chapter');
     var cfg = null;
     var curIdx = 0;
 
-    // Quem sou + Sobre slide vertically up over the fixed frame layer as the user scrolls.
-    function driveFrameText(fp, vis){
-      var S = fp * frameChapters.length; // virtual scroll position across the text panels
+    // Each panel (Quem sou, Sobre) gets half the journey:
+    // rises in from below → holds centred (full opacity) → rises out above.
+    function driveFrameText(jp, canvasVis){
+      var n = frameChapters.length; // 2
       frameChapters.forEach(function(el, i){
-        var offset = i - S;              // panel i is centered when S === i
-        el.style.transform = 'translateY(' + (offset * 100) + 'vh)';
-        el.style.opacity = vis * Math.max(0, Math.min(1, 1 - Math.abs(offset)));
+        var pj = jp * n - i;   // local progress 0→1 within this panel's half
+        var ty, op;
+        if (pj <= 0 || canvasVis <= 0) {
+          ty = 100;  op = 0;                     // not yet / canvas gone → park below
+        } else if (pj >= 1) {
+          ty = -100; op = 0;                     // done → park above
+        } else if (pj < 0.18) {                  // ENTRY: rise from +80 vh, fade in
+          var t = pj / 0.18;
+          ty = 80 * (1 - t); op = t;
+        } else if (pj < 0.82) {                  // HOLD: centred, full opacity
+          ty = 0; op = 1;
+        } else {                                  // EXIT: rise to −80 vh, fade out
+          var t = (pj - 0.82) / 0.18;
+          ty = -80 * t; op = 1 - t;
+        }
+        el.style.transform = 'translateY(' + ty + 'vh)';
+        el.style.opacity    = op * canvasVis;
       });
     }
 
     function buildConfig(){
       var mobile = window.innerWidth < 900;
       var total = mobile ? 960 : 504;
+      // Proportional tail: same 38% share of the video for both breakpoints,
+      // so the split point falls at the same visual moment regardless of resolution.
+      var tail = Math.round(192 * total / 504);
       return {
         folder: mobile ? 'frames-mobile/' : 'frames/',
         total: total,
-        start: total - TAIL,   // 0-based index of first continued frame
+        tail: tail,
+        start: total - tail,   // 0-based index of first continued frame
         end: total - 1,
         frames: new Array(total)
       };
@@ -1018,7 +1037,7 @@
       var f = cfg.frames;
       var img = f[target];
       if (img && img.complete && img.naturalWidth) return img;
-      for (var d = 1; d <= TAIL; d++){
+      for (var d = 1; d <= cfg.tail; d++){
         var a = f[target - d]; if (a && a.complete && a.naturalWidth) return a;
         var b = f[target + d]; if (b && b.complete && b.naturalWidth) return b;
       }
@@ -1037,8 +1056,8 @@
     }
 
     function loadFrames(){
-      // Only the last 192 frames; immutable cache makes these near-instant
-      // since the hero requested the full set already.
+      // Only the proportional tail; the hero already pre-loaded the full set,
+      // so most of these will be instant cache hits.
       var i = cfg.start, inFlight = 0, CONC = 6;
       function pump(){
         while (inFlight < CONC && i <= cfg.end){
@@ -1063,28 +1082,27 @@
       var vh = window.innerHeight;
       var scrollable = section.offsetHeight - vh;
       if (scrollable <= 0) return;
-      var p = Math.max(0, Math.min(1, (-rect.top) / scrollable));
-      var fp = Math.max(0, Math.min(1, p / SPAN));
+      // Continuous "journey": the instant the hero finishes its frames (the
+      // section sits one viewport below, rect.top === vh) the fixed layer takes
+      // over with the very next frame, in the exact same spot. From there the
+      // frames AND the text advance together with every scroll tick — no frozen
+      // gap, no two watches — until the 192 frames are spent across Quem sou +
+      // Sobre, then it fades out to reveal the photo chapters (Familia onward).
+      var spanPx = SPAN * scrollable;        // pinned scroll budget for the frame span
+      var journeyLen = vh + spanPx;          // bridge (one viewport) + span
+      var traveled = vh - rect.top;          // 0 at takeover -> journeyLen at span end
+      var jp = Math.max(0, Math.min(1, traveled / journeyLen));
 
-      // The frame layer is fixed to the viewport so the watch stays in the exact
-      // same spot — it never rises. The hero finishes its frames precisely when
-      // the section is one viewport away (rect.top === vh), so we snap the OPAQUE
-      // layer on there to fully cover the departing hero: no cross-fade, no two
-      // watches at once. It holds through the frame span, then fades to the photos.
       var canvasVis;
-      if (rect.top > vh)   canvasVis = 0;                                  // hero still animating its frames
-      else if (p <= SPAN)  canvasVis = 1;                                  // covering hero + playing frame span
-      else                 canvasVis = Math.max(0, 1 - (p - SPAN) / 0.04); // past span: hand to photos
+      if (rect.top > vh) canvasVis = 0;      // hero still owns the frames
+      else if (jp < 1)   canvasVis = 1;      // continuous frame journey
+      else               canvasVis = Math.max(0, 1 - (traveled - journeyLen) / (0.025 * scrollable)); // fast hand-off to photos
 
-      // Only the text moves: it eases in just after the takeover so the title
-      // doesn't pop, then scrolls upward over the static frames.
-      var textEnter = rect.top > vh ? 0 : (rect.top > 0 ? Math.min(1, (vh - rect.top) / (vh * 0.35)) : 1);
-
-      curIdx = cfg.start + fp * (cfg.end - cfg.start);
+      curIdx = cfg.start + jp * (cfg.end - cfg.start);
       draw(curIdx);
       canvas.style.opacity = canvasVis;
       canvas.style.visibility = canvasVis <= 0 ? 'hidden' : 'visible';
-      driveFrameText(fp, canvasVis * textEnter);
+      driveFrameText(jp, canvasVis);
     }
 
     cfg = buildConfig();
@@ -1221,8 +1239,9 @@
       var scrolled = window.scrollY - hero.offsetTop;
       var scrollable = hero.offsetHeight - window.innerHeight;
       var p = Math.max(0, Math.min(1, scrolled / scrollable));
-      // Hero plays the first (TOTAL-192) frames; the last 192 continue in #quem-sou.
-      var HERO_LAST = TOTAL - 192 - 1;
+      // Hero plays the proportional share; the rest continue in #quem-sou.
+      var TAIL = Math.round(192 * TOTAL / 504);
+      var HERO_LAST = TOTAL - TAIL - 1;
       targetIdx = Math.min(HERO_LAST, p * HERO_LAST);
       if(!rafId) rafId = requestAnimationFrame(animate);
       textElsD.forEach(function(item){
@@ -1341,8 +1360,9 @@
       var scrolled = window.scrollY - hero.offsetTop;
       var scrollable = hero.offsetHeight - window.innerHeight;
       var p = Math.max(0, Math.min(1, scrolled / scrollable));
-      // Hero plays the first (TOTAL-192) frames; the last 192 continue in #quem-sou.
-      var HERO_LAST = TOTAL - 192 - 1;
+      // Hero plays the proportional share; the rest continue in #quem-sou.
+      var TAIL = Math.round(192 * TOTAL / 504);
+      var HERO_LAST = TOTAL - TAIL - 1;
       targetIdx = Math.min(HERO_LAST, p * HERO_LAST);
       if(!rafId) rafId = requestAnimationFrame(animate);
       textEls.forEach(function(item){
