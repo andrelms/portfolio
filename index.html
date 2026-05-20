@@ -232,12 +232,14 @@
   .qs2-section{position:relative;height:700vh;padding:0;background:var(--bg);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
   .qs2-sticky{position:sticky;top:0;height:100vh;overflow:hidden}
   .qs2-bg-layer{position:absolute;inset:0;background:linear-gradient(135deg,#0d1015 0%,#080b0f 60%,#0c0a08 100%);z-index:0}
-  .qs2-photo{position:absolute;inset:0;z-index:1;transform:translateX(105%);transition:transform .75s cubic-bezier(.77,0,.18,1);will-change:transform}
+  .qs2-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:1;transition:opacity .6s ease}
+  .qs2-canvas.qs2-canvas-hidden{opacity:0}
+  .qs2-photo{position:absolute;inset:0;z-index:2;transform:translateX(105%);transition:transform .75s cubic-bezier(.77,0,.18,1);will-change:transform}
   .qs2-photo.qs2-past{transform:translateX(-12%)}
   .qs2-photo.qs2-active{transform:translateX(0)}
   .qs2-photo img{width:100%;height:100%;object-fit:cover;display:block}
-  .qs2-overlay{position:absolute;inset:0;z-index:2;background:linear-gradient(to top,rgba(8,11,15,.95) 0%,rgba(8,11,15,.6) 30%,rgba(8,11,15,.2) 65%,rgba(8,11,15,.05) 100%),linear-gradient(to right,rgba(8,11,15,.65) 0%,rgba(8,11,15,.15) 55%,transparent 100%);pointer-events:none}
-  .qs2-center{position:absolute;inset:0;z-index:3;display:flex;align-items:center;justify-content:center;padding:0 60px;text-align:center}
+  .qs2-overlay{position:absolute;inset:0;z-index:3;background:linear-gradient(to top,rgba(8,11,15,.95) 0%,rgba(8,11,15,.6) 30%,rgba(8,11,15,.2) 65%,rgba(8,11,15,.05) 100%),linear-gradient(to right,rgba(8,11,15,.65) 0%,rgba(8,11,15,.15) 55%,transparent 100%);pointer-events:none}
+  .qs2-center{position:absolute;inset:0;z-index:4;display:flex;align-items:center;justify-content:center;padding:0 60px;text-align:center}
   .qs2-chapter{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 60px;opacity:0;transform:translateY(28px);filter:blur(8px);transition:opacity .55s ease,transform .55s ease,filter .55s ease;pointer-events:none}
   .qs2-chapter.qs2-chapter-active{opacity:1;transform:translateY(0);filter:blur(0);pointer-events:auto}
   .qs2-eyebrow{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.4em;color:var(--gold);text-transform:uppercase;margin-bottom:28px;display:flex;align-items:center;gap:14px;justify-content:center}
@@ -417,6 +419,9 @@
 
     <!-- Base dark gradient -->
     <div class="qs2-bg-layer"></div>
+
+    <!-- Frame continuation — last 192 hero frames play across ch0 (Quem sou) + ch1 (Sobre) -->
+    <canvas id="qs2-canvas" class="qs2-canvas"></canvas>
 
     <!-- Photo layers — each slides in laterally as its chapter activates -->
     <div class="qs2-photo" data-ch="2"><img src="assets/family-andre.jpg" alt="Bernardo e Joaquim" loading="lazy" decoding="async" style="object-position:center 28%"></div>
@@ -967,6 +972,104 @@
     onQs2Scroll();
   })();
 
+  // 4b. Quem sou — frame continuation: last 192 hero frames across ch0 + ch1
+  (function(){
+    var section = document.getElementById('quem-sou');
+    var canvas = document.getElementById('qs2-canvas');
+    if (!section || !canvas) return;
+    var ctx = canvas.getContext('2d');
+    var TAIL = 192;          // number of frames continued here
+    var SPAN = 2 / 7;        // ch0 + ch1 occupy the first 2 of 7 chapters
+    var cfg = null;
+    var curIdx = 0;
+
+    function buildConfig(){
+      var mobile = window.innerWidth < 900;
+      var total = mobile ? 960 : 504;
+      return {
+        folder: mobile ? 'frames-mobile/' : 'frames/',
+        total: total,
+        start: total - TAIL,   // 0-based index of first continued frame
+        end: total - 1,
+        frames: new Array(total)
+      };
+    }
+
+    function resize(){
+      canvas.width = canvas.offsetWidth * (window.devicePixelRatio || 1);
+      canvas.height = canvas.offsetHeight * (window.devicePixelRatio || 1);
+      draw(curIdx);
+    }
+
+    function pickNearest(target){
+      if (!cfg) return null;
+      var f = cfg.frames;
+      var img = f[target];
+      if (img && img.complete && img.naturalWidth) return img;
+      for (var d = 1; d <= TAIL; d++){
+        var a = f[target - d]; if (a && a.complete && a.naturalWidth) return a;
+        var b = f[target + d]; if (b && b.complete && b.naturalWidth) return b;
+      }
+      return null;
+    }
+
+    function draw(idx){
+      var img = pickNearest(Math.round(idx));
+      if (!img) return;
+      var cw = canvas.width, ch = canvas.height;
+      var iw = img.naturalWidth, ih = img.naturalHeight;
+      var scale = Math.max(cw / iw, ch / ih);
+      var w = iw * scale, h = ih * scale;
+      ctx.clearRect(0, 0, cw, ch);
+      ctx.drawImage(img, (cw - w) / 2, (ch - h) / 2, w, h);
+    }
+
+    function loadFrames(){
+      // Only the last 192 frames; immutable cache makes these near-instant
+      // since the hero requested the full set already.
+      var i = cfg.start, inFlight = 0, CONC = 6;
+      function pump(){
+        while (inFlight < CONC && i <= cfg.end){
+          var pos = i++, n = pos + 1;
+          var img = new Image();
+          img.decoding = 'async';
+          inFlight++;
+          (function(img){
+            var done = function(){ inFlight--; draw(curIdx); pump(); };
+            img.onload = done; img.onerror = done;
+          })(img);
+          img.src = cfg.folder + 'frame_' + String(n).padStart(4, '0') + '.jpg';
+          cfg.frames[pos] = img;
+        }
+      }
+      pump();
+    }
+
+    function update(){
+      var rect = section.getBoundingClientRect();
+      var scrolled = -rect.top;
+      var scrollable = section.offsetHeight - window.innerHeight;
+      if (scrollable <= 0) return;
+      var p = Math.max(0, Math.min(1, scrolled / scrollable));
+      var fp = Math.max(0, Math.min(1, p / SPAN));
+      curIdx = cfg.start + fp * (cfg.end - cfg.start);
+      draw(curIdx);
+      canvas.classList.toggle('qs2-canvas-hidden', p > SPAN + 0.002);
+    }
+
+    cfg = buildConfig();
+    resize();
+    loadFrames();
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', function(){
+      var mobileNow = window.innerWidth < 900;
+      if ((cfg.total === 960) !== mobileNow){ cfg = buildConfig(); loadFrames(); }
+      resize();
+      update();
+    }, { passive: true });
+  })();
+
   // 5. Stats showcase — native sticky, scroll-driven slide activation
   (function(){
     var section = document.getElementById('stats-pin');
@@ -1116,7 +1219,9 @@
       var scrolled = window.scrollY - hero.offsetTop;
       var scrollable = hero.offsetHeight - window.innerHeight;
       var p = Math.max(0, Math.min(1, scrolled / scrollable));
-      targetIdx = Math.min(TOTAL-1, p * (TOTAL-1));
+      // Hero plays the first (TOTAL-192) frames; the last 192 continue in #quem-sou.
+      var HERO_LAST = TOTAL - 192 - 1;
+      targetIdx = Math.min(HERO_LAST, p * HERO_LAST);
       if(!rafId) rafId = requestAnimationFrame(animate);
       textElsD.forEach(function(item){
         var el = document.querySelector(item.sel);
@@ -1234,7 +1339,9 @@
       var scrolled = window.scrollY - hero.offsetTop;
       var scrollable = hero.offsetHeight - window.innerHeight;
       var p = Math.max(0, Math.min(1, scrolled / scrollable));
-      targetIdx = Math.min(TOTAL-1, p * (TOTAL-1));
+      // Hero plays the first (TOTAL-192) frames; the last 192 continue in #quem-sou.
+      var HERO_LAST = TOTAL - 192 - 1;
+      targetIdx = Math.min(HERO_LAST, p * HERO_LAST);
       if(!rafId) rafId = requestAnimationFrame(animate);
       textEls.forEach(function(item){
         var el = document.querySelector(item.sel);
