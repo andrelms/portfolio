@@ -242,6 +242,8 @@
   .qs2-center{position:absolute;inset:0;z-index:4;display:flex;align-items:center;justify-content:center;padding:0 60px;text-align:center}
   .qs2-chapter{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 60px;opacity:0;transform:translateY(28px);filter:blur(8px);transition:opacity .55s ease,transform .55s ease,filter .55s ease;pointer-events:none}
   .qs2-chapter.qs2-chapter-active{opacity:1;transform:translateY(0);filter:blur(0);pointer-events:auto}
+  /* Frame chapters (Quem sou + Sobre) scroll up over the sticky frames — JS drives transform/opacity */
+  .qs2-chapter.qs2-frame-chapter{filter:none;transition:opacity .12s linear;pointer-events:none;will-change:transform,opacity}
   .qs2-eyebrow{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.4em;color:var(--gold);text-transform:uppercase;margin-bottom:28px;display:flex;align-items:center;gap:14px;justify-content:center}
   .qs2-eyebrow::before,.qs2-eyebrow::after{content:'';display:block;width:36px;height:1px;background:var(--gold);opacity:.5}
   .qs2-title{font-family:'Cormorant Garamond',serif;font-size:clamp(52px,8vw,140px);font-weight:300;line-height:.95;color:#fff;letter-spacing:-.02em}
@@ -437,13 +439,13 @@
     <div class="qs2-center">
 
       <!-- ch0: Quem sou -->
-      <div class="qs2-chapter qs2-chapter-active" data-ch="0">
+      <div class="qs2-chapter qs2-frame-chapter qs2-chapter-active" data-ch="0">
         <p class="qs2-eyebrow">Quem sou</p>
         <h1 class="qs2-title">Dados.<br><em>Família.</em><br>Propósito.</h1>
       </div>
 
       <!-- ch1: Sobre mim -->
-      <div class="qs2-chapter" data-ch="1">
+      <div class="qs2-chapter qs2-frame-chapter" data-ch="1">
         <p class="qs2-eyebrow">Sobre</p>
         <p class="qs2-text">Profissional Senior em Data &amp; Analytics com experiência end-to-end em <em>BI, Engenharia de Dados, Data Science e IA</em> aplicada ao negócio. Pipeline, governança, Lakehouse Bronze/Silver/Gold e modernização analítica que vira <b>decisão executiva</b>.</p>
       </div>
@@ -945,6 +947,8 @@
       if (idx === curIdx) return;
       curIdx = idx;
       chapters.forEach(function(c, i) {
+        // ch0 + ch1 ride the scroll-linked frame transform, not the discrete fade
+        if (c.classList.contains('qs2-frame-chapter')) return;
         c.classList.toggle('qs2-chapter-active', i === idx);
       });
       photos.forEach(function(ph) {
@@ -980,8 +984,24 @@
     var ctx = canvas.getContext('2d');
     var TAIL = 192;          // number of frames continued here
     var SPAN = 2 / 7;        // ch0 + ch1 occupy the first 2 of 7 chapters
+    var frameChapters = section.querySelectorAll('.qs2-frame-chapter');
     var cfg = null;
     var curIdx = 0;
+
+    // Quem sou + Sobre slide vertically up over the sticky frames as the user scrolls.
+    function driveFrameText(fp, inFrames){
+      var S = fp * frameChapters.length; // virtual scroll position across the text panels
+      frameChapters.forEach(function(el, i){
+        if (inFrames){
+          var offset = i - S;            // panel i is centered when S === i
+          el.style.transform = 'translateY(' + (offset * 100) + 'vh)';
+          el.style.opacity = Math.max(0, Math.min(1, 1 - Math.abs(offset)));
+        } else {
+          el.style.transform = 'translateY(-120vh)';
+          el.style.opacity = '0';
+        }
+      });
+    }
 
     function buildConfig(){
       var mobile = window.innerWidth < 900;
@@ -1052,9 +1072,11 @@
       if (scrollable <= 0) return;
       var p = Math.max(0, Math.min(1, scrolled / scrollable));
       var fp = Math.max(0, Math.min(1, p / SPAN));
+      var inFrames = p <= SPAN + 0.002;
       curIdx = cfg.start + fp * (cfg.end - cfg.start);
       draw(curIdx);
-      canvas.classList.toggle('qs2-canvas-hidden', p > SPAN + 0.002);
+      canvas.classList.toggle('qs2-canvas-hidden', !inFrames);
+      driveFrameText(fp, inFrames);
     }
 
     cfg = buildConfig();
