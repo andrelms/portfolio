@@ -49,7 +49,7 @@
   .stat{text-align:right;text-shadow:0 2px 12px rgba(0,0,0,.8)}
   .stat-num{font-family:'Bebas Neue',sans-serif;font-size:48px;color:var(--gold);line-height:1}
   .stat-label{font-size:10px;letter-spacing:.25em;color:var(--muted);text-transform:uppercase}
-  .hero-line{position:absolute;bottom:0;left:50%;width:1px;height:100%;background:linear-gradient(to bottom,transparent,var(--line),transparent)}
+
   .scroll-hint{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;pointer-events:none;animation:fadeIn 1s 2s forwards;z-index:2}
   .scroll-hint span{font-size:10px;letter-spacing:.3em;color:var(--muted);text-transform:uppercase}
   .scroll-arrow{width:1px;height:40px;background:linear-gradient(to bottom,var(--gold),transparent);animation:scrollPulse 2s ease-in-out infinite}
@@ -302,7 +302,7 @@
 
   @media(max-width:900px){
     .hero{grid-template-columns:1fr;position:relative;height:100vh;min-height:unset;overflow:hidden}.hero-right{display:block;position:absolute;inset:0;z-index:0}.hero-left{padding:0 24px;position:absolute;left:0;right:0;top:0;bottom:0;z-index:2;background:none;display:flex;flex-direction:column;justify-content:flex-end;gap:12px;padding-bottom:260px;overflow:hidden}.hero{height:1000vh !important;padding:0 !important;overflow:visible !important}.hero-sticky{position:sticky !important;top:0 !important;height:100vh !important;overflow:hidden !important;display:grid !important;grid-template-columns:1fr !important}.smoke-layer{display:block !important;z-index:1 !important}.hero-canvas{display:none !important}.hero-canvas-mobile{display:block !important;position:absolute;inset:0;width:100%;height:100%}.hero-mobile-img{display:none !important}
-    .hero-line{display:none}.hero-photo-wrap{height:130vh}.scroll-hint{bottom:18px}.hero-eyebrow{top:24px;left:24px;right:24px}.hero-name{top:14vh;left:24px;right:24px}.hero-photo{object-position:5% 20%}.hero-stats{position:absolute;bottom:95px;left:24px;right:auto;flex-direction:row;gap:20px;z-index:3}.hero-stats .stat{text-align:left}.hero-stats .stat-num{font-size:28px}.hero-photo-overlay{background:linear-gradient(to bottom,rgba(8,11,15,.2) 0%,rgba(8,11,15,.45) 50%,rgba(8,11,15,.85) 100%)}
+    .hero-photo-wrap{height:130vh}.scroll-hint{bottom:18px}.hero-eyebrow{top:24px;left:24px;right:24px}.hero-name{top:14vh;left:24px;right:24px}.hero-photo{object-position:5% 20%}.hero-stats{position:absolute;bottom:95px;left:24px;right:auto;flex-direction:row;gap:20px;z-index:3}.hero-stats .stat{text-align:left}.hero-stats .stat-num{font-size:28px}.hero-photo-overlay{background:linear-gradient(to bottom,rgba(8,11,15,.2) 0%,rgba(8,11,15,.45) 50%,rgba(8,11,15,.85) 100%)}
     .about-grid,.projects-grid,.certs-list{grid-template-columns:1fr;gap:40px}
     .formatura-grid{grid-template-columns:1fr 1fr}
     .expertise-grid,.stack-grid,.numbers-grid,.partners-grid{grid-template-columns:1fr 1fr}
@@ -457,7 +457,7 @@
       <div class="hero-photo-overlay"></div>
     </div>
   </div>
-  <div class="hero-line"></div>
+
   <div class="hero-stats">
     <div class="stat"><div class="stat-num">15+</div><div class="stat-label">Anos de Carreira</div></div>
     <div class="stat"><div class="stat-num">1,5B</div><div class="stat-label">Linhas Migradas</div></div>
