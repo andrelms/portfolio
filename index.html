@@ -194,6 +194,98 @@
   .footer-links a{color:#fff;text-decoration:none;font-size:12px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;transition:color .2s}
   .footer-links a:hover{color:var(--gold)}
 
+  /* MOTION STACK: pinned stats, horizontal track, parallax, clip-reveal */
+  .stats-pin-section{position:relative;height:320vh;padding:0;background:#000;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .stats-pin-stage{position:sticky;top:0;height:100vh;display:flex;align-items:center;justify-content:center;padding:0 60px;overflow:hidden}
+  .stat-slide{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 60px;opacity:0;transform:translateY(28px);filter:blur(10px);transition:opacity .6s ease,transform .6s ease,filter .6s ease;pointer-events:none}
+  .stat-slide.active{opacity:1;transform:translateY(0);filter:blur(0);pointer-events:auto}
+  .stat-eyebrow{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.4em;color:var(--gold);text-transform:uppercase;margin-bottom:32px;display:flex;align-items:center;gap:14px}
+  .stat-eyebrow::before{content:'';display:block;width:36px;height:1px;background:var(--gold)}
+  .stat-big{font-family:'Bebas Neue',sans-serif;font-size:clamp(110px,22vw,300px);color:var(--gold);line-height:.85;letter-spacing:-.02em;margin-bottom:28px}
+  .stat-headline{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4vw,56px);font-weight:300;color:#fff;line-height:1.08;margin-bottom:24px;max-width:820px;letter-spacing:-.01em}
+  .stat-context{font-size:14px;color:var(--muted);line-height:1.7;max-width:580px;font-weight:400}
+  .stats-pin-progress{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);display:flex;gap:14px;z-index:2}
+  .stats-pin-progress .dot{width:6px;height:6px;border-radius:50%;background:var(--line);transition:background .3s,transform .3s,width .3s}
+  .stats-pin-progress .dot.active{background:var(--gold);width:24px;border-radius:3px}
+
+  /* Especialidades — pinned carousel: vertical scroll drives lateral card transitions */
+  .exp-carousel{position:relative;background:var(--bg);height:460vh}
+  .exp-carousel-sticky{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center}
+  .exp-carousel-head{position:absolute;top:11vh;left:0;right:0;text-align:center;z-index:20;padding:0 24px}
+  .exp-deck{position:relative;width:100%;height:62vh;max-width:1100px;margin:0 auto;perspective:1700px}
+  .exp-slide-card{position:absolute;inset:0;margin:auto;width:min(86vw,600px);height:100%;max-height:500px;
+    background:linear-gradient(160deg,var(--bg3) 0%,var(--bg2) 100%);border:1px solid var(--line);border-radius:20px;
+    padding:clamp(36px,5vw,60px);display:flex;flex-direction:column;justify-content:center;overflow:hidden;
+    box-shadow:0 40px 90px -30px rgba(0,0,0,.7);will-change:transform,opacity;backface-visibility:hidden;transform-style:preserve-3d}
+  .exp-slide-card::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:3px;background:linear-gradient(to right,var(--gold),transparent)}
+  .exp-slide-card .expertise-icon{font-size:clamp(38px,5vw,52px);margin-bottom:clamp(20px,3vw,32px);display:block}
+  .exp-slide-card .expertise-title{font-family:'Cormorant Garamond',serif;font-size:clamp(30px,4.4vw,48px);color:#fff;margin-bottom:clamp(16px,2vw,24px);font-weight:400;line-height:1.08}
+  .exp-slide-card .expertise-desc{font-size:clamp(14px,1.7vw,18px);color:var(--text);line-height:1.8;font-weight:400}
+  .exp-slide-card .expertise-num{position:absolute;top:clamp(28px,4vw,40px);right:clamp(32px,4vw,44px);font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.3em;color:var(--gold)}
+  .exp-carousel-progress{position:absolute;bottom:8vh;left:50%;transform:translateX(-50%);display:flex;gap:10px;z-index:20}
+  .exp-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.2);transition:background .35s,width .35s}
+  .exp-dot.active{background:var(--gold);width:26px;border-radius:4px}
+
+  .parallax-img{will-change:transform}
+  .clip-reveal{clip-path:inset(0 100% 0 0);transition:clip-path 1.1s cubic-bezier(.65,.05,.2,1)}
+  .clip-reveal.visible{clip-path:inset(0 0% 0 0)}
+
+  /* QUEM SOU 2 — native sticky, 7 chapters, lateral photo slide-in */
+  .qs2-section{position:relative;height:700vh;padding:0;background:var(--bg);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .qs2-sticky{position:sticky;top:0;height:100vh;overflow:hidden}
+  .qs2-bg-layer{position:absolute;inset:0;background:linear-gradient(135deg,#0d1015 0%,#080b0f 60%,#0c0a08 100%);z-index:0}
+  .qs2-canvas{position:fixed;inset:0;width:100%;height:100%;display:block;z-index:900;opacity:0;visibility:hidden;pointer-events:none}
+  .qs2-photo{position:absolute;inset:0;z-index:2;transform:translateX(105%);transition:transform .75s cubic-bezier(.77,0,.18,1);will-change:transform}
+  .qs2-photo.qs2-past{transform:translateX(-12%)}
+  .qs2-photo.qs2-active{transform:translateX(0)}
+  .qs2-photo img{width:100%;height:100%;object-fit:cover;display:block}
+  .qs2-overlay{position:absolute;inset:0;z-index:3;background:linear-gradient(to top,rgba(8,11,15,.95) 0%,rgba(8,11,15,.6) 30%,rgba(8,11,15,.2) 65%,rgba(8,11,15,.05) 100%),linear-gradient(to right,rgba(8,11,15,.65) 0%,rgba(8,11,15,.15) 55%,transparent 100%);pointer-events:none}
+  .qs2-center{position:absolute;inset:0;z-index:4;display:flex;align-items:center;justify-content:center;padding:0 60px;text-align:center}
+  .qs2-chapter{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 60px;opacity:0;transform:translateY(28px);filter:blur(8px);transition:opacity .55s ease,transform .55s ease,filter .55s ease;pointer-events:none}
+  .qs2-chapter.qs2-chapter-active{opacity:1;transform:translateY(0);filter:blur(0);pointer-events:auto}
+  /* Frame chapters (Quem sou + Sobre) ride a viewport-fixed layer above the frames — JS drives transform/opacity */
+  .qs2-chapter.qs2-frame-chapter{position:fixed;inset:0;z-index:902;filter:none;transition:none;pointer-events:none;will-change:transform,opacity}
+  /* Centre scrim behind the text — fades with the text (opacity is JS-driven on the
+     chapter), so it darkens behind the words for legibility without touching the seam. */
+  .qs2-frame-chapter::before{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse 95% 62% at 50% 46%,rgba(8,11,15,.74) 0%,rgba(8,11,15,.4) 46%,rgba(8,11,15,.08) 74%,transparent 88%)}
+  /* Smoke overlay for quem-sou/sobre frame chapters — same atmosphere as hero */
+  #qs2-smoke{position:fixed;inset:0;z-index:901;pointer-events:none;overflow:hidden;opacity:0;visibility:hidden}
+  /* Veil that mirrors the hero's photo overlay so the frame composite matches across the seam */
+  #qs2-frame-veil{position:fixed;inset:0;z-index:901;pointer-events:none;opacity:0;visibility:hidden;background:linear-gradient(to right,rgba(8,11,15,.85) 0%,rgba(8,11,15,.4) 50%,rgba(8,11,15,.1) 100%),linear-gradient(to top,rgba(8,11,15,.6) 0%,transparent 40%)}
+  .qs2-frame-chapter .qs2-title,.qs2-frame-chapter .qs2-text,.qs2-frame-chapter .qs2-eyebrow{text-shadow:0 2px 30px rgba(0,0,0,.85),0 2px 10px rgba(0,0,0,.7),0 1px 3px rgba(0,0,0,.6)}
+  .qs2-eyebrow{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.4em;color:var(--gold);text-transform:uppercase;margin-bottom:28px;display:flex;align-items:center;gap:14px;justify-content:center}
+  .qs2-eyebrow::before,.qs2-eyebrow::after{content:'';display:block;width:36px;height:1px;background:var(--gold);opacity:.5}
+  .qs2-title{font-family:'Cormorant Garamond',serif;font-size:clamp(52px,8vw,140px);font-weight:300;line-height:.95;color:#fff;letter-spacing:-.02em}
+  .qs2-title em{font-style:italic;color:var(--gold2)}
+  .qs2-text{font-family:'Cormorant Garamond',serif;font-size:clamp(20px,2.4vw,32px);font-weight:300;line-height:1.48;color:#fff;max-width:700px}
+  .qs2-text em{color:var(--gold2);font-style:italic}
+  .qs2-text b{color:#fff;font-weight:500}
+  .qs2-note{font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.18em;color:var(--muted);text-transform:uppercase;margin-top:20px;line-height:1.6}
+  .qs2-contact-title{font-family:'Cormorant Garamond',serif;font-size:clamp(40px,6vw,90px);font-weight:300;line-height:.95;color:#fff;margin-bottom:32px;letter-spacing:-.02em}
+  .qs2-contact-title em{font-style:italic;color:var(--gold2)}
+  .qs2-contacts{display:flex;flex-direction:column;gap:8px;align-items:center}
+  .qs2-contacts a{color:#fff;text-decoration:none;font-family:'DM Mono',monospace;font-size:14px;font-weight:400;letter-spacing:.1em;transition:color .2s,border-color .2s,background .2s;padding:10px 22px;border:1px solid var(--line);background:rgba(14,19,24,.5);min-width:280px;text-align:center}
+  .qs2-contacts a:hover{color:var(--gold);border-color:var(--gold);background:rgba(201,168,76,.05)}
+  .qs2-progress{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;gap:14px;z-index:5}
+  .qs2-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.2);transition:background .3s,width .3s}
+  .qs2-dot.qs2-dot-active{background:var(--gold);width:24px;border-radius:3px}
+  @media(max-width:900px){
+    .qs2-section{height:700vh}
+    /* Match the hero's mobile canvas geometry exactly (100vw x 130vh, top-aligned)
+       so the watch keeps the same zoom/crop across the hero -> quem-sou seam. */
+    .qs2-canvas{height:130vh;top:0;bottom:auto}
+    /* Veil takes the hero's mobile overlay gradient + same 130vh geometry so the
+       bottom-darkening lines up exactly -> the seam is no longer perceptible. */
+    #qs2-frame-veil{height:130vh;top:0;bottom:auto;background:linear-gradient(to bottom,rgba(8,11,15,.2) 0%,rgba(8,11,15,.45) 50%,rgba(8,11,15,.85) 100%)}
+    .qs2-center{padding:0 24px}
+    .qs2-chapter{padding:0 24px}
+    .qs2-title{font-size:clamp(38px,11vw,80px)}
+    .qs2-text{font-size:clamp(18px,4.5vw,26px)}
+    .qs2-note{font-size:11px}
+    .qs2-contacts a{min-width:unset;width:100%;max-width:320px}
+    .qs2-contact-title{font-size:clamp(36px,10vw,64px)}
+  }
+
   /* REVEAL */
   .reveal{opacity:0;transform:translateY(36px);transition:opacity .7s ease,transform .7s ease;pointer-events:none}
   .reveal.visible{opacity:1;transform:translateY(0);pointer-events:auto}
@@ -214,6 +306,14 @@
     .partners-inner{padding:80px 24px}.partners-year{display:none}
     .arch-grid{grid-template-columns:1fr !important;gap:16px !important}
     .arch-arrow{transform:rotate(90deg);padding:8px 0 !important}
+    .stats-pin-stage{padding:0 24px}
+    .stat-slide{padding:0 24px}
+    .stat-big{font-size:clamp(80px,28vw,180px)}
+    .stats-pin-progress{bottom:24px}
+    .exp-carousel{height:420vh}
+    .exp-carousel-head{top:8vh}
+    .exp-deck{height:66vh;perspective:1200px}
+    .exp-slide-card{max-height:none;height:100%}
   }
   @media(max-width:500px){
     .expertise-grid,.stack-grid,.numbers-grid,.partners-grid{grid-template-columns:1fr}
@@ -233,6 +333,14 @@
       transform:translateY(0) !important;
       pointer-events:auto !important;
     }
+    /* Final stretch of the hero: data rises out and fades, handing the frames
+       over to the Quem sou data — an elegant baton pass, not a hard cut. */
+    .hero-eyebrow.hero-exit,.hero-name.hero-exit,.hero-role.hero-exit,
+    .hero-sub.hero-exit,.hero-cta.hero-exit,.hero-stats.hero-exit{
+      opacity:0 !important;
+      transform:translateY(-48px) !important;
+      pointer-events:none !important;
+    }
   }
 
   .hero-eyebrow,.hero-name,.hero-role,.hero-sub,.hero-cta,.hero-stats{
@@ -247,6 +355,12 @@
     opacity:1 !important;
     transform:translateY(0) !important;
     pointer-events:auto !important;
+  }
+
+  @media(prefers-reduced-motion: reduce){
+    .stat-slide{transition:opacity .2s ease;transform:none;filter:none}
+    .clip-reveal{clip-path:none !important;transition:none !important}
+    .parallax-img{transform:none !important}
   }
 
   @keyframes smokeA{
@@ -322,81 +436,114 @@
 </div>
 </section>
 
-<!-- ABOUT -->
-<section>
-  <div class="container">
-    <div class="about-grid">
-      <div>
-        <p class="section-tag">Quem sou</p>
-        <h2 class="section-title">Dados.<br>Família.<br>Propósito.</h2>
-        <p class="about-text reveal">
-          Profissional Senior em Data &amp; Analytics com experiência end-to-end em <em>BI, Engenharia de Dados, Data Science e IA aplicada ao negócio</em>. Administrador (UNIASSELVI) e Cientista de Dados (<em>PUCRS</em>). Pipeline, governança, Lakehouse Bronze/Silver/Gold e modernização analítica gerando insights escaláveis.
-        </p>
-        <div class="about-contact reveal">
-          <a href="tel:+5551998837555">📞 (51) 99883-7555</a>
-          <a href="mailto:andrelms_@hotmail.com">✉️ andrelms_@hotmail.com</a>
-          <a href="https://github.com/andrelms" target="_blank">⌨️ github.com/andrelms</a>
+<!-- QUEM SOU — native sticky, 7 chapters, lateral photo slide-in -->
+<section id="quem-sou" class="qs2-section">
+  <div class="qs2-sticky">
+
+    <!-- Base dark gradient -->
+    <div class="qs2-bg-layer"></div>
+
+    <!-- Photo layers — each slides in laterally as its chapter activates -->
+    <div class="qs2-photo" data-ch="2"><img src="assets/family-andre.jpg" alt="Bernardo e Joaquim" loading="lazy" decoding="async" style="object-position:center 28%"></div>
+    <div class="qs2-photo" data-ch="3"><img src="assets/family-joaquim.jpg" alt="Ragnar e Floki" loading="lazy" decoding="async" style="object-position:center 38%"></div>
+    <div class="qs2-photo" data-ch="4"><img src="assets/formatura-2.jpg" alt="Formatura PUCRS" loading="lazy" decoding="async" style="object-position:center 22%"></div>
+    <div class="qs2-photo" data-ch="5"><img src="assets/formatura-4.jpg" alt="Formatura UNIASSELVI" loading="lazy" decoding="async" style="object-position:center 22%"></div>
+    <div class="qs2-photo" data-ch="6"><img src="assets/formatura-1.jpg" alt="Onde me encontra" loading="lazy" decoding="async" style="object-position:center 22%"></div>
+
+    <!-- Dark overlay on top of photos -->
+    <div class="qs2-overlay"></div>
+
+    <!-- Chapter text blocks -->
+    <div class="qs2-center">
+
+      <!-- ch0 and ch1 are now at body level to avoid Safari overflow:hidden clip -->
+
+      <!-- ch2: Família -->
+      <div class="qs2-chapter" data-ch="2">
+        <p class="qs2-eyebrow">Família</p>
+        <h2 class="qs2-title">Bernardo &amp;<br><em>Joaquim.</em></h2>
+        <p class="qs2-note">4 anos · 2 anos · o propósito que ancora tudo</p>
+      </div>
+
+      <!-- ch3: Casa -->
+      <div class="qs2-chapter" data-ch="3">
+        <p class="qs2-eyebrow">Casa</p>
+        <h2 class="qs2-title">Ragnar &amp;<br><em>Floki.</em></h2>
+        <p class="qs2-note">Os gatos da casa · Porto Alegre</p>
+      </div>
+
+      <!-- ch4: Formação PUCRS -->
+      <div class="qs2-chapter" data-ch="4">
+        <p class="qs2-eyebrow">Formação · PUCRS</p>
+        <h2 class="qs2-title">Esp. Ciência<br>de Dados<br><em>&amp; IA.</em></h2>
+        <p class="qs2-note">2022 — 2023 · TCC nota 9,5 · 364h · Escola Politécnica</p>
+      </div>
+
+      <!-- ch5: Formação UNIASSELVI -->
+      <div class="qs2-chapter" data-ch="5">
+        <p class="qs2-eyebrow">Formação · UNIASSELVI</p>
+        <h2 class="qs2-title">Bacharel em<br><em>Administração.</em></h2>
+        <p class="qs2-note">2015 — 2019 · Bolsa Prouni integral</p>
+      </div>
+
+      <!-- ch6: Onde me encontra -->
+      <div class="qs2-chapter" data-ch="6">
+        <p class="qs2-eyebrow">Onde me encontra</p>
+        <h2 class="qs2-contact-title">Vamos<br><em>conversar.</em></h2>
+        <div class="qs2-contacts">
+          <a href="tel:+5551998837555">(51) 99883-7555</a>
+          <a href="mailto:andrelms_@hotmail.com">andrelms_@hotmail.com</a>
+          <a href="https://github.com/andrelms" target="_blank" rel="noopener">github.com/andrelms</a>
         </div>
       </div>
-      <div class="reveal">
-        <p class="section-tag">Família</p>
-        <div class="photo-grid">
-          <div class="photo-wrap" style="aspect-ratio:2/3">
-            <img src="assets/family-andre.jpg" alt="Bernardo e Joaquim" loading="lazy" decoding="async" style="object-position:center">
-            <div class="photo-fume"></div>
-            <div class="photo-tags">
-              <span class="photo-tag"><b>Bernardo</b> · 4</span>
-              <span class="photo-tag"><b>Joaquim</b> · 2</span>
-            </div>
-          </div>
-          <div class="photo-wrap" style="aspect-ratio:2/3">
-            <img src="assets/family-joaquim.jpg" alt="Floki e Ragnar" loading="lazy" decoding="async" style="object-position:bottom">
-            <div class="photo-fume"></div>
-            <div class="photo-tags">
-              <span class="photo-tag"><b>Ragnar &amp; Floki</b></span>
-            </div>
-          </div>
-        </div>
-        <div style="margin-top:20px;padding:24px;background:var(--bg2);border:1px solid var(--line)">
-          <p class="section-tag" style="margin-bottom:10px">Formação</p>
-          <div class="formatura-grid">
-            <div class="photo-wrap" style="aspect-ratio:9/16">
-              <img src="assets/formatura-1.jpg" alt="Formação 1" loading="lazy" decoding="async" style="object-position:center 20%;transform:scale(1.25) translateX(8%)">
-              <div class="photo-fume"></div>
-            </div>
-            <div class="photo-wrap" style="aspect-ratio:9/16">
-              <img src="assets/formatura-2.jpg" alt="Formação 2" loading="lazy" decoding="async">
-              <div class="photo-fume"></div>
-            </div>
-            <div class="photo-wrap" style="aspect-ratio:9/16">
-              <img src="assets/formatura-3.jpg" alt="Formação 3" loading="lazy" decoding="async">
-              <div class="photo-fume"></div>
-            </div>
-            <div class="photo-wrap" style="aspect-ratio:9/16">
-              <img src="assets/formatura-4.jpg" alt="Formação 4" loading="lazy" decoding="async">
-              <div class="photo-fume"></div>
-            </div>
-          </div>
-          <p style="font-size:14px;color:#fff;line-height:1.9;font-weight:400">
-            🎓 Pós-grad. Ciências de Dados &amp; IA — PUCRS (2022–2023)<br>
-            🎓 Bacharel em Administração — UNIASSELVI (2015–2019)<br>
-          </p>
-        </div>
-      </div>
+
     </div>
+
+    <!-- Progress indicator -->
+    <div class="qs2-progress" aria-hidden="true">
+      <span class="qs2-dot qs2-dot-active"></span>
+      <span class="qs2-dot"></span>
+      <span class="qs2-dot"></span>
+      <span class="qs2-dot"></span>
+      <span class="qs2-dot"></span>
+      <span class="qs2-dot"></span>
+      <span class="qs2-dot"></span>
+    </div>
+
   </div>
 </section>
 
 <div class="divider"></div>
 
-<!-- NUMBERS -->
-<section class="numbers-section">
-  <div class="container">
-    <div class="numbers-grid">
-      <div class="number-item reveal"><span class="number-val">+10k</span><div class="number-label">Processos Revisados<br><small style="opacity:.9;font-size:10px;color:var(--text)">+10 mil processos revisados com automação para recuperação de ativos · Eichenberg &amp; Lobato</small></div></div>
-      <div class="number-item reveal"><span class="number-val">30min</span><div class="number-label">Atualização em Tempo Real<br><small style="opacity:.9;font-size:10px;color:var(--text)">Dashboards em tempo real: milhares de pedidos rastreados e atualizados a cada 30 minutos para acompanhamento nos 4 CDs de Distribuição. +2 mil funcionários, +20 lojas nacionais · Refrigeração Dufrio</small></div></div>
-      <div class="number-item reveal"><span class="number-val">R$M+</span><div class="number-label">Crédito Consignado<br><small style="opacity:.9;font-size:10px;color:var(--text)">Monitoramento de milhões em Crédito Consignado em todo o Brasil. Balancete Financeiro e ciclo de centenas de dados tombado · Futuro Previdência</small></div></div>
-      <div class="number-item reveal"><span class="number-val">~1,5B</span><div class="number-label">Linhas Migradas<br><small style="opacity:.9;font-size:10px;color:var(--text)">Migração de sistemas legados para Databricks e Dataflow · Qlik para Power BI · Lakehouse Bronze/Silver/Gold · Infinilabs</small></div></div>
+<!-- NUMBERS (pinned showcase) -->
+<section id="stats-pin" class="stats-pin-section">
+  <div class="stats-pin-stage">
+    <div class="stat-slide active" data-i="0">
+      <div class="stat-eyebrow">01 · Processos</div>
+      <div class="stat-big">+10k</div>
+      <h3 class="stat-headline">Processos revisados<br>com automação</h3>
+      <p class="stat-context">+10 mil processos revisados via Power BI para recuperação de ativos · Eichenberg &amp; Lobato</p>
+    </div>
+    <div class="stat-slide" data-i="1">
+      <div class="stat-eyebrow">02 · Tempo Real</div>
+      <div class="stat-big">30min</div>
+      <h3 class="stat-headline">Atualização<br>contínua</h3>
+      <p class="stat-context">Dashboards em tempo real: milhares de pedidos rastreados e atualizados a cada 30 minutos para acompanhamento nos 4 CDs de Distribuição. +2 mil funcionários, +20 lojas nacionais · Refrigeração Dufrio</p>
+    </div>
+    <div class="stat-slide" data-i="2">
+      <div class="stat-eyebrow">03 · Capital</div>
+      <div class="stat-big">R$ M+</div>
+      <h3 class="stat-headline">Crédito Consignado<br>monitorado</h3>
+      <p class="stat-context">Monitoramento de milhões em Crédito Consignado em todo o Brasil. Balancete Financeiro e ciclo de centenas de dados tombados · Futuro Previdência</p>
+    </div>
+    <div class="stat-slide" data-i="3">
+      <div class="stat-eyebrow">04 · Migração</div>
+      <div class="stat-big">~1,5B</div>
+      <h3 class="stat-headline">Linhas migradas<br>para Lakehouse</h3>
+      <p class="stat-context">Sistemas legados migrados para Databricks e Dataflow · Qlik → Power BI · Lakehouse Bronze/Silver/Gold · Infinilabs</p>
+    </div>
+    <div class="stats-pin-progress">
+      <span class="dot active"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
     </div>
   </div>
 </section>
@@ -405,7 +552,7 @@
 <section class="timeline-section">
   <div class="container">
     <p class="section-tag">Trajetória</p>
-    <h2 class="section-title reveal">Uma carreira<br>construída<br>linha a linha.</h2>
+    <h2 class="section-title reveal clip-reveal">Uma carreira<br>construída<br>linha a linha.</h2>
     <div class="timeline">
 
       <div class="timeline-item">
@@ -616,19 +763,22 @@
   </div>
 </section>
 
-<!-- EXPERTISE -->
-<section>
-  <div class="container">
-    <p class="section-tag">Especialidades</p>
-    <h2 class="section-title reveal">O que entrego.</h2>
-  </div>
-  <div class="expertise-grid">
-    <div class="expertise-card reveal"><span class="expertise-icon">⚡</span><div class="expertise-title">IA Generativa &amp; LLMs</div><div class="expertise-desc">Agentes conversacionais, pipelines de classificação automática de documentos, OCR e análise de cláusulas trabalhistas. Fundamentos MLOps, modelos open source, validação cruzada por múltiplos modelos.</div></div>
-    <div class="expertise-card reveal"><span class="expertise-icon">📊</span><div class="expertise-title">Business Intelligence</div><div class="expertise-desc">Power BI (DAX avançado, Dataflows, Direct Lake, Microsoft Fabric), Qlik. Migração Qlik → Power BI, modelagem star schema, relatórios para comitês executivos e dashboards em tempo real.</div></div>
-    <div class="expertise-card reveal"><span class="expertise-icon">🏗️</span><div class="expertise-title">Engenharia de Dados</div><div class="expertise-desc">Lakehouse Bronze/Silver/Gold, ETL/ELT, Databricks, BigQuery, PostgreSQL, SQL Server. Migração de ambientes analíticos legados e governança para bilhões de linhas de dados históricos.</div></div>
-    <div class="expertise-card reveal"><span class="expertise-icon">☁️</span><div class="expertise-title">Cloud &amp; Integração</div><div class="expertise-desc">Azure, GCP, Microsoft Fabric. Integrações SAP, SharePoint, ERP, APIs externas. Pipelines cloud-to-cloud e híbridos para suporte a decisões estratégicas.</div></div>
-    <div class="expertise-card reveal"><span class="expertise-icon">🔄</span><div class="expertise-title">Automação &amp; Scraping</div><div class="expertise-desc">Web scraping institucional (MTE, sindicatos, órgãos públicos) com Playwright/Selenium. VBA para rotinas operacionais. Pipelines inteligentes com IA adaptativa para extração de documentos.</div></div>
-    <div class="expertise-card reveal"><span class="expertise-icon">⚖️</span><div class="expertise-title">Compliance &amp; Governança</div><div class="expertise-desc">LGPD para dados sensíveis, adequação BACEN, análise comparativa de CCTs/ACTs. Perfis hierárquicos de acesso, rastreabilidade, auditoria e conformidade regulatória em ambientes de saúde e financeiro.</div></div>
+<!-- EXPERTISE — vertical scroll, cards slide in from the side -->
+<section class="exp-carousel" id="exp-carousel">
+  <div class="exp-carousel-sticky">
+    <div class="exp-carousel-head">
+      <p class="section-tag">Especialidades</p>
+      <h2 class="section-title">O que entrego.</h2>
+    </div>
+    <div class="exp-deck">
+      <article class="exp-slide-card"><div class="expertise-num">01 / 06</div><span class="expertise-icon">⚡</span><div class="expertise-title">IA Generativa &amp; LLMs</div><div class="expertise-desc">Agentes conversacionais, pipelines de classificação automática de documentos, OCR e análise de cláusulas trabalhistas. Fundamentos MLOps, modelos open source, validação cruzada por múltiplos modelos.</div></article>
+      <article class="exp-slide-card"><div class="expertise-num">02 / 06</div><span class="expertise-icon">📊</span><div class="expertise-title">Business Intelligence</div><div class="expertise-desc">Power BI (DAX avançado, Dataflows, Direct Lake, Microsoft Fabric), Qlik. Migração Qlik → Power BI, modelagem star schema, relatórios para comitês executivos e dashboards em tempo real.</div></article>
+      <article class="exp-slide-card"><div class="expertise-num">03 / 06</div><span class="expertise-icon">🏗️</span><div class="expertise-title">Engenharia de Dados</div><div class="expertise-desc">Lakehouse Bronze/Silver/Gold, ETL/ELT, Databricks, BigQuery, PostgreSQL, SQL Server. Migração de ambientes analíticos legados e governança para bilhões de linhas de dados históricos.</div></article>
+      <article class="exp-slide-card"><div class="expertise-num">04 / 06</div><span class="expertise-icon">☁️</span><div class="expertise-title">Cloud &amp; Integração</div><div class="expertise-desc">Azure, GCP, Microsoft Fabric. Integrações SAP, SharePoint, ERP, APIs externas. Pipelines cloud-to-cloud e híbridos para suporte a decisões estratégicas.</div></article>
+      <article class="exp-slide-card"><div class="expertise-num">05 / 06</div><span class="expertise-icon">🔄</span><div class="expertise-title">Automação &amp; Scraping</div><div class="expertise-desc">Web scraping institucional (MTE, sindicatos, órgãos públicos) com Playwright/Selenium. VBA para rotinas operacionais. Pipelines inteligentes com IA adaptativa para extração de documentos.</div></article>
+      <article class="exp-slide-card"><div class="expertise-num">06 / 06</div><span class="expertise-icon">⚖️</span><div class="expertise-title">Compliance &amp; Governança</div><div class="expertise-desc">LGPD para dados sensíveis, adequação BACEN, análise comparativa de CCTs/ACTs. Perfis hierárquicos de acesso, rastreabilidade, auditoria e conformidade regulatória em ambientes de saúde e financeiro.</div></article>
+    </div>
+    <div class="exp-carousel-progress" id="exp-dots"></div>
   </div>
 </section>
 
@@ -636,7 +786,7 @@
 <section class="stack-section">
   <div class="container">
     <p class="section-tag">Stack Técnico</p>
-    <h2 class="section-title reveal">Ferramentas<br>de guerra.</h2>
+    <h2 class="section-title reveal clip-reveal">Ferramentas<br>de guerra.</h2>
   </div>
   <div class="stack-grid">
     <div class="stack-group reveal">
@@ -685,7 +835,7 @@
 <section class="projects-section">
   <div class="container">
     <p class="section-tag">Demos · Insightful Data Explorer</p>
-    <h2 class="section-title reveal">IA aplicada ao<br>direito<br>trabalhista.</h2>
+    <h2 class="section-title reveal clip-reveal">IA aplicada ao<br>direito<br>trabalhista.</h2>
     <div class="projects-grid">
       <div class="project-card reveal">
         <div class="video-thumb" onclick="loadVideo(this,'ah895Kb3tHI','16/9')">
@@ -742,7 +892,377 @@
   </div>
 </section>
 
+<!-- Fixed frame-layer: canvas + text panels live at body level (and BEFORE the
+     scripts so they exist at init) so no overflow:hidden ancestor — e.g. the
+     .qs2-sticky on iOS Safari — can clip them. -->
+<canvas id="qs2-canvas" class="qs2-canvas"></canvas>
+<!-- Veil mirrors the hero's photo overlay so the frame composite matches across the seam -->
+<div id="qs2-frame-veil"></div>
+<!-- Smoke / atmosphere overlay for the frame continuation (Quem sou + Sobre) — same puffs as hero -->
+<div id="qs2-smoke">
+  <div class="smoke-layer smoke-1"></div>
+  <div class="smoke-layer smoke-2"></div>
+  <div class="smoke-layer smoke-3"></div>
+  <div class="smoke-layer smoke-4"></div>
+</div>
+<div class="qs2-chapter qs2-frame-chapter" data-ch="0">
+  <p class="qs2-eyebrow">Quem sou</p>
+  <h1 class="qs2-title">Dados.<br><em>Família.</em><br>Propósito.</h1>
+</div>
+<div class="qs2-chapter qs2-frame-chapter" data-ch="1">
+  <p class="qs2-eyebrow">Sobre</p>
+  <p class="qs2-text">Profissional Senior em Data &amp; Analytics com experiência end-to-end em <em>BI, Engenharia de Dados, Data Science e IA</em> aplicada ao negócio. Pipeline, governança, Lakehouse Bronze/Silver/Gold e modernização analítica que vira <b>decisão executiva</b>.</p>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+
 <script>
+  // ===== motion stack: Lenis smooth scroll + GSAP ScrollTrigger =====
+  (function(){
+    if (typeof window.Lenis === 'undefined' || typeof window.gsap === 'undefined' || typeof window.ScrollTrigger === 'undefined') return;
+    var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var isDesktop = window.innerWidth >= 900;
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Lenis only on desktop and only when motion is allowed (mobile keeps native momentum)
+    if (isDesktop && !prefersReduced) {
+      var lenis = new Lenis({
+        duration: 1.05,
+        easing: function(t){ return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+        smoothWheel: true,
+        wheelMultiplier: 1,
+      });
+      lenis.on('scroll', ScrollTrigger.update);
+      gsap.ticker.add(function(time){ lenis.raf(time * 1000); });
+      gsap.ticker.lagSmoothing(0);
+      document.documentElement.classList.add('has-lenis');
+    }
+
+    // 3. Subtle parallax on tagged images
+    if (!prefersReduced) {
+      gsap.utils.toArray('.parallax-img').forEach(function(el){
+        var parent = el.closest('.photo-wrap') || el.parentElement;
+        gsap.fromTo(el,
+          { yPercent: -8 },
+          {
+            yPercent: 8,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: parent,
+              start: 'top bottom',
+              end: 'bottom top',
+              scrub: true,
+            }
+          }
+        );
+      });
+    }
+
+  })();
+
+  // 4. Quem sou 2 — native sticky, scroll-driven chapter + lateral photo slide
+  (function(){
+    var qs2 = document.getElementById('quem-sou');
+    if (!qs2) return;
+    var N = 7;
+    var chapters = qs2.querySelectorAll('.qs2-chapter');
+    var photos = qs2.querySelectorAll('.qs2-photo');
+    var dots = qs2.querySelectorAll('.qs2-dot');
+    var curIdx = -1;
+
+    function activateChapter(idx) {
+      if (idx === curIdx) return;
+      curIdx = idx;
+      chapters.forEach(function(c) {
+        // Match by data-ch (ch0/ch1 live at body level and aren't in this list)
+        var ch = parseInt(c.dataset.ch, 10);
+        c.classList.toggle('qs2-chapter-active', ch === idx);
+      });
+      photos.forEach(function(ph) {
+        var ch = parseInt(ph.dataset.ch, 10);
+        ph.classList.remove('qs2-active', 'qs2-past');
+        if (ch < idx) { ph.classList.add('qs2-past'); }
+        else if (ch === idx) { ph.classList.add('qs2-active'); }
+      });
+      dots.forEach(function(d, i) {
+        d.classList.toggle('qs2-dot-active', i === idx);
+      });
+    }
+
+    function onQs2Scroll() {
+      var rect = qs2.getBoundingClientRect();
+      var scrolled = -rect.top;
+      var scrollable = qs2.offsetHeight - window.innerHeight;
+      if (scrollable <= 0) return;
+      var p = Math.max(0, Math.min(1, scrolled / scrollable));
+      var idx = Math.min(N - 1, Math.floor(p * N * 0.9999));
+      activateChapter(idx);
+    }
+
+    window.addEventListener('scroll', onQs2Scroll, { passive: true });
+    onQs2Scroll();
+  })();
+
+  // 4b. Quem sou — frame continuation: last 192 hero frames across ch0 + ch1
+  (function(){
+    var section = document.getElementById('quem-sou');
+    var canvas = document.getElementById('qs2-canvas');
+    var smokeEl = document.getElementById('qs2-smoke');
+    var veilEl = document.getElementById('qs2-frame-veil');
+    if (!section || !canvas) return;
+    var ctx = canvas.getContext('2d');
+    // TAIL is computed proportionally inside buildConfig() as cfg.tail
+    var SPAN = 2 / 7;        // ch0 + ch1 occupy the first 2 of 7 chapters
+    // Elements are at body level (not inside the section) to avoid
+    // overflow:hidden clipping in iOS Safari with sticky ancestors.
+    var frameChapters = document.querySelectorAll('.qs2-frame-chapter');
+    var cfg = null;
+    var curIdx = 0;
+
+    // Each panel (Quem sou, Sobre) gets half the journey:
+    // rises in from below → holds centred (full opacity) → rises out above.
+    function driveFrameText(jp, canvasVis){
+      var n = frameChapters.length; // 2
+      frameChapters.forEach(function(el, i){
+        var pj = jp * n - i;   // local progress 0→1 within this panel's half
+        var ty, op;
+        if (pj <= 0 || canvasVis <= 0) {
+          ty = 100;  op = 0;                     // not yet / canvas gone → park below
+        } else if (pj >= 1) {
+          ty = -100; op = 0;                     // done → park above
+        } else if (pj < 0.18) {                  // ENTRY: rise from +80 vh, fade in
+          var t = pj / 0.18;
+          ty = 80 * (1 - t); op = t;
+        } else if (pj < 0.82) {                  // HOLD: centred, full opacity
+          ty = 0; op = 1;
+        } else {                                  // EXIT: rise to −80 vh, fade out
+          var t = (pj - 0.82) / 0.18;
+          ty = -80 * t; op = 1 - t;
+        }
+        el.style.transform = 'translateY(' + ty + 'vh)';
+        el.style.opacity    = op * canvasVis;
+      });
+    }
+
+    function buildConfig(){
+      var mobile = window.innerWidth < 900;
+      var total = mobile ? 960 : 504;
+      // Proportional tail: same 38% share of the video for both breakpoints,
+      // so the split point falls at the same visual moment regardless of resolution.
+      var tail = Math.round(192 * total / 504);
+      return {
+        total: total,
+        tail: tail,
+        // Start ON the hero's last frame (total-tail-1) so the cross-fade
+        // overlap blends two identical frames -> seamless takeover.
+        start: total - tail - 1,
+        end: total - 1
+      };
+    }
+
+    function resize(){
+      canvas.width = canvas.offsetWidth * (window.devicePixelRatio || 1);
+      canvas.height = canvas.offsetHeight * (window.devicePixelRatio || 1);
+      draw(curIdx);
+    }
+
+    // Reuse the hero's already-loaded frames (same URLs, same Image objects) —
+    // no second download, no redundant decode. Falls back gracefully while the
+    // hero is still filling its cache.
+    function sharedFrames(){
+      var store = window.__heroFrames;
+      if (!store) return null;
+      return (window.innerWidth < 900) ? store.m : store.d;
+    }
+
+    function pickNearest(target){
+      var f = sharedFrames();
+      if (!f) return null;
+      var img = f[target];
+      if (img && img.complete && img.naturalWidth) return img;
+      for (var d = 1; d <= (cfg ? cfg.tail : 200); d++){
+        var a = f[target - d]; if (a && a.complete && a.naturalWidth) return a;
+        var b = f[target + d]; if (b && b.complete && b.naturalWidth) return b;
+      }
+      return null;
+    }
+
+    function draw(idx){
+      var img = pickNearest(Math.round(idx));
+      if (!img) return;
+      var cw = canvas.width, ch = canvas.height;
+      var iw = img.naturalWidth, ih = img.naturalHeight;
+      var scale = Math.max(cw / iw, ch / ih);
+      var w = iw * scale, h = ih * scale;
+      ctx.clearRect(0, 0, cw, ch);
+      ctx.drawImage(img, (cw - w) / 2, (ch - h) / 2, w, h);
+    }
+
+
+    // Cache section height — only recalculate on resize, not every scroll tick.
+    var sectionH = 0;
+
+    function update(){
+      if (!cfg) return;
+      var rect = section.getBoundingClientRect();
+      var vh = window.innerHeight;
+      var scrollable = sectionH - vh;
+      if (scrollable <= 0) return;
+      // Continuous "journey": the instant the hero finishes its frames (the
+      // section sits one viewport below, rect.top === vh) the fixed layer takes
+      // over with the very next frame, in the exact same spot. From there the
+      // frames AND the text advance together with every scroll tick — no frozen
+      // gap, no two watches — until the 192 frames are spent across Quem sou +
+      // Sobre, then it fades out to reveal the photo chapters (Familia onward).
+      var spanPx = SPAN * scrollable;        // pinned scroll budget for the frame span
+      var journeyLen = vh + spanPx;          // bridge (one viewport) + span
+      var traveled = vh - rect.top;          // 0 at takeover -> journeyLen at span end
+      var jp = Math.max(0, Math.min(1, traveled / journeyLen));
+
+      // Hard swap at the seam — no cross-fade.
+      // Hero snaps to HERO_LAST at p≥0.97 (identical frame on both canvases).
+      // Veil exactly mirrors hero-photo-overlay → composite is indistinguishable
+      // → zero visible seam regardless of scroll speed or device.
+      var canvasVis;
+      if (traveled < 0)  canvasVis = 0;                 // hero still owns the frames
+      else if (jp < 1)   canvasVis = 1;                 // continuous frame journey
+      else               canvasVis = Math.max(0, 1 - (traveled - journeyLen) / (0.025 * scrollable)); // hand-off to photos
+
+      curIdx = cfg.start + jp * (cfg.end - cfg.start);
+      draw(curIdx);
+      canvas.style.opacity = canvasVis;
+      canvas.style.visibility = canvasVis <= 0 ? 'hidden' : 'visible';
+      if (smokeEl) {
+        smokeEl.style.opacity = canvasVis;
+        smokeEl.style.visibility = canvasVis <= 0 ? 'hidden' : 'visible';
+      }
+      if (veilEl) {
+        veilEl.style.opacity = canvasVis;
+        veilEl.style.visibility = canvasVis <= 0 ? 'hidden' : 'visible';
+      }
+      driveFrameText(jp, canvasVis);
+    }
+
+    // rAF throttle: draw once per display frame even when scroll fires many
+    // times per paint cycle — eliminates stutter on touch / fast scroll.
+    var qs2RafPending = false;
+    function scheduleUpdate(){
+      if (qs2RafPending) return;
+      qs2RafPending = true;
+      requestAnimationFrame(function(){ qs2RafPending = false; update(); });
+    }
+
+    cfg = buildConfig();
+    sectionH = section.offsetHeight;
+    resize();
+    update();
+    window.addEventListener('scroll', scheduleUpdate, { passive: true });
+    window.addEventListener('resize', function(){
+      var mobileNow = window.innerWidth < 900;
+      if ((cfg.total === 960) !== mobileNow){ cfg = buildConfig(); }
+      sectionH = section.offsetHeight;
+      resize();
+      update();
+    }, { passive: true });
+  })();
+
+  // 4b-warm. Pre-fetch the Quem sou photo chapters during idle so they are
+  // already cached by the time the frame journey ends — no pop-in on arrival.
+  (function(){
+    var srcs = ['assets/family-andre.jpg','assets/family-joaquim.jpg',
+                'assets/formatura-2.jpg','assets/formatura-4.jpg','assets/formatura-1.jpg'];
+    function warm(){
+      srcs.forEach(function(src){
+        var img = new Image();
+        if ('fetchPriority' in img) img.fetchPriority = 'low';
+        img.decoding = 'async';
+        img.src = src;
+      });
+    }
+    if ('requestIdleCallback' in window) requestIdleCallback(warm, { timeout: 4000 });
+    else setTimeout(warm, 2500);
+  })();
+
+  // 4c. Especialidades — pinned carousel: vertical scroll drives lateral card transitions
+  (function(){
+    var section = document.getElementById('exp-carousel');
+    if (!section) return;
+    var cards = Array.prototype.slice.call(section.querySelectorAll('.exp-slide-card'));
+    var dotsWrap = document.getElementById('exp-dots');
+    if (!cards.length) return;
+    var n = cards.length;
+
+    var dots = [];
+    if (dotsWrap){
+      cards.forEach(function(_, i){
+        var d = document.createElement('span');
+        d.className = 'exp-dot' + (i === 0 ? ' active' : '');
+        dotsWrap.appendChild(d);
+        dots.push(d);
+      });
+    }
+
+    function layout(pos){
+      cards.forEach(function(card, i){
+        var off = i - pos;                 // 0 = centred/active
+        var a = Math.abs(off);
+        var x  = off * 62;                 // % of card width — lateral travel
+        var sc = Math.max(0.78, 1 - a * 0.14);
+        var op = Math.max(0, 1 - a * 0.85);
+        var ry = Math.max(-22, Math.min(22, off * -9)); // subtle 3D turn
+        card.style.transform = 'translateX(' + x + '%) scale(' + sc + ') rotateY(' + ry + 'deg)';
+        card.style.opacity = op;
+        card.style.zIndex = String(100 - Math.round(a * 10));
+        card.style.pointerEvents = a < 0.5 ? 'auto' : 'none';
+      });
+      if (dots.length){
+        var active = Math.round(pos);
+        dots.forEach(function(d, i){ d.classList.toggle('active', i === active); });
+      }
+    }
+
+    function update(){
+      var rect = section.getBoundingClientRect();
+      var vh = window.innerHeight;
+      var scrollable = section.offsetHeight - vh;
+      if (scrollable <= 0){ layout(0); return; }
+      var p = Math.max(0, Math.min(1, -rect.top / scrollable));
+      layout(p * (n - 1));
+    }
+
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update, { passive: true });
+  })();
+
+  // 5. Stats showcase — native sticky, scroll-driven slide activation
+  (function(){
+    var section = document.getElementById('stats-pin');
+    if (!section) return;
+    var slides = section.querySelectorAll('.stat-slide');
+    var dots = section.querySelectorAll('.stats-pin-progress .dot');
+    var N = slides.length;
+    var cur = -1;
+    function activate(idx){
+      if (idx === cur) return;
+      cur = idx;
+      slides.forEach(function(s, i){ s.classList.toggle('active', i === idx); });
+      dots.forEach(function(d, i){ d.classList.toggle('active', i === idx); });
+    }
+    function onScroll(){
+      var rect = section.getBoundingClientRect();
+      var scrolled = -rect.top;
+      var scrollable = section.offsetHeight - window.innerHeight;
+      if (scrollable <= 0) return;
+      var p = Math.max(0, Math.min(1, scrolled / scrollable));
+      activate(Math.min(N - 1, Math.floor(p * N * 0.9999)));
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+
   const cursor=document.getElementById('cursor'),ring=document.getElementById('cursorRing');
   let mx=0,my=0,rx=0,ry=0;
   document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px'});
@@ -755,7 +1275,7 @@
   const obs=new IntersectionObserver(entries=>{
     entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*70);obs.unobserve(e.target)}});
   },{threshold:.1});
-  document.querySelectorAll('.reveal,.timeline-item').forEach(el=>obs.observe(el));
+  document.querySelectorAll('.reveal,.timeline-item,.clip-reveal').forEach(el=>obs.observe(el));
 
   function loadVideo(el, id, ratio) {
     el.classList.add('loaded');
@@ -778,6 +1298,8 @@
     function isDesktop(){ return window.innerWidth >= 900; }
     var ctx = canvas.getContext('2d');
     var frames = new Array(TOTAL);
+    // Share the cache so #quem-sou reuses these exact Image objects.
+    (window.__heroFrames = window.__heroFrames || {}).d = frames;
     var currentIdx = 0;
     var targetIdx = 0;
     var rafId = null;
@@ -838,8 +1360,19 @@
       var scrolled = window.scrollY - hero.offsetTop;
       var scrollable = hero.offsetHeight - window.innerHeight;
       var p = Math.max(0, Math.min(1, scrolled / scrollable));
-      targetIdx = Math.min(TOTAL-1, p * (TOTAL-1));
-      if(!rafId) rafId = requestAnimationFrame(animate);
+      // Hero plays the proportional share; the rest continue in #quem-sou.
+      var TAIL = Math.round(192 * TOTAL / 504);
+      var HERO_LAST = TOTAL - TAIL - 1;
+      // Snap to HERO_LAST in the final 3%: eliminates lerp lag at the seam
+      // so the qs2 hard-swap lands on the identical frame.
+      if (p >= 0.97) {
+        if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+        currentIdx = HERO_LAST; targetIdx = HERO_LAST;
+        drawFrame(HERO_LAST);
+      } else {
+        targetIdx = Math.min(HERO_LAST, p * HERO_LAST);
+        if(!rafId) rafId = requestAnimationFrame(animate);
+      }
       textElsD.forEach(function(item){
         var el = document.querySelector(item.sel);
         if(!el) return;
@@ -850,7 +1383,12 @@
 
     resize();
     window.addEventListener('resize', resize, {passive:true});
-    window.addEventListener('scroll', onScroll, {passive:true});
+    // rAF-throttle: targetIdx only needs to update once per paint cycle.
+    var heroRafD = false;
+    window.addEventListener('scroll', function(){
+      if (heroRafD) return; heroRafD = true;
+      requestAnimationFrame(function(){ heroRafD = false; onScroll(); });
+    }, {passive:true});
 
     // Priority queue: frame 0 first, then anchor frames every `stride`,
     // then the rest. Caps in-flight requests so the browser doesn't
@@ -890,7 +1428,12 @@
         frames[pos] = img;
       }
     }
-    pump();
+    // Only download the desktop set on desktop — mobile gets its own lighter
+    // folder. (Previously both sets loaded on every device: ~139MB total.)
+    var started = false;
+    function maybeLoad(){ if(started || !isDesktop()) return; started = true; pump(); }
+    maybeLoad();
+    window.addEventListener('resize', maybeLoad, {passive:true});
   })();
 
   // Hero scroll-driven canvas (mobile only)
@@ -901,6 +1444,8 @@
     function isMobile(){ return window.innerWidth < 900; }
     var ctx = canvas.getContext('2d');
     var frames = new Array(TOTAL);
+    // Share the cache so #quem-sou reuses these exact Image objects.
+    (window.__heroFrames = window.__heroFrames || {}).m = frames;
     var currentIdx = 0;
     var targetIdx = 0;
     var rafId = null;
@@ -956,19 +1501,41 @@
       var scrolled = window.scrollY - hero.offsetTop;
       var scrollable = hero.offsetHeight - window.innerHeight;
       var p = Math.max(0, Math.min(1, scrolled / scrollable));
-      targetIdx = Math.min(TOTAL-1, p * (TOTAL-1));
-      if(!rafId) rafId = requestAnimationFrame(animate);
+      // Hero plays the proportional share; the rest continue in #quem-sou.
+      var TAIL = Math.round(192 * TOTAL / 504);
+      var HERO_LAST = TOTAL - TAIL - 1;
+      // Snap to HERO_LAST in the final 3%: eliminates lerp lag at the seam
+      // so the qs2 hard-swap lands on the identical frame.
+      if (p >= 0.97) {
+        if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+        currentIdx = HERO_LAST; targetIdx = HERO_LAST;
+        drawFrame(HERO_LAST);
+      } else {
+        targetIdx = Math.min(HERO_LAST, p * HERO_LAST);
+        if(!rafId) rafId = requestAnimationFrame(animate);
+      }
+      var exiting = p > 0.88;   // last stretch before #quem-sou takes the frames
       textEls.forEach(function(item){
         var el = document.querySelector(item.sel);
         if(!el) return;
-        if(p >= item.t){ el.classList.add('scroll-in'); }
-        else { el.classList.remove('scroll-in'); }
+        if(exiting){
+          el.classList.add('hero-exit');
+        } else {
+          el.classList.remove('hero-exit');
+          if(p >= item.t){ el.classList.add('scroll-in'); }
+          else { el.classList.remove('scroll-in'); }
+        }
       });
     }
 
     resize();
     window.addEventListener('resize', resize, {passive:true});
-    window.addEventListener('scroll', onScroll, {passive:true});
+    // rAF-throttle: same approach as desktop hero for consistent performance.
+    var heroRafM = false;
+    window.addEventListener('scroll', function(){
+      if (heroRafM) return; heroRafM = true;
+      requestAnimationFrame(function(){ heroRafM = false; onScroll(); });
+    }, {passive:true});
 
     var queue = [];
     var seen = new Array(TOTAL);
@@ -1005,7 +1572,11 @@
         frames[pos] = img;
       }
     }
-    pump();
+    // Only download the mobile set on mobile.
+    var started = false;
+    function maybeLoad(){ if(started || !isMobile()) return; started = true; pump(); }
+    maybeLoad();
+    window.addEventListener('resize', maybeLoad, {passive:true});
   })();
 </script>
 
