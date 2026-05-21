@@ -254,7 +254,7 @@
     text-shadow: 0 2px 30px rgba(0,0,0,.95), 0 2px 10px rgba(0,0,0,.85), 0 1px 3px rgba(0,0,0,.7);
   }
   /* Smoke overlay for quem-sou/sobre frame chapters — same atmosphere as hero */
-  #qs2-smoke{position:fixed;inset:0;z-index:901;pointer-events:none;overflow:hidden;opacity:0;visibility:hidden}
+  #qs2-smoke{position:fixed;inset:0;z-index:900;pointer-events:none;overflow:hidden;opacity:0;visibility:hidden}
   /* Veil that mirrors the hero's photo overlay so the frame composite matches across the seam */
   #qs2-frame-veil{position:fixed;inset:0;z-index:901;pointer-events:none;opacity:0;visibility:hidden;background:linear-gradient(to right,rgba(8,11,15,.85) 0%,rgba(8,11,15,.4) 50%,rgba(8,11,15,.1) 100%),linear-gradient(to top,rgba(8,11,15,.6) 0%,transparent 40%)}
   .qs2-frame-chapter .qs2-title,.qs2-frame-chapter .qs2-text,.qs2-frame-chapter .qs2-eyebrow{text-shadow:0 2px 30px rgba(0,0,0,.85),0 2px 10px rgba(0,0,0,.7),0 1px 3px rgba(0,0,0,.6)}
@@ -271,6 +271,7 @@
   .qs2-contacts{display:flex;flex-direction:column;gap:8px;align-items:center}
   .qs2-contacts a{color:#fff;text-decoration:none;font-family:'DM Mono',monospace;font-size:14px;font-weight:400;letter-spacing:.1em;transition:color .2s,border-color .2s,background .2s;padding:10px 22px;border:1px solid var(--line);background:rgba(14,19,24,.5);min-width:280px;text-align:center}
   .qs2-contacts a:hover{color:var(--gold);border-color:var(--gold);background:rgba(201,168,76,.05)}
+  .qs2-cta{display:flex;gap:16px;margin-top:32px;justify-content:center;flex-wrap:wrap}
   .qs2-progress{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;gap:14px;z-index:5}
   .qs2-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.2);transition:background .3s,width .3s}
   .qs2-dot.qs2-dot-active{background:var(--gold);width:24px;border-radius:3px}
@@ -440,10 +441,7 @@
   <div class="hero-left">
     <p class="hero-role">Data Engineering · Analytics · LLMs · Cloud</p>
     <p class="hero-sub">Databricks · Power BI · Python · Azure · GCP · Microsoft Fabric</p>
-    <div class="hero-cta">
-      <a href="#quem-sou" class="btn btn-fill btn-scroll-contato">Ver Projeto</a>
-      <a href="#quem-sou" class="btn btn-scroll-contato">LinkedIn</a>
-    </div>
+
   </div>
   <div class="hero-right">
     <div class="hero-photo-wrap">
@@ -479,7 +477,7 @@
     <div class="qs2-photo" data-ch="3"><img src="assets/family-joaquim.jpg" alt="Ragnar e Floki" loading="lazy" decoding="async" style="object-position:center 38%"></div>
     <div class="qs2-photo" data-ch="4"><img src="assets/formatura-2.jpg" alt="Formatura PUCRS" loading="lazy" decoding="async" style="object-position:center 22%"></div>
     <div class="qs2-photo" data-ch="5"><img src="assets/formatura-4.jpg" alt="Formatura UNIASSELVI" loading="lazy" decoding="async" style="object-position:center 22%"></div>
-    <div class="qs2-photo" data-ch="6"><img src="assets/formatura-1.jpg" alt="Onde me encontra" loading="lazy" decoding="async" style="object-position:center 22%"></div>
+    <div class="qs2-photo" data-ch="6"><img src="assets/formatura-3.jpg" alt="Onde me encontra" loading="lazy" decoding="async" style="object-position:center 22%"></div>
 
     <!-- Local smoke overlay for photo chapters (ch2 to ch6) -->
     <div class="qs2-smoke-local" aria-hidden="true">
@@ -533,6 +531,10 @@
           <a href="tel:+5551998837555">(51) 99883-7555</a>
           <a href="mailto:andrelms_@hotmail.com">andrelms_@hotmail.com</a>
           <a href="https://github.com/andrelms" target="_blank" rel="noopener">github.com/andrelms</a>
+        </div>
+        <div class="qs2-cta">
+          <a href="https://insightful-data-explorer-27-sepia.vercel.app/site" target="_blank" class="btn btn-fill">Ver Projeto</a>
+          <a href="https://www.linkedin.com/in/andr%C3%A9-machado-b7475257/" target="_blank" class="btn">LinkedIn</a>
         </div>
       </div>
 
@@ -935,8 +937,6 @@
      scripts so they exist at init) so no overflow:hidden ancestor — e.g. the
      .qs2-sticky on iOS Safari — can clip them. -->
 <canvas id="qs2-canvas" class="qs2-canvas"></canvas>
-<!-- Veil mirrors the hero's photo overlay so the frame composite matches across the seam -->
-<div id="qs2-frame-veil"></div>
 <!-- Smoke / atmosphere overlay for the frame continuation (Quem sou + Sobre) — same puffs as hero -->
 <div id="qs2-smoke">
   <div class="smoke-layer smoke-1"></div>
@@ -944,6 +944,8 @@
   <div class="smoke-layer smoke-3"></div>
   <div class="smoke-layer smoke-4"></div>
 </div>
+<!-- Veil mirrors the hero's photo overlay so the frame composite matches across the seam -->
+<div id="qs2-frame-veil"></div>
 <div class="qs2-chapter qs2-frame-chapter" data-ch="0">
   <p class="qs2-eyebrow">Quem sou</p>
   <h1 class="qs2-title">Dados.<br><em>Família.</em><br>Propósito.</h1>
