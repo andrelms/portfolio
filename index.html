@@ -248,7 +248,7 @@
   /* Centre scrim behind the text — fades with the text (opacity is JS-driven on the
      chapter), so it darkens behind the words for legibility without touching the seam. */
   .qs2-frame-chapter::before{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse 95% 72% at 50% 46%,rgba(8,11,15,.88) 0%,rgba(8,11,15,.62) 48%,rgba(8,11,15,.2) 76%,transparent 92%)}
-  .qs2-smoke-local{position:absolute;inset:0;z-index:3;pointer-events:none;overflow:hidden}
+  .qs2-smoke-local{position:absolute;inset:0;z-index:2;pointer-events:none;overflow:hidden}
   /* Shadow for text elements inside chapters for better legibility */
   .qs2-chapter .qs2-title, .qs2-chapter .qs2-text, .qs2-chapter .qs2-eyebrow, .qs2-chapter .qs2-note {
     text-shadow: 0 2px 30px rgba(0,0,0,.95), 0 2px 10px rgba(0,0,0,.85), 0 1px 3px rgba(0,0,0,.7);
@@ -481,9 +481,6 @@
     <div class="qs2-photo" data-ch="5"><img src="assets/formatura-4.jpg" alt="Formatura UNIASSELVI" loading="lazy" decoding="async" style="object-position:center 22%"></div>
     <div class="qs2-photo" data-ch="6"><img src="assets/formatura-1.jpg" alt="Onde me encontra" loading="lazy" decoding="async" style="object-position:center 22%"></div>
 
-    <!-- Dark overlay on top of photos -->
-    <div class="qs2-overlay"></div>
-
     <!-- Local smoke overlay for photo chapters (ch2 to ch6) -->
     <div class="qs2-smoke-local" aria-hidden="true">
       <div class="smoke-layer smoke-1"></div>
@@ -491,6 +488,9 @@
       <div class="smoke-layer smoke-3"></div>
       <div class="smoke-layer smoke-4"></div>
     </div>
+
+    <!-- Dark overlay on top of photos -->
+    <div class="qs2-overlay"></div>
 
     <!-- Chapter text blocks -->
     <div class="qs2-center">
