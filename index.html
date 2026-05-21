@@ -248,13 +248,13 @@
   /* Centre scrim behind the text — fades with the text (opacity is JS-driven on the
      chapter), so it darkens behind the words for legibility without touching the seam. */
   .qs2-frame-chapter::before{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse 95% 72% at 50% 46%,rgba(8,11,15,.88) 0%,rgba(8,11,15,.62) 48%,rgba(8,11,15,.2) 76%,transparent 92%)}
-  .qs2-smoke-local{position:absolute;inset:0;z-index:2;pointer-events:none;overflow:hidden}
+  .qs2-smoke-local{position:absolute;top:0;bottom:0;right:0;width:50%;z-index:2;pointer-events:none;overflow:hidden}
   /* Shadow for text elements inside chapters for better legibility */
   .qs2-chapter .qs2-title, .qs2-chapter .qs2-text, .qs2-chapter .qs2-eyebrow, .qs2-chapter .qs2-note {
     text-shadow: 0 2px 30px rgba(0,0,0,.95), 0 2px 10px rgba(0,0,0,.85), 0 1px 3px rgba(0,0,0,.7);
   }
   /* Smoke overlay for quem-sou/sobre frame chapters — same atmosphere as hero */
-  #qs2-smoke{position:fixed;inset:0;z-index:900;pointer-events:none;overflow:hidden;opacity:0;visibility:hidden}
+  #qs2-smoke{position:fixed;top:0;bottom:0;right:0;width:50%;z-index:900;pointer-events:none;overflow:hidden;opacity:0;visibility:hidden}
   /* Veil that mirrors the hero's photo overlay so the frame composite matches across the seam */
   #qs2-frame-veil{position:fixed;inset:0;z-index:901;pointer-events:none;opacity:0;visibility:hidden;background:linear-gradient(to right,rgba(8,11,15,.85) 0%,rgba(8,11,15,.4) 50%,rgba(8,11,15,.1) 100%),linear-gradient(to top,rgba(8,11,15,.6) 0%,transparent 40%)}
   .qs2-frame-chapter .qs2-title,.qs2-frame-chapter .qs2-text,.qs2-frame-chapter .qs2-eyebrow{text-shadow:0 2px 30px rgba(0,0,0,.85),0 2px 10px rgba(0,0,0,.7),0 1px 3px rgba(0,0,0,.6)}
@@ -290,6 +290,8 @@
     .qs2-note{font-size:11px}
     .qs2-contacts a{min-width:unset;width:100%;max-width:320px}
     .qs2-contact-title{font-size:clamp(36px,10vw,64px)}
+    .qs2-smoke-local, #qs2-smoke{width:100% !important;height:130vh !important;top:0 !important;bottom:auto !important;left:0 !important;right:0 !important}
+    .qs2-overlay{background:linear-gradient(to bottom,rgba(8,11,15,.2) 0%,rgba(8,11,15,.45) 50%,rgba(8,11,15,.85) 100%) !important}
   }
 
   /* REVEAL */
@@ -387,6 +389,46 @@
     opacity:1 !important;
     transform:translateY(0) !important;
     pointer-events:auto !important;
+  }
+
+  /* Saída elegante em cascata no desktop (width >= 900px) */
+  @media(min-width:900px){
+    .hero-eyebrow.hero-exit{
+      opacity:0 !important;
+      transform:translateY(-40px) !important;
+      transition:opacity .5s ease 0s, transform .5s ease 0s !important;
+      pointer-events:none !important;
+    }
+    .hero-name.hero-exit{
+      opacity:0 !important;
+      transform:translateY(-40px) !important;
+      transition:opacity .5s ease .05s, transform .5s ease .05s !important;
+      pointer-events:none !important;
+    }
+    .hero-role.hero-exit{
+      opacity:0 !important;
+      transform:translateY(-40px) !important;
+      transition:opacity .5s ease .1s, transform .5s ease .1s !important;
+      pointer-events:none !important;
+    }
+    .hero-sub.hero-exit{
+      opacity:0 !important;
+      transform:translateY(-40px) !important;
+      transition:opacity .5s ease .15s, transform .5s ease .15s !important;
+      pointer-events:none !important;
+    }
+    .hero-cta.hero-exit{
+      opacity:0 !important;
+      transform:translateY(-40px) !important;
+      transition:opacity .5s ease .2s, transform .5s ease .2s !important;
+      pointer-events:none !important;
+    }
+    .hero-stats.hero-exit{
+      opacity:0 !important;
+      transform:translateY(-40px) !important;
+      transition:opacity .5s ease .25s, transform .5s ease .25s !important;
+      pointer-events:none !important;
+    }
   }
 
   @media(prefers-reduced-motion: reduce){
@@ -1391,11 +1433,21 @@
       var HERO_LAST = TOTAL - TAIL - 1;
       targetIdx = Math.min(HERO_LAST, p * HERO_LAST);
       if(!rafId) rafId = requestAnimationFrame(animate);
+      
+      // Saída elegante em cascata no desktop:
+      var exitStart = 0.80; // os elementos do hero começam a sair a partir de 80% do scroll do hero
       textElsD.forEach(function(item){
         var el = document.querySelector(item.sel);
         if(!el) return;
-        if(p >= item.t){ el.classList.add('scroll-in'); }
-        else { el.classList.remove('scroll-in'); }
+        // Cada elemento tem seu próprio threshold de saída baseado no ponto de entrada
+        var elExitAt = exitStart + (item.t / 0.20) * 0.08; // spread suave de até 8% de scroll
+        if(p >= elExitAt){
+          el.classList.add('hero-exit');
+        } else {
+          el.classList.remove('hero-exit');
+          if(p >= item.t){ el.classList.add('scroll-in'); }
+          else { el.classList.remove('scroll-in'); }
+        }
       });
     }
 
