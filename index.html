@@ -247,7 +247,12 @@
   .qs2-chapter.qs2-frame-chapter{position:fixed;inset:0;z-index:902;filter:none;transition:none;pointer-events:none;will-change:transform,opacity}
   /* Centre scrim behind the text — fades with the text (opacity is JS-driven on the
      chapter), so it darkens behind the words for legibility without touching the seam. */
-  .qs2-frame-chapter::before{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse 95% 62% at 50% 46%,rgba(8,11,15,.74) 0%,rgba(8,11,15,.4) 46%,rgba(8,11,15,.08) 74%,transparent 88%)}
+  .qs2-frame-chapter::before{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse 95% 72% at 50% 46%,rgba(8,11,15,.88) 0%,rgba(8,11,15,.62) 48%,rgba(8,11,15,.2) 76%,transparent 92%)}
+  .qs2-smoke-local{position:absolute;inset:0;z-index:3;pointer-events:none;overflow:hidden}
+  /* Shadow for text elements inside chapters for better legibility */
+  .qs2-chapter .qs2-title, .qs2-chapter .qs2-text, .qs2-chapter .qs2-eyebrow, .qs2-chapter .qs2-note {
+    text-shadow: 0 2px 30px rgba(0,0,0,.95), 0 2px 10px rgba(0,0,0,.85), 0 1px 3px rgba(0,0,0,.7);
+  }
   /* Smoke overlay for quem-sou/sobre frame chapters — same atmosphere as hero */
   #qs2-smoke{position:fixed;inset:0;z-index:901;pointer-events:none;overflow:hidden;opacity:0;visibility:hidden}
   /* Veil that mirrors the hero's photo overlay so the frame composite matches across the seam */
@@ -436,8 +441,8 @@
     <p class="hero-role">Data Engineering · Analytics · LLMs · Cloud</p>
     <p class="hero-sub">Databricks · Power BI · Python · Azure · GCP · Microsoft Fabric</p>
     <div class="hero-cta">
-      <a href="http://insightful-data-explorer-27-sepia.vercel.app/site" target="_blank" class="btn btn-fill">Ver Projeto</a>
-      <a href="https://www.linkedin.com/in/andr%C3%A9-machado-b7475257/" target="_blank" class="btn">LinkedIn</a>
+      <a href="#quem-sou" class="btn btn-fill btn-scroll-contato">Ver Projeto</a>
+      <a href="#quem-sou" class="btn btn-scroll-contato">LinkedIn</a>
     </div>
   </div>
   <div class="hero-right">
@@ -478,6 +483,14 @@
 
     <!-- Dark overlay on top of photos -->
     <div class="qs2-overlay"></div>
+
+    <!-- Local smoke overlay for photo chapters (ch2 to ch6) -->
+    <div class="qs2-smoke-local" aria-hidden="true">
+      <div class="smoke-layer smoke-1"></div>
+      <div class="smoke-layer smoke-2"></div>
+      <div class="smoke-layer smoke-3"></div>
+      <div class="smoke-layer smoke-4"></div>
+    </div>
 
     <!-- Chapter text blocks -->
     <div class="qs2-center">
@@ -1568,6 +1581,24 @@
     function maybeLoad(){ if(started || !isMobile()) return; started = true; pump(); }
     maybeLoad();
     window.addEventListener('resize', maybeLoad, {passive:true});
+  })();
+
+  // Botões do Hero rolam até a seção Contato (Vamos Conversar)
+  (function(){
+    var buttons = document.querySelectorAll('.btn-scroll-contato');
+    buttons.forEach(function(btn){
+      btn.addEventListener('click', function(e){
+        e.preventDefault();
+        var target = document.getElementById('quem-sou');
+        if (target) {
+          var targetScroll = target.offsetTop + target.offsetHeight - window.innerHeight;
+          window.scrollTo({
+            top: targetScroll,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
   })();
 </script>
 
