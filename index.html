@@ -25,6 +25,20 @@
   body{background:var(--bg);color:var(--text);font-family:'DM Mono',monospace;font-size:15px;line-height:1.7;overflow-x:hidden;cursor:none;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
   .cursor{position:fixed;width:8px;height:8px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s}
   .cursor-ring{position:fixed;width:32px;height:32px;border:1px solid var(--gold);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);opacity:.45}
+  /* Scroll progress frame — four bars scale from 0→1 clockwise (top→right→bottom→left) */
+  .scroll-frame{position:fixed;inset:0;z-index:9990;pointer-events:none}
+  .scroll-frame .sf-bar{position:absolute;background:var(--gold);box-shadow:0 0 7px rgba(201,168,76,.45);will-change:transform}
+  .scroll-frame .sf-top{top:0;left:0;height:2px;width:100%;transform:scaleX(0);transform-origin:left center}
+  .scroll-frame .sf-right{top:0;right:0;width:2px;height:100%;transform:scaleY(0);transform-origin:center top}
+  .scroll-frame .sf-bottom{bottom:0;right:0;height:2px;width:100%;transform:scaleX(0);transform-origin:right center}
+  .scroll-frame .sf-left{bottom:0;left:0;width:2px;height:100%;transform:scaleY(0);transform-origin:center bottom}
+  /* Completion: the closed frame brightens to gold2 and pulses a glow once. */
+  .scroll-frame.is-complete .sf-bar{background:var(--gold2);animation:sfSeal 1.3s ease-out}
+  @keyframes sfSeal{
+    0%{box-shadow:0 0 7px rgba(201,168,76,.45)}
+    35%{box-shadow:0 0 30px rgba(232,201,122,.95),0 0 60px rgba(232,201,122,.45)}
+    100%{box-shadow:0 0 12px rgba(232,201,122,.6)}
+  }
   body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:1000;opacity:.4}
 
   /* HERO */
@@ -400,6 +414,17 @@
 
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
+
+<!-- Scroll progress frame: gold border draws clockwise around the viewport as
+     you advance through the page; seals + glows on completion. Built from four
+     transform:scale bars (not SVG dashoffset) so it renders identically in every
+     browser. -->
+<div class="scroll-frame" id="scrollFrame" aria-hidden="true">
+  <i class="sf-bar sf-top"></i>
+  <i class="sf-bar sf-right"></i>
+  <i class="sf-bar sf-bottom"></i>
+  <i class="sf-bar sf-left"></i>
+</div>
 
 <!-- HERO -->
 <section class="hero">
@@ -1261,6 +1286,39 @@
     }
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
+  })();
+
+  // 6. Scroll progress frame — gold border draws clockwise around the viewport
+  //    as the page advances, then seals + glows on completion.
+  (function(){
+    var frame = document.getElementById('scrollFrame');
+    if (!frame) return;
+    var top    = frame.querySelector('.sf-top');
+    var right  = frame.querySelector('.sf-right');
+    var bottom = frame.querySelector('.sf-bottom');
+    var left   = frame.querySelector('.sf-left');
+    var completed = false;
+    function clamp(v){ return v < 0 ? 0 : (v > 1 ? 1 : v); }
+    function update(){
+      var doc = document.documentElement;
+      var max = doc.scrollHeight - window.innerHeight;
+      var p = max > 0 ? clamp(window.scrollY / max) : 0;
+      // Each edge owns one quarter of the scroll, filled in clockwise order.
+      top.style.transform    = 'scaleX(' + clamp(p / 0.25) + ')';
+      right.style.transform  = 'scaleY(' + clamp((p - 0.25) / 0.25) + ')';
+      bottom.style.transform = 'scaleX(' + clamp((p - 0.5) / 0.25) + ')';
+      left.style.transform   = 'scaleY(' + clamp((p - 0.75) / 0.25) + ')';
+      if (p >= 0.999 && !completed){ completed = true; frame.classList.add('is-complete'); }
+      else if (p < 0.98 && completed){ completed = false; frame.classList.remove('is-complete'); }
+    }
+    var pending = false;
+    function onScroll(){
+      if (pending) return; pending = true;
+      requestAnimationFrame(function(){ pending = false; update(); });
+    }
+    update();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
   })();
 
   const cursor=document.getElementById('cursor'),ring=document.getElementById('cursorRing');
