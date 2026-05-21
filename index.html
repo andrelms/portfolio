@@ -335,10 +335,43 @@
     }
     /* Final stretch of the hero: data rises out and fades, handing the frames
        over to the Quem sou data — an elegant baton pass, not a hard cut. */
-    .hero-eyebrow.hero-exit,.hero-name.hero-exit,.hero-role.hero-exit,
-    .hero-sub.hero-exit,.hero-cta.hero-exit,.hero-stats.hero-exit{
+    /* Saída elegante em cascata — cada elemento tem sua própria direção e timing */
+    .hero-eyebrow.hero-exit{
       opacity:0 !important;
-      transform:translateY(-48px) !important;
+      transform:translateY(-32px) !important;
+      filter:blur(4px) !important;
+      transition:opacity .55s ease, transform .55s ease, filter .55s ease !important;
+      pointer-events:none !important;
+    }
+    .hero-name.hero-exit{
+      opacity:0 !important;
+      transform:translateY(-52px) scale(.97) !important;
+      filter:blur(3px) !important;
+      transition:opacity .65s cubic-bezier(.4,0,.2,1), transform .65s cubic-bezier(.4,0,.2,1), filter .65s ease !important;
+      pointer-events:none !important;
+    }
+    .hero-role.hero-exit{
+      opacity:0 !important;
+      transform:translateY(-28px) !important;
+      transition:opacity .5s ease .05s, transform .5s ease .05s !important;
+      pointer-events:none !important;
+    }
+    .hero-sub.hero-exit{
+      opacity:0 !important;
+      transform:translateY(-20px) !important;
+      transition:opacity .45s ease .08s, transform .45s ease .08s !important;
+      pointer-events:none !important;
+    }
+    .hero-cta.hero-exit{
+      opacity:0 !important;
+      transform:translateY(16px) !important;
+      transition:opacity .4s ease .1s, transform .4s ease .1s !important;
+      pointer-events:none !important;
+    }
+    .hero-stats.hero-exit{
+      opacity:0 !important;
+      transform:translateY(24px) !important;
+      transition:opacity .5s ease .12s, transform .5s ease .12s !important;
       pointer-events:none !important;
     }
   }
@@ -1478,11 +1511,17 @@
       var HERO_LAST = TOTAL - TAIL - 1;
       targetIdx = Math.min(HERO_LAST, p * HERO_LAST);
       if(!rafId) rafId = requestAnimationFrame(animate);
-      var exiting = p > 0.88;   // last stretch before #quem-sou takes the frames
+      // Saída elegante em cascata: cada elemento começa a sair em momentos
+      // ligeiramente diferentes, criando um efeito cinematográfico de "cortina"
+      // que se levanta antes do Quem Sou assumir.
+      var exitStart = 0.82; // hero começa a despedir os elementos aqui
+      var exitEnd   = 0.97; // totalmente saídos antes do seam
       textEls.forEach(function(item){
         var el = document.querySelector(item.sel);
         if(!el) return;
-        if(exiting){
+        // Cada elemento tem seu próprio threshold de saída, levemente escalonado
+        var elExitAt = exitStart + (item.t / 0.30) * 0.04; // spread de 0 a 4% entre eles
+        if(p >= elExitAt){
           el.classList.add('hero-exit');
         } else {
           el.classList.remove('hero-exit');
