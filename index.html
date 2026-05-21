@@ -1118,16 +1118,13 @@
       var traveled = vh - rect.top;          // 0 at takeover -> journeyLen at span end
       var jp = Math.max(0, Math.min(1, traveled / journeyLen));
 
-      // Cross-fade overlap: the fixed layer fades IN over the last stretch
-      // before the seam, while the hero is still showing (nearly) the same
-      // frame. Both watches dissolve through each other on identical frames,
-      // so there is no snap — quem-sou eases in fluidly, then continues forward.
-      var preFade = 0.28 * vh;               // overlap distance before the seam
+      // Transição direta frame a frame — sem cross-fade/dissolve.
+      // O canvas aparece exatamente quando o scroll passa o seam (traveled >= 0),
+      // igual a todos os outros frames da sequência.
       var canvasVis;
-      if (traveled <= -preFade)      canvasVis = 0;                                   // hero still owns the frames
-      else if (traveled < 0)         canvasVis = (traveled + preFade) / preFade;      // 0 -> 1 cross-fade into the seam
-      else if (jp < 1)               canvasVis = 1;                                   // continuous frame journey
-      else                           canvasVis = Math.max(0, 1 - (traveled - journeyLen) / (0.025 * scrollable)); // hand-off to photos
+      if (traveled < 0)  canvasVis = 0;                                                                          // hero ainda controla os frames
+      else if (jp < 1)   canvasVis = 1;                                                                          // jornada contínua de frames
+      else               canvasVis = Math.max(0, 1 - (traveled - journeyLen) / (0.025 * scrollable));            // passagem para as fotos
 
       curIdx = cfg.start + jp * (cfg.end - cfg.start);
       draw(curIdx);
