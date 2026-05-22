@@ -1210,11 +1210,14 @@
     }
 
 
+    // Altura da seção em cache — recalculada só no resize, não a cada scroll.
+    var sectionH = 0;
+
     function update(){
       if (!cfg) return;
       var rect = section.getBoundingClientRect();
       var vh = window.innerHeight;
-      var scrollable = section.offsetHeight - vh;
+      var scrollable = sectionH - vh;
       if (scrollable <= 0) return;
       // Continuous "journey": the instant the hero finishes its frames (the
       // section sits one viewport below, rect.top === vh) the fixed layer takes
@@ -1250,13 +1253,25 @@
       driveFrameText(jp, canvasVis);
     }
 
+    // rAF throttle: desenha no máximo uma vez por frame de tela, mesmo que o
+    // navegador dispare muitos eventos de scroll por ciclo de pintura. Sem isto,
+    // o Samsung Internet / mobile chama ctx.drawImage a cada evento -> trava.
+    var qs2RafPending = false;
+    function scheduleUpdate(){
+      if (qs2RafPending) return;
+      qs2RafPending = true;
+      requestAnimationFrame(function(){ qs2RafPending = false; update(); });
+    }
+
     cfg = buildConfig();
+    sectionH = section.offsetHeight;
     resize();
     update();
-    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('scroll', scheduleUpdate, { passive: true });
     window.addEventListener('resize', function(){
       var mobileNow = window.innerWidth < 900;
       if ((cfg.total === 960) !== mobileNow){ cfg = buildConfig(); }
+      sectionH = section.offsetHeight;
       resize();
       update();
     }, { passive: true });
@@ -1326,9 +1341,14 @@
       layout(p * (n - 1));
     }
 
+    var expRaf = false;
+    function scheduleExp(){
+      if (expRaf) return; expRaf = true;
+      requestAnimationFrame(function(){ expRaf = false; update(); });
+    }
     update();
-    window.addEventListener('scroll', update, { passive: true });
-    window.addEventListener('resize', update, { passive: true });
+    window.addEventListener('scroll', scheduleExp, { passive: true });
+    window.addEventListener('resize', scheduleExp, { passive: true });
   })();
 
   // 5. Stats showcase — native sticky, scroll-driven slide activation
@@ -1457,9 +1477,17 @@
       // Hero plays the proportional share; the rest continue in #quem-sou.
       var TAIL = Math.round(192 * TOTAL / 504);
       var HERO_LAST = TOTAL - TAIL - 1;
-      targetIdx = Math.min(HERO_LAST, p * HERO_LAST);
-      if(!rafId) rafId = requestAnimationFrame(animate);
-      
+      // Snap para HERO_LAST nos últimos 3%: elimina o atraso do lerp no seam,
+      // então o hard-swap do quem-sou cai exatamente no mesmo frame -> sem salto.
+      if (p >= 0.97) {
+        if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+        currentIdx = HERO_LAST; targetIdx = HERO_LAST;
+        drawFrame(HERO_LAST);
+      } else {
+        targetIdx = Math.min(HERO_LAST, p * HERO_LAST);
+        if(!rafId) rafId = requestAnimationFrame(animate);
+      }
+
       // Saída elegante em cascata no desktop:
       var exitStart = 0.80; // os elementos do hero começam a sair a partir de 80% do scroll do hero
       textElsD.forEach(function(item){
@@ -1479,7 +1507,12 @@
 
     resize();
     window.addEventListener('resize', resize, {passive:true});
-    window.addEventListener('scroll', onScroll, {passive:true});
+    // rAF throttle: atualiza targetIdx no máximo uma vez por frame de pintura.
+    var heroRafD = false;
+    window.addEventListener('scroll', function(){
+      if (heroRafD) return; heroRafD = true;
+      requestAnimationFrame(function(){ heroRafD = false; onScroll(); });
+    }, {passive:true});
 
     // Priority queue: frame 0 first, then anchor frames every `stride`,
     // then the rest. Caps in-flight requests so the browser doesn't
@@ -1595,8 +1628,16 @@
       // Hero plays the proportional share; the rest continue in #quem-sou.
       var TAIL = Math.round(192 * TOTAL / 504);
       var HERO_LAST = TOTAL - TAIL - 1;
-      targetIdx = Math.min(HERO_LAST, p * HERO_LAST);
-      if(!rafId) rafId = requestAnimationFrame(animate);
+      // Snap para HERO_LAST nos últimos 3%: elimina o atraso do lerp no seam,
+      // então o hard-swap do quem-sou cai exatamente no mesmo frame -> sem salto.
+      if (p >= 0.97) {
+        if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+        currentIdx = HERO_LAST; targetIdx = HERO_LAST;
+        drawFrame(HERO_LAST);
+      } else {
+        targetIdx = Math.min(HERO_LAST, p * HERO_LAST);
+        if(!rafId) rafId = requestAnimationFrame(animate);
+      }
       // Saída elegante em cascata: cada elemento começa a sair em momentos
       // ligeiramente diferentes, criando um efeito cinematográfico de "cortina"
       // que se levanta antes do Quem Sou assumir.
@@ -1619,7 +1660,13 @@
 
     resize();
     window.addEventListener('resize', resize, {passive:true});
-    window.addEventListener('scroll', onScroll, {passive:true});
+    // rAF throttle: o loop de lerp já cuida da animação suave; o handler só
+    // precisa atualizar targetIdx uma vez por frame de pintura.
+    var heroRafM = false;
+    window.addEventListener('scroll', function(){
+      if (heroRafM) return; heroRafM = true;
+      requestAnimationFrame(function(){ heroRafM = false; onScroll(); });
+    }, {passive:true});
 
     var queue = [];
     var seen = new Array(TOTAL);
