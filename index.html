@@ -1157,7 +1157,7 @@
 
     function buildConfig(){
       var mobile = window.innerWidth < 900;
-      var total = mobile ? 960 : 504;
+      var total = mobile ? 960 : 380;
       // Proportional tail: same 38% share of the video for both breakpoints,
       // so the split point falls at the same visual moment regardless of resolution.
       var tail = Math.round(192 * total / 504);
@@ -1406,7 +1406,7 @@
 
   // Hero scroll-driven canvas (desktop only)
   (function(){
-    var TOTAL = 504;
+    var TOTAL = 380;
     var canvas = document.getElementById('hero-canvas');
     if (!canvas) return;
     function isDesktop(){ return window.innerWidth >= 900; }
