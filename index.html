@@ -44,7 +44,7 @@
   body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:1000;opacity:.4}
 
   /* HERO */
-  .hero{height:524vh;position:relative;padding:0}.hero-sticky{position:sticky;top:0;height:100vh;display:grid;grid-template-columns:1fr 1fr;overflow:hidden}.hero-canvas{position:absolute;inset:0;width:100%;height:100%;display:block}.hero-canvas-mobile{display:none !important}.hero-mobile-img{display:none}
+  .hero{height:400vh;position:relative;padding:0}.hero-sticky{position:sticky;top:0;height:100vh;display:grid;grid-template-columns:1fr 1fr;overflow:hidden}.hero-canvas{position:absolute;inset:0;width:100%;height:100%;display:block}.hero-canvas-mobile{display:none !important}.hero-mobile-img{display:none}
   .hero-left{display:flex;flex-direction:column;justify-content:flex-end;padding:80px 60px;position:relative;z-index:2;min-height:100vh}
   .hero-eyebrow{position:absolute;top:40px;left:60px;font-size:12px;letter-spacing:.3em;color:var(--gold);text-transform:uppercase;margin-bottom:0;opacity:0;animation:fadeUp .8s .2s forwards;font-weight:500;z-index:5}
   .hero-name{position:absolute;top:120px;left:60px;font-family:'Bebas Neue',sans-serif;font-size:clamp(68px,10vw,140px);line-height:.88;color:#fff;letter-spacing:-.02em;opacity:0;animation:fadeUp .8s .4s forwards;z-index:5}
@@ -1406,7 +1406,7 @@
 
   // Hero scroll-driven canvas (desktop only)
   (function(){
-    var TOTAL = 380;
+    var TOTAL = 351;
     var canvas = document.getElementById('hero-canvas');
     if (!canvas) return;
     function isDesktop(){ return window.innerWidth >= 900; }
@@ -1475,8 +1475,8 @@
       var scrollable = hero.offsetHeight - window.innerHeight;
       var p = Math.max(0, Math.min(1, scrolled / scrollable));
       // Hero plays the proportional share; the rest continue in #quem-sou.
-      var TAIL = Math.round(192 * TOTAL / 504);
-      var HERO_LAST = TOTAL - TAIL - 1;
+      var TAIL = 0;
+      var HERO_LAST = TOTAL - 1;
       // Snap para HERO_LAST nos últimos 3%: elimina o atraso do lerp no seam,
       // então o hard-swap do quem-sou cai exatamente no mesmo frame -> sem salto.
       if (p >= 0.97) {
@@ -1562,7 +1562,7 @@
 
   // Hero scroll-driven canvas (mobile only)
   (function(){
-    var TOTAL = 960;
+    var TOTAL = 351;
     var canvas = document.getElementById('hero-canvas-mobile');
     if (!canvas) return;
     function isMobile(){ return window.innerWidth < 900; }
@@ -1626,8 +1626,8 @@
       var scrollable = hero.offsetHeight - window.innerHeight;
       var p = Math.max(0, Math.min(1, scrolled / scrollable));
       // Hero plays the proportional share; the rest continue in #quem-sou.
-      var TAIL = Math.round(192 * TOTAL / 504);
-      var HERO_LAST = TOTAL - TAIL - 1;
+      var TAIL = 0;
+      var HERO_LAST = TOTAL - 1;
       // Snap para HERO_LAST nos últimos 3%: elimina o atraso do lerp no seam,
       // então o hard-swap do quem-sou cai exatamente no mesmo frame -> sem salto.
       if (p >= 0.97) {
