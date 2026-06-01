@@ -261,9 +261,8 @@
   .qs2-chapter.qs2-chapter-active{opacity:1;transform:translateY(0);filter:blur(0);pointer-events:auto}
   /* Frame chapters (Quem sou + Sobre) ride a viewport-fixed layer above the frames — JS drives transform/opacity */
   .qs2-chapter.qs2-frame-chapter{position:fixed;inset:0;z-index:902;filter:none;transition:none;pointer-events:none;will-change:transform,opacity}
-  /* Centre scrim behind the text — fades with the text (opacity is JS-driven on the
-     chapter), so it darkens behind the words for legibility without touching the seam. */
-  .qs2-frame-chapter::before{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse 95% 72% at 50% 46%,rgba(8,11,15,.62) 0%,rgba(8,11,15,.38) 48%,rgba(8,11,15,.1) 76%,transparent 92%)}
+  /* Centre scrim behind the text — removed for fully bright frames */
+  .qs2-frame-chapter::before{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;background:none}
   .qs2-smoke-local{position:absolute;inset:0;width:100%;z-index:2;pointer-events:none;overflow:hidden}
   /* Shadow for text elements inside chapters for better legibility */
   .qs2-chapter .qs2-title, .qs2-chapter .qs2-text, .qs2-chapter .qs2-eyebrow, .qs2-chapter .qs2-note {
@@ -1157,18 +1156,25 @@
 
     function buildConfig(){
       var mobile = window.innerWidth < 900;
-      var total = mobile ? 960 : 380;
-      // Proportional tail: same 38% share of the video for both breakpoints,
-      // so the split point falls at the same visual moment regardless of resolution.
-      var tail = Math.round(192 * total / 504);
-      return {
-        total: total,
-        tail: tail,
-        // Start ON the hero's last frame (total-tail-1) so the cross-fade
-        // overlap blends two identical frames -> seamless takeover.
-        start: total - tail - 1,
-        end: total - 1
-      };
+      if (mobile) {
+        var total = 240;
+        var tail = 40;
+        return {
+          total: total,
+          tail: tail,
+          start: total - tail - 1,
+          end: total - 1
+        };
+      } else {
+        var total = 240;
+        var tail = 80;
+        return {
+          total: total,
+          tail: tail,
+          start: total - tail - 1,
+          end: total - 1
+        };
+      }
     }
 
     function resize(){
@@ -1406,7 +1412,7 @@
 
   // Hero scroll-driven canvas (desktop only)
   (function(){
-    var TOTAL = 351;
+    var TOTAL = 240;
     var canvas = document.getElementById('hero-canvas');
     if (!canvas) return;
     function isDesktop(){ return window.innerWidth >= 900; }
@@ -1475,8 +1481,8 @@
       var scrollable = hero.offsetHeight - window.innerHeight;
       var p = Math.max(0, Math.min(1, scrolled / scrollable));
       // Hero plays the proportional share; the rest continue in #quem-sou.
-      var TAIL = 0;
-      var HERO_LAST = TOTAL - 1;
+      var TAIL = 80;
+      var HERO_LAST = TOTAL - TAIL - 1;
       // Snap para HERO_LAST nos últimos 3%: elimina o atraso do lerp no seam,
       // então o hard-swap do quem-sou cai exatamente no mesmo frame -> sem salto.
       if (p >= 0.97) {
@@ -1562,7 +1568,7 @@
 
   // Hero scroll-driven canvas (mobile only)
   (function(){
-    var TOTAL = 351;
+    var TOTAL = 240;
     var canvas = document.getElementById('hero-canvas-mobile');
     if (!canvas) return;
     function isMobile(){ return window.innerWidth < 900; }
@@ -1626,8 +1632,8 @@
       var scrollable = hero.offsetHeight - window.innerHeight;
       var p = Math.max(0, Math.min(1, scrolled / scrollable));
       // Hero plays the proportional share; the rest continue in #quem-sou.
-      var TAIL = 0;
-      var HERO_LAST = TOTAL - 1;
+      var TAIL = 40;
+      var HERO_LAST = TOTAL - TAIL - 1;
       // Snap para HERO_LAST nos últimos 3%: elimina o atraso do lerp no seam,
       // então o hard-swap do quem-sou cai exatamente no mesmo frame -> sem salto.
       if (p >= 0.97) {
