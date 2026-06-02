@@ -1240,11 +1240,17 @@
       // O canvas aparece exatamente quando o scroll passa o seam (traveled >= 0),
       // igual a todos os outros frames da sequência.
       var canvasVis;
-      if (traveled < 0)  canvasVis = 0;                                                                          // hero ainda controla os frames
+      if (traveled < -10)  canvasVis = 0;                                                                        // hero ainda controla os frames (com margem de segurança)
+      else if (traveled < 0) canvasVis = Math.max(0, (traveled + 10) / 10);                                      // fade-in suave de -10px a 0
       else if (jp < 1)   canvasVis = 1;                                                                          // jornada contínua de frames
       else               canvasVis = Math.max(0, 1 - (traveled - journeyLen) / (0.025 * scrollable));            // passagem para as fotos
 
-      curIdx = cfg.start + jp * (cfg.end - cfg.start);
+      // Se o hero ainda está renderizando, sincroniza com seu frame final
+      if (traveled < 0 && window.__heroFinalFrame !== undefined) {
+        curIdx = window.__heroFinalFrame;
+      } else {
+        curIdx = cfg.start + jp * (cfg.end - cfg.start);
+      }
       draw(curIdx);
       canvas.style.opacity = canvasVis;
       canvas.style.visibility = canvasVis <= 0 ? 'hidden' : 'visible';
@@ -1257,6 +1263,8 @@
         veilEl.style.visibility = canvasVis <= 0 ? 'hidden' : 'visible';
       }
       driveFrameText(jp, canvasVis);
+      // Debug: log a transição para verificar sincronização
+      // console.log('qs2 traveled:', traveled, 'jp:', jp, 'canvasVis:', canvasVis, 'curIdx:', curIdx);
     }
 
     // rAF throttle: desenha no máximo uma vez por frame de tela, mesmo que o
@@ -1640,6 +1648,8 @@
         if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
         currentIdx = HERO_LAST; targetIdx = HERO_LAST;
         drawFrame(HERO_LAST);
+        // Sincroniza o frame final com o qs2-canvas para evitar solavanco na transição
+        window.__heroFinalFrame = HERO_LAST;
       } else {
         targetIdx = Math.min(HERO_LAST, p * HERO_LAST);
         if(!rafId) rafId = requestAnimationFrame(animate);
