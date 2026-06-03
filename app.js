@@ -159,50 +159,63 @@ function loadVideo(el, id, ratio) {
   }
 
   // ═══════════════════════════════════════════════════════════
-  // 4. HERO — DESKTOP: CSS Dynamic Debossed Lighting
+  // 4. UNIFIED HERO LIGHT ENGINE & PLASTER RENDERING
   // ═══════════════════════════════════════════════════════════
+  var L = { a: -0.55, d: 1.0 };
+  var BASE = -0.55;
+  var heroSection = document.querySelector('.hero');
+  var heroSticky = document.querySelector('.hero-sticky');
+  var isHovering = false;
+
+  function updateScrollLight() {
+    if (isHovering && !isMobile) return;
+    if (!heroSection) return;
+    
+    var rect = heroSection.getBoundingClientRect();
+    var scrolled = -rect.top;
+    var maxScroll = heroSection.offsetHeight - window.innerHeight;
+    if (maxScroll <= 0) return;
+    var progress = Math.max(0, Math.min(1, scrolled / maxScroll));
+    
+    // Luz gira 2.5 voltas, easing cúbico suave
+    var ep = progress < 0.5 ? 4 * progress * progress * progress : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+    L.a = BASE + ep * Math.PI * 2 * 2.5;
+    L.d = 0.65 + progress * 0.35;
+    
+    var lx = Math.cos(L.a) * 4;
+    var ly = Math.sin(L.a) * 4;
+    
+    document.documentElement.style.setProperty('--lx', lx.toFixed(2));
+    document.documentElement.style.setProperty('--ly', ly.toFixed(2));
+    
+    if (!isMobile) {
+      var spotX = 50 + Math.cos(L.a) * 35;
+      var spotY = 50 + Math.sin(L.a) * 35;
+      document.documentElement.style.setProperty('--spot-x', spotX.toFixed(2) + '%');
+      document.documentElement.style.setProperty('--spot-y', spotY.toFixed(2) + '%');
+    }
+  }
+
+  // Scroll listener for light updates
+  var lightTicking = false;
+  window.addEventListener('scroll', function() {
+    if (!lightTicking) {
+      requestAnimationFrame(function() {
+        updateScrollLight();
+        lightTicking = false;
+      });
+      lightTicking = true;
+    }
+  }, { passive: true });
+
+  // Initial call
+  updateScrollLight();
+
+  // Desktop only interactive mouse light tracking & canvases
   if (!isMobile) {
-    var heroSection = document.querySelector('.hero');
-    var heroSticky = document.querySelector('.hero-sticky');
-
-    if (heroSection && heroSticky) {
-      var isHovering = false;
-      var dTicking = false;
-
-      function updateScrollLight() {
-        if (isHovering) return;
-        var rect = heroSection.getBoundingClientRect();
-        var scrolled = -rect.top;
-        var maxScroll = heroSection.offsetHeight - window.innerHeight;
-        if (maxScroll <= 0) return;
-        var progress = Math.max(0, Math.min(1, scrolled / maxScroll));
-        
-        // Map scroll to light angle (full 360° rotation like the video)
-        var angle = progress * Math.PI * 2;
-        var lx = Math.cos(angle) * 4;
-        var ly = Math.sin(angle) * 4;
-        
-        // Spotlight center coordinates (15% to 85% of screen)
-        var spotX = 50 + Math.cos(angle) * 35;
-        var spotY = 50 + Math.sin(angle) * 35;
-        
-        heroSticky.style.setProperty('--lx', lx.toFixed(2));
-        heroSticky.style.setProperty('--ly', ly.toFixed(2));
-        heroSticky.style.setProperty('--spot-x', spotX.toFixed(2) + '%');
-        heroSticky.style.setProperty('--spot-y', spotY.toFixed(2) + '%');
-      }
-
-      window.addEventListener('scroll', function() {
-        if (!dTicking) {
-          requestAnimationFrame(function() {
-            updateScrollLight();
-            dTicking = false;
-          });
-          dTicking = true;
-        }
-      }, { passive: true });
-
-      // Interactive mousemove light tracking
+    if (heroSticky) {
+      heroSticky.style.pointerEvents = 'auto'; // ensure mousemove works
+      
       heroSticky.addEventListener('mousemove', function(e) {
         isHovering = true;
         var w = window.innerWidth;
@@ -216,21 +229,250 @@ function loadVideo(el, id, ratio) {
         var spotX = (e.clientX / w) * 100;
         var spotY = (e.clientY / h) * 100;
         
-        heroSticky.style.setProperty('--lx', lx.toFixed(2));
-        heroSticky.style.setProperty('--ly', ly.toFixed(2));
-        heroSticky.style.setProperty('--spot-x', spotX.toFixed(2) + '%');
-        heroSticky.style.setProperty('--spot-y', spotY.toFixed(2) + '%');
+        document.documentElement.style.setProperty('--lx', lx.toFixed(2));
+        document.documentElement.style.setProperty('--ly', ly.toFixed(2));
+        document.documentElement.style.setProperty('--spot-x', spotX.toFixed(2) + '%');
+        document.documentElement.style.setProperty('--spot-y', spotY.toFixed(2) + '%');
+        
+        // Feed mouse light angle into L.a for the canvas engine
+        L.a = Math.atan2(ly, lx);
       });
 
       heroSticky.addEventListener('mouseleave', function() {
         isHovering = false;
-        // Snap back to scroll position smoothly
         updateScrollLight();
       });
-
-      // Run once on load
-      updateScrollLight();
     }
+
+    // Initialize bg and hero canvases
+    var bgCanvas = document.getElementById('bg-canvas');
+    var bgCtx = bgCanvas ? bgCanvas.getContext('2d') : null;
+    var bgW, bgH;
+
+    var heroCanvas = document.getElementById('hero-canvas');
+    var heroCtx = heroCanvas ? heroCanvas.getContext('2d') : null;
+    var heroW, heroH, heroDPR;
+    var fontsReady = false;
+    document.fonts.ready.then(function() { fontsReady = true; });
+
+    function resizeCanvases() {
+      if (bgCanvas) {
+        bgW = bgCanvas.width = window.innerWidth;
+        bgH = bgCanvas.height = window.innerHeight;
+      }
+      if (heroCanvas) {
+        heroDPR = window.devicePixelRatio || 1;
+        heroW = heroCanvas.width = heroCanvas.offsetWidth * heroDPR;
+        heroH = heroCanvas.height = heroCanvas.offsetHeight * heroDPR;
+      }
+      layoutMid();
+    }
+
+    var midElement = document.querySelector('.hero-left');
+    function layoutMid() {
+      if (!midElement || !heroCanvas) return;
+      var W2 = window.innerWidth;
+      var H2 = window.innerHeight;
+      var fsFinal = W2 * 0.215;
+      var topY = H2 * 0.22;
+      var twoLines = fsFinal * 0.88 * 2;
+      var gap = H2 * 0.052;
+      midElement.style.top = (topY + twoLines + gap) + 'px';
+    }
+
+    // Run resizing
+    resizeCanvases();
+    window.addEventListener('resize', function() { setTimeout(resizeCanvases, 50); }, { passive: true });
+
+    // BG Canvas rendering loop
+    function drawBg() {
+      if (!bgCtx || isMobile) {
+        if (bgCanvas) bgCanvas.style.display = 'none';
+        return;
+      }
+      bgCanvas.style.display = 'block';
+      
+      bgCtx.fillStyle = '#dedad4';
+      bgCtx.fillRect(0, 0, bgW, bgH);
+      
+      var lx = (0.5 + Math.cos(L.a) * 0.44) * bgW;
+      var ly = (0.5 + Math.sin(L.a) * 0.44) * bgH;
+      var R = Math.hypot(bgW, bgH);
+      
+      // Main spotlight glow
+      var g = bgCtx.createRadialGradient(lx, ly, 0, lx, ly, R * 0.8);
+      g.addColorStop(0,   'rgba(255,253,247,.70)');
+      g.addColorStop(0.18, 'rgba(245,241,233,.42)');
+      g.addColorStop(0.50, 'rgba(210,206,198,.16)');
+      g.addColorStop(1,    'rgba(160,156,148,0)');
+      bgCtx.fillStyle = g;
+      bgCtx.fillRect(0, 0, bgW, bgH);
+      
+      // Shadow glow opposite side
+      var ox = (0.5 - Math.cos(L.a) * 0.36) * bgW;
+      var oy = (0.5 - Math.sin(L.a) * 0.36) * bgH;
+      var gs = bgCtx.createRadialGradient(ox, oy, 0, ox, oy, R * 0.58);
+      gs.addColorStop(0,   'rgba(60,52,44,.28)');
+      gs.addColorStop(0.38, 'rgba(60,52,44,.10)');
+      gs.addColorStop(1,    'rgba(60,52,44,0)');
+      bgCtx.fillStyle = gs;
+      bgCtx.fillRect(0, 0, bgW, bgH);
+      
+      requestAnimationFrame(drawBg);
+    }
+    
+    // Hero Canvas volumetric plaster rendering loop
+    function calcFS() {
+      if (!heroCtx) return 100;
+      var target = heroW * 0.975;
+      var fs = heroW * 0.32;
+      heroCtx.font = '400 ' + fs + 'px "Bebas Neue"';
+      for (var i = 0; i < 30; i++) {
+        heroCtx.font = '400 ' + fs + 'px "Bebas Neue"';
+        var w = heroCtx.measureText('MACHADO').width;
+        if (Math.abs(w - target) < heroW * 0.004) break;
+        fs *= target / w;
+      }
+      return fs;
+    }
+    
+    function drawHero() {
+      if (!heroCtx || isMobile) {
+        if (heroCanvas) heroCanvas.style.display = 'none';
+        return;
+      }
+      if (!fontsReady) {
+        requestAnimationFrame(drawHero);
+        return;
+      }
+      heroCanvas.style.display = 'block';
+      heroCtx.clearRect(0, 0, heroW, heroH);
+      
+      var a = L.a;
+      var lx = Math.cos(a);
+      var ly = Math.sin(a);
+      var fs = calcFS();
+      
+      var padL = heroW * 0.012;
+      var topY = heroH * 0.22;
+      var lnH = fs * 0.88;
+      var D = fs * 0.13;
+      
+      heroCtx.font = '400 ' + fs + 'px "Bebas Neue"';
+      heroCtx.textBaseline = 'top';
+      
+      var lines = ['ANDRÉ', 'MACHADO'];
+      lines.forEach(function(txt, i) {
+        var bx = padL, by = topY + i * lnH;
+        
+        // 1. Cavity floor (dark)
+        var indir = Math.max(0, -Math.cos(a) * 0.2 + 0.08);
+        var floorR = Math.round(34 + indir * 20);
+        var floorG = Math.round(30 + indir * 16);
+        var floorB = Math.round(26 + indir * 12);
+        heroCtx.fillStyle = 'rgb(' + floorR + ',' + floorG + ',' + floorB + ')';
+        heroCtx.fillText(txt, bx, by);
+        
+        // 2. Cavity walls (28 steps)
+        var STEPS = 28;
+        for (var s = 1; s <= STEPS; s++) {
+          var t = s / STEPS;
+          var off = t * D * 0.7;
+          
+          // Highlight side walls
+          heroCtx.save();
+          heroCtx.globalAlpha = t * t * 0.28;
+          var lv = Math.round(200 + t * 42);
+          heroCtx.fillStyle = 'rgb(' + lv + ',' + Math.round(lv * 0.97) + ',' + Math.round(lv * 0.93) + ')';
+          heroCtx.fillText(txt, bx + lx * off * 0.55, by + ly * off * 0.55);
+          heroCtx.restore();
+          
+          // Shadow side walls
+          heroCtx.save();
+          heroCtx.globalAlpha = t * t * 0.22;
+          heroCtx.fillStyle = 'rgb(28,24,20)';
+          heroCtx.fillText(txt, bx - lx * off * 0.45, by - ly * off * 0.45);
+          heroCtx.restore();
+        }
+        
+        // 3. Lit ridge/bevel
+        heroCtx.save();
+        heroCtx.shadowColor = 'rgba(255,253,246,1.0)';
+        heroCtx.shadowBlur = D * 0.40;
+        heroCtx.shadowOffsetX = lx * D * 0.72;
+        heroCtx.shadowOffsetY = ly * D * 0.72;
+        heroCtx.fillStyle = 'rgba(222,218,212,0)';
+        heroCtx.fillText(txt, bx, by);
+        heroCtx.restore();
+        
+        // 4. Shadow ridge
+        heroCtx.save();
+        heroCtx.shadowColor = 'rgba(22,17,12,0.80)';
+        heroCtx.shadowBlur = D * 1.3;
+        heroCtx.shadowOffsetX = -lx * D * 0.80;
+        heroCtx.shadowOffsetY = -ly * D * 0.80;
+        heroCtx.fillStyle = 'rgba(222,218,212,0)';
+        heroCtx.fillText(txt, bx, by);
+        heroCtx.restore();
+        
+        // 5. Ambient occlusion
+        heroCtx.save();
+        heroCtx.shadowColor = 'rgba(18,14,10,0.55)';
+        heroCtx.shadowBlur = D * 2.8;
+        heroCtx.shadowOffsetX = 0;
+        heroCtx.shadowOffsetY = 0;
+        heroCtx.fillStyle = 'rgba(222,218,212,0)';
+        heroCtx.fillText(txt, bx, by);
+        heroCtx.restore();
+        
+        // 6. Glow on outer surface (destination-out blending)
+        (function(text2, bx2, by2) {
+          var oc = document.createElement('canvas');
+          oc.width = heroW; oc.height = heroH;
+          var oc2 = oc.getContext('2d');
+          oc2.font = heroCtx.font;
+          oc2.textBaseline = 'top';
+          
+          var gs = Math.max(0, Math.cos(a) * 0.45 + 0.55);
+          oc2.shadowColor = 'rgba(255,251,240,' + (0.45 + gs * 0.35) + ')';
+          oc2.shadowBlur = D * 4.2;
+          oc2.shadowOffsetX = lx * D * 0.18;
+          oc2.shadowOffsetY = ly * D * 0.18;
+          oc2.fillStyle = 'rgba(222,218,212,1)';
+          oc2.fillText(text2, bx2, by2);
+          
+          oc2.globalCompositeOperation = 'destination-out';
+          oc2.shadowColor = 'transparent'; oc2.shadowBlur = 0;
+          oc2.shadowOffsetX = 0; oc2.shadowOffsetY = 0;
+          oc2.fillStyle = 'rgba(0,0,0,1)';
+          oc2.fillText(text2, bx2, by2);
+          
+          heroCtx.save();
+          heroCtx.drawImage(oc, 0, 0);
+          heroCtx.restore();
+        })(txt, bx, by);
+        
+        // 7. Specular Peak
+        var spec = Math.pow(Math.max(0, Math.sin(a + Math.PI * 0.5)), 8) * 0.55;
+        if (spec > 0.012) {
+          heroCtx.save();
+          heroCtx.globalAlpha = spec;
+          heroCtx.shadowColor = 'rgba(255,254,250,1)';
+          heroCtx.shadowBlur = D * 0.28;
+          heroCtx.shadowOffsetX = lx * D * 0.22;
+          heroCtx.shadowOffsetY = ly * D * 0.22;
+          heroCtx.fillStyle = 'rgba(248,246,240,0.55)';
+          heroCtx.fillText(txt, bx, by);
+          heroCtx.restore();
+        }
+      });
+      
+      requestAnimationFrame(drawHero);
+    }
+    
+    // Start drawing loops
+    drawBg();
+    drawHero();
   }
 
   // ═══════════════════════════════════════════════════════════
