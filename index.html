@@ -2,22 +2,17 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="color-scheme" content="dark">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="color-scheme" content="light">
 <meta name="description" content="André Machado — Senior Data & AI Professional. Dados. Família. Propósito. Porto Alegre, Brasil.">
 <title>André Machado — Senior Data & AI Professional</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Mono:wght@300;400;500&family=Bebas+Neue&display=swap" rel="stylesheet">
-<link rel="preload" as="image" href="frames/frame_0001.jpg" fetchpriority="high" media="(max-width: 899px)">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Bebas+Neue&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- Custom cursor (desktop) -->
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursorRing"></div>
-
-<!-- Scroll progress frame -->
+<!-- Scroll progress frame borders -->
 <div class="scroll-frame" id="scrollFrame" aria-hidden="true">
   <i class="sf-bar sf-top"></i>
   <i class="sf-bar sf-right"></i>
@@ -25,452 +20,199 @@
   <i class="sf-bar sf-left"></i>
 </div>
 
-<!-- ════════════════════════════════════════════════════════════ -->
-<!-- HERO                                                       -->
-<!-- Mobile: 9:16 frame sequence on canvas                      -->
-<!-- Desktop: CSS/SVG dynamic lighting effect                   -->
-<!-- ════════════════════════════════════════════════════════════ -->
-<section class="hero" id="hero">
-<div class="hero-sticky">
+<div class="app-container">
+  <div class="viewport-sticky" id="viewportSticky">
+    
+    <!-- Background Concrete Texture Slab -->
+    <div class="concrete-slab" aria-hidden="true"></div>
 
-  <!-- Desktop: Plaster background & text canvases -->
-  <canvas id="bg-canvas" aria-hidden="true"></canvas>
-  <canvas id="hero-canvas" aria-hidden="true"></canvas>
+    <!-- ════════════════════════════════════════════════════════════ -->
+    <!-- BEAT 0: HERO (A Fundação)                                  -->
+    <!-- ════════════════════════════════════════════════════════════ -->
+    <section class="beat-panel active" id="beat-0" data-beat="0">
+      <div class="beat-content hero-layout">
+        <p class="debossed-text hero-eyebrow">Senior Data &amp; AI Professional</p>
+        <h1 class="debossed-text hero-name">ANDRÉ<br>MACHADO</h1>
+        <div class="hero-reveal-box">
+          <p class="debossed-text hero-tagline">Dados. Família. Propósito.</p>
+          <p class="debossed-text hero-sub">Data Engineering · Analytics · LLMs · Cloud</p>
+        </div>
+      </div>
+    </section>
 
-  <p class="hero-eyebrow">Senior Data & AI Professional · Porto Alegre, Brasil</p>
-  <h1 class="hero-name">ANDRÉ<span>MACHADO</span></h1>
+    <!-- ════════════════════════════════════════════════════════════ -->
+    <!-- BEAT 1: PROPÓSITO (Família e Casa - Origami)               -->
+    <!-- ════════════════════════════════════════════════════════════ -->
+    <section class="beat-panel" id="beat-1" data-beat="1">
+      <div class="beat-content purpose-layout">
+        <div class="origami-box">
+          <div class="origami-face" id="origami-family">
+            <p class="debossed-text purpose-eyebrow">Propósito</p>
+            <h2 class="debossed-text purpose-title">Bernardo &amp;<br>Joaquim</h2>
+            <p class="debossed-text purpose-note">4 anos · 2 anos · o propósito que ancora tudo</p>
+          </div>
+          <div class="origami-face" id="origami-house" style="opacity: 0; transform: rotateY(90deg);">
+            <p class="debossed-text purpose-eyebrow">Casa</p>
+            <h2 class="debossed-text purpose-title">Ragnar &amp;<br>Floki</h2>
+            <p class="debossed-text purpose-note">Os gatos de estimação · Porto Alegre</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-  <div class="hero-left">
-    <p class="hero-role">Data Engineering · Analytics · LLMs · Cloud</p>
-    <p class="hero-sub">Databricks · Power BI · Python · Azure · GCP · Microsoft Fabric</p>
-  </div>
+    <!-- ════════════════════════════════════════════════════════════ -->
+    <!-- BEAT 2: TRAJETÓRIA (A Escadaria de Concreto)               -->
+    <!-- ════════════════════════════════════════════════════════════ -->
+    <section class="beat-panel" id="beat-2" data-beat="2">
+      <div class="beat-content trajectory-layout">
+        <p class="debossed-text section-tag">Trajetória</p>
+        <div class="staircase">
+          
+          <div class="stair-step" id="step-1">
+            <div class="step-num debossed-text">01</div>
+            <div class="step-details">
+              <h3 class="debossed-text step-title">Infinilabs</h3>
+              <p class="debossed-text step-desc">Dell Analytics · Lakehouse Bronze/Silver/Gold (1,5B linhas) · Migração para Databricks e Fabric.</p>
+            </div>
+          </div>
+          
+          <div class="stair-step" id="step-2">
+            <div class="step-num debossed-text">02</div>
+            <div class="step-details">
+              <h3 class="debossed-text step-title">Quattrus</h3>
+              <p class="debossed-text step-desc">Consultoria Estratégica · MVPs com LLMs, GCP, ChatGPT API e extração inteligente de dados.</p>
+            </div>
+          </div>
 
-  <div class="hero-right">
-    <div class="hero-photo-wrap">
-      <!-- Mobile: canvas frame sequence (9:16) -->
-      <canvas id="hero-canvas-mobile" class="hero-canvas-mobile"></canvas>
-      <!-- Smoke layers -->
-      <div class="smoke-layer smoke-1"></div>
-      <div class="smoke-layer smoke-2"></div>
-      <div class="smoke-layer smoke-3"></div>
-      <div class="smoke-layer smoke-4"></div>
-      <div class="hero-photo-overlay"></div>
+          <div class="stair-step" id="step-3">
+            <div class="step-num debossed-text">03</div>
+            <div class="step-details">
+              <h3 class="debossed-text step-title">Dufrio</h3>
+              <p class="debossed-text step-desc">Supply Chain Analytics · Rastreamento de pedidos em tempo real (4 CDs, 20 lojas, D365, SQL Server).</p>
+            </div>
+          </div>
+
+          <div class="stair-step" id="step-4">
+            <div class="step-num debossed-text">04</div>
+            <div class="step-details">
+              <h3 class="debossed-text step-title">Eichenberg &amp; Lobato</h3>
+              <p class="debossed-text step-desc">Data Analytics no setor Jurídico · Recuperação de ativos com automação e revisão de 10k+ processos.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════════ -->
+    <!-- BEAT 3: ARSENAL TÉCNICO (A Matriz)                         -->
+    <!-- ════════════════════════════════════════════════════════════ -->
+    <section class="beat-panel" id="beat-3" data-beat="3">
+      <div class="beat-content matrix-layout">
+        <p class="debossed-text section-tag">Arsenal Técnico</p>
+        <div class="tools-matrix">
+          <div class="matrix-cell" id="cell-db">
+            <div class="cell-glow-border"></div>
+            <span class="debossed-text cell-title">Databricks</span>
+            <p class="debossed-text cell-desc">Lakehouse, Apache Spark, Python notebooks</p>
+          </div>
+          <div class="matrix-cell" id="cell-pbi">
+            <div class="cell-glow-border"></div>
+            <span class="debossed-text cell-title">Power BI</span>
+            <p class="debossed-text cell-desc">Fabric, Direct Lake, DAX avançado, Dataflows</p>
+          </div>
+          <div class="matrix-cell" id="cell-py">
+            <div class="cell-glow-border"></div>
+            <span class="debossed-text cell-title">Python</span>
+            <p class="debossed-text cell-desc">LLMs integration, Web scraping, Data Science</p>
+          </div>
+          <div class="matrix-cell" id="cell-cloud">
+            <div class="cell-glow-border"></div>
+            <span class="debossed-text cell-title">Azure &amp; GCP</span>
+            <p class="debossed-text cell-desc">Data flow, Cloud Functions, BigQuery, Serverless</p>
+          </div>
+          <div class="matrix-cell" id="cell-sql">
+            <div class="cell-glow-border"></div>
+            <span class="debossed-text cell-title">SQL Server</span>
+            <p class="debossed-text cell-desc">Star schemas, procedures, query optimization</p>
+          </div>
+          <div class="matrix-cell" id="cell-ia">
+            <div class="cell-glow-border"></div>
+            <span class="debossed-text cell-title">AI &amp; Automation</span>
+            <p class="debossed-text cell-desc">Playwright, agents, document automation</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════════ -->
+    <!-- BEAT 4: DEMOS, CERTIFICAÇÕES & CONTATO (O Final)            -->
+    <!-- ════════════════════════════════════════════════════════════ -->
+    <section class="beat-panel" id="beat-4" data-beat="4">
+      <div class="beat-content final-layout">
+        <div class="scrollable-inner">
+          <p class="debossed-text section-tag">Demos &amp; Projetos</p>
+          <div class="demos-list">
+            <a href="https://youtu.be/ah895Kb3tHI" target="_blank" rel="noopener" class="demo-card-link">
+              <div class="demo-item">
+                <span class="debossed-text demo-title">LegalTech IA ↗</span>
+                <p class="debossed-text demo-desc">Automação trabalhista: OCR de convenções e IA generativa.</p>
+              </div>
+            </a>
+            <a href="https://youtube.com/shorts/QAlaylojosU" target="_blank" rel="noopener" class="demo-card-link">
+              <div class="demo-item">
+                <span class="debossed-text demo-title">Dados Sindicais ↗</span>
+                <p class="debossed-text demo-desc">SaaS de monitoramento de ACT/CCT via web scraping.</p>
+              </div>
+            </a>
+          </div>
+
+          <p class="debossed-text section-tag" style="margin-top: 24px;">Certificações</p>
+          <ul class="certs-inline-list">
+            <li class="debossed-text">Pós-Graduação Ciências de Dados e IA · PUCRS</li>
+            <li class="debossed-text">Agile Management &amp; Data Analytics</li>
+            <li class="debossed-text">Design Thinking para Disrupção</li>
+            <li class="debossed-text">Data Science &amp; AI aplicados ao Marketing</li>
+          </ul>
+
+          <div class="contact-box">
+            <h2 class="debossed-text contact-title">Vamos conversar</h2>
+            <div class="contact-links">
+              <a href="https://api.whatsapp.com/send?phone=5551998837555" target="_blank" class="debossed-text link-btn">WhatsApp</a>
+              <a href="mailto:andrelms_@hotmail.com" class="debossed-text link-btn">Email</a>
+              <a href="https://github.com/andrelms" target="_blank" class="debossed-text link-btn">GitHub</a>
+              <a href="https://www.linkedin.com/in/andré-machado-b7475257" target="_blank" class="debossed-text link-btn">LinkedIn</a>
+            </div>
+          </div>
+
+          <footer>
+            <p class="debossed-text footer-text">© 2026 André Machado · Porto Alegre, Brasil</p>
+          </footer>
+        </div>
+      </div>
+    </section>
+
+    <!-- Star indicators -->
+    <div class="hero-stars-svg" aria-hidden="true">
+      <svg class="star-svg star-1" viewBox="0 0 24 24">
+        <path d="M12 0Q12 12 24 12Q12 12 12 24Q12 12 0 12Q12 12 12 0Z"/>
+      </svg>
+      <svg class="star-svg star-2" viewBox="0 0 24 24">
+        <path d="M12 0Q12 12 24 12Q12 12 12 24Q12 12 0 12Q12 12 12 0Z"/>
+      </svg>
     </div>
-  </div>
 
-  <div class="hero-stats">
-    <div class="stat"><div class="stat-num">15+</div><div class="stat-label">Anos de Carreira</div></div>
-    <div class="stat"><div class="stat-num">1,5B</div><div class="stat-label">Linhas Migradas</div></div>
-    <div class="stat"><div class="stat-num">7</div><div class="stat-label">Setores Atendidos</div></div>
-  </div>
+    <!-- Scroll Hint -->
+    <div class="scroll-hint" id="scrollHint" aria-hidden="true">
+      <span class="debossed-text">Scroll</span>
+      <div class="scroll-arrow"></div>
+    </div>
 
-  <!-- Unified dynamic stars -->
-  <div class="hero-stars-svg" aria-hidden="true">
-    <svg class="star-svg star-1" viewBox="0 0 24 24">
-      <path d="M12 0Q12 12 24 12Q12 12 12 24Q12 12 0 12Q12 12 12 0Z"/>
-    </svg>
-    <svg class="star-svg star-2" viewBox="0 0 24 24">
-      <path d="M12 0Q12 12 24 12Q12 12 12 24Q12 12 0 12Q12 12 12 0Z"/>
-    </svg>
   </div>
-
-  <div class="scroll-hint"><span>Scroll</span><div class="scroll-arrow"></div></div>
 </div>
-</section>
 
-<!-- ════════════════════════════════════════════════════════════ -->
-<!-- QUEM SOU — 7 chapters, lateral photo slide-in              -->
-<!-- ════════════════════════════════════════════════════════════ -->
-<section id="quem-sou" class="qs2-section">
-  <div class="qs2-sticky">
-    <div class="qs2-bg-layer"></div>
-
-    <!-- Photo layers -->
-    <div class="qs2-photo" data-ch="2"><img src="assets/family-andre.jpg" alt="Bernardo e Joaquim" loading="lazy" decoding="async" style="object-position:center 28%"></div>
-    <div class="qs2-photo" data-ch="3"><img src="assets/family-joaquim.jpg" alt="Ragnar e Floki" loading="lazy" decoding="async" style="object-position:center 38%"></div>
-    <div class="qs2-photo" data-ch="4"><img src="assets/formatura-2.jpg" alt="Formatura PUCRS" loading="lazy" decoding="async" style="object-position:center 22%"></div>
-    <div class="qs2-photo" data-ch="5"><img src="assets/formatura-4.jpg" alt="Formatura UNIASSELVI" loading="lazy" decoding="async" style="object-position:center 22%"></div>
-    <div class="qs2-photo" data-ch="6"><img src="assets/formatura-3.jpg" alt="Onde me encontra" loading="lazy" decoding="async" style="object-position:center 22%"></div>
-
-    <!-- Local smoke overlay -->
-    <div class="qs2-smoke-local" aria-hidden="true">
-      <div class="smoke-layer smoke-1"></div>
-      <div class="smoke-layer smoke-2"></div>
-      <div class="smoke-layer smoke-3"></div>
-      <div class="smoke-layer smoke-4"></div>
-    </div>
-
-    <div class="qs2-overlay"></div>
-
-    <div class="qs2-center">
-      <!-- ch2: Família -->
-      <div class="qs2-chapter" data-ch="2">
-        <p class="qs2-eyebrow">Família</p>
-        <h2 class="qs2-title">Bernardo &amp;<br><em>Joaquim.</em></h2>
-        <p class="qs2-note">4 anos · 2 anos · o propósito que ancora tudo</p>
-      </div>
-      <!-- ch3: Casa -->
-      <div class="qs2-chapter" data-ch="3">
-        <p class="qs2-eyebrow">Casa</p>
-        <h2 class="qs2-title">Ragnar &amp;<br><em>Floki.</em></h2>
-        <p class="qs2-note">Os gatos da casa · Porto Alegre</p>
-      </div>
-      <!-- ch4: Formação PUCRS -->
-      <div class="qs2-chapter" data-ch="4">
-        <p class="qs2-eyebrow">Formação · PUCRS</p>
-        <h2 class="qs2-title">Esp. Ciência<br>de Dados<br><em>&amp; IA.</em></h2>
-        <p class="qs2-note">2022 — 2023 · TCC nota 9,5 · 364h · Escola Politécnica</p>
-      </div>
-      <!-- ch5: Formação UNIASSELVI -->
-      <div class="qs2-chapter" data-ch="5">
-        <p class="qs2-eyebrow">Formação · UNIASSELVI</p>
-        <h2 class="qs2-title">Bacharel em<br><em>Administração.</em></h2>
-        <p class="qs2-note">2015 — 2019 · Bolsa Prouni integral</p>
-      </div>
-      <!-- ch6: Contato -->
-      <div class="qs2-chapter" data-ch="6">
-        <p class="qs2-eyebrow">Onde me encontra</p>
-        <h2 class="qs2-contact-title">Vamos<br><em>conversar.</em></h2>
-        <div class="qs2-contacts">
-          <a href="https://api.whatsapp.com/send?phone=5551998837555" target="_blank" rel="noopener">WhatsApp</a>
-          <a href="mailto:andrelms_@hotmail.com">Email</a>
-          <a href="https://github.com/andrelms" target="_blank" rel="noopener">github.com/andrelms</a>
-        </div>
-        <div class="qs2-cta">
-          <a href="https://insightful-data-explorer-27-sepia.vercel.app/site" target="_blank" class="btn btn-fill">Ver Projeto</a>
-          <a href="https://www.linkedin.com/in/andré-machado-b7475257" target="_blank" class="btn">LinkedIn</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="qs2-progress" aria-hidden="true">
-      <span class="qs2-dot qs2-dot-active"></span>
-      <span class="qs2-dot"></span>
-      <span class="qs2-dot"></span>
-      <span class="qs2-dot"></span>
-      <span class="qs2-dot"></span>
-      <span class="qs2-dot"></span>
-      <span class="qs2-dot"></span>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- ════════════════════════════════════════════════════════════ -->
-<!-- NUMBERS (pinned showcase)                                  -->
-<!-- ════════════════════════════════════════════════════════════ -->
-<section id="stats-pin" class="stats-pin-section">
-  <div class="stats-pin-stage">
-    <div class="stat-slide active" data-i="0">
-      <div class="stat-eyebrow">01 · Processos</div>
-      <div class="stat-big">+10k</div>
-      <h3 class="stat-headline">Processos revisados<br>com automação</h3>
-      <p class="stat-context">+10 mil processos revisados via Power BI para recuperação de ativos · Eichenberg &amp; Lobato</p>
-    </div>
-    <div class="stat-slide" data-i="1">
-      <div class="stat-eyebrow">02 · Tempo Real</div>
-      <div class="stat-big">30min</div>
-      <h3 class="stat-headline">Atualização<br>contínua</h3>
-      <p class="stat-context">Dashboards em tempo real: milhares de pedidos rastreados e atualizados a cada 30 minutos para acompanhamento nos 4 CDs de Distribuição. +2 mil funcionários, +20 lojas nacionais · Refrigeração Dufrio</p>
-    </div>
-    <div class="stat-slide" data-i="2">
-      <div class="stat-eyebrow">03 · Capital</div>
-      <div class="stat-big">R$ M+</div>
-      <h3 class="stat-headline">Crédito Consignado<br>monitorado</h3>
-      <p class="stat-context">Monitoramento de milhões em Crédito Consignado em todo o Brasil. Balancete Financeiro e ciclo de centenas de dados tombados · Futuro Previdência</p>
-    </div>
-    <div class="stat-slide" data-i="3">
-      <div class="stat-eyebrow">04 · Migração</div>
-      <div class="stat-big">~1,5B</div>
-      <h3 class="stat-headline">Linhas migradas<br>para Lakehouse</h3>
-      <p class="stat-context">Sistemas legados migrados para Databricks e Dataflow · Qlik → Power BI · Lakehouse Bronze/Silver/Gold · Infinilabs</p>
-    </div>
-    <div class="stats-pin-progress">
-      <span class="dot active"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
-    </div>
-  </div>
-</section>
-
-<!-- ════════════════════════════════════════════════════════════ -->
-<!-- TIMELINE                                                   -->
-<!-- ════════════════════════════════════════════════════════════ -->
-<section class="timeline-section">
-  <div class="container">
-    <p class="section-tag">Trajetória</p>
-    <h2 class="section-title reveal clip-reveal">Uma carreira<br>construída<br>linha a linha.</h2>
-    <div class="timeline">
-
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div class="timeline-year">MAI 2025 — JAN 2026</div>
-        <div class="timeline-company">Infinilabs</div>
-        <div class="timeline-role">Business Analytics · Parceria Dell Technologies</div>
-        <div class="timeline-desc">Migração de ambientes analíticos (SAP, Oracle, Azure, SharePoint) para Databricks. Arquitetura em camadas Bronze/Silver/Gold para +20 anos de dados (~1,5B linhas). Criação de fontes via Dataflows e Direct Lake (Microsoft Fabric). Transição de Qlik para Power BI.</div>
-        <div class="timeline-tags"><span class="tag">Databricks</span><span class="tag">Microsoft Fabric</span><span class="tag">Direct Lake</span><span class="tag">Power BI</span><span class="tag">Azure</span><span class="tag">Dell</span></div>
-      </div>
-
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div class="timeline-year">FEV — MAI 2025</div>
-        <div class="timeline-company">Unimed<br>Porto Alegre</div>
-        <div class="timeline-role">Business Analytics</div>
-        <div class="timeline-desc">Migração de dashboards em produção de Qlik para Power BI sprint a sprint. Transição de conexões diretas com Databricks para Dataflows, reduzindo dependências técnicas e melhorando governança.</div>
-        <div class="timeline-tags"><span class="tag">Qlik → Power BI</span><span class="tag">Dataflows</span><span class="tag">Databricks</span><span class="tag">Agile</span></div>
-      </div>
-
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div class="timeline-year">ABR — AGO 2024</div>
-        <div class="timeline-company">Linha por Linha</div>
-        <div class="timeline-role">Dados · Big Data ENEM · 15 func.</div>
-        <div class="timeline-desc">Análise exploratória e descritiva dos Microdados do ENEM — maior exame nacional de ensino médio. Big Data: 86 milhões de linhas de inscritos, 15 anos de dados históricos. Dashboard demográfico, socioeconômico e de desempenho.</div>
-        <div class="timeline-tags"><span class="tag">Big Data</span><span class="tag">86M linhas</span><span class="tag">ENEM</span><span class="tag">Power BI</span><span class="tag">Python</span></div>
-      </div>
-
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div class="timeline-year">JAN — JUN 2024</div>
-        <div class="timeline-company">Quattrus</div>
-        <div class="timeline-role">Consultoria Estratégica · MVP & LLMs · 40 func.</div>
-        <div class="timeline-desc">Desenvolvimento de MVP com infraestrutura de modelos LLM (GCP, ChatGPT). Chatbot de autoatendimento com recomendações, classificação de perfil e análise de sentimentos. Drag and drop para extração de dados estruturados/semiestruturados com insights de negócio.</div>
-        <div class="timeline-tags"><span class="tag">GCP</span><span class="tag">ChatGPT API</span><span class="tag">LLMs</span><span class="tag">Python</span><span class="tag">Azure SQL</span><span class="tag">Power BI</span></div>
-      </div>
-
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div class="timeline-year">OUT 2022 — JUN 2023</div>
-        <div class="timeline-company">Sistema FIERGS</div>
-        <div class="timeline-role">Analista Corp. Especialista de Dados Pleno</div>
-        <div class="timeline-desc">4.000+ colaboradores. Módulo de BI no backlog gerencial, integridade de KPIs entre sistemas legados e novos. Dashboards Power BI, análises Excel, notebooks Python. Conformidade LGPD em dados sensíveis.</div>
-        <div class="timeline-tags"><span class="tag">Power BI</span><span class="tag">Python</span><span class="tag">Excel</span><span class="tag">LGPD</span><span class="tag">LG SaaS</span></div>
-      </div>
-
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div class="timeline-year">JUN 2022 — SET 2023</div>
-        <div class="timeline-company">PUCRS — Escola Politécnica</div>
-        <div class="timeline-role">Especialização em Ciência de Dados e Inteligência Artificial</div>
-        <div class="timeline-desc">Especialização lato sensu — Computação e Tecnologias da Informação e Comunicação. 24 créditos · 364 horas. TCC: <em>O Impacto das IAs como o ChatGPT na Sociedade e Iniciativas de Regulamentação</em> (nota 9,5).</div>
-        <div class="timeline-tags"><span class="tag">Data Science</span><span class="tag">IA</span><span class="tag">Machine Learning</span><span class="tag">Deep Learning</span><span class="tag">Python</span><span class="tag">PUCRS</span></div>
-      </div>
-
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div class="timeline-year">SET 2021 — MAI 2022</div>
-        <div class="timeline-company">Futuro Previdência</div>
-        <div class="timeline-role">Analista de Dados · Financeiro / BACEN</div>
-        <div class="timeline-desc">Monitoramento de Milhões em Crédito Consignado em todo o Brasil. Balancete Financeiro e ciclo de centenas de dados tombados e validados. Dashboards em tempo real integrando APIs e SharePoint. VBA para automação. Adequações regulatórias BACEN.</div>
-        <div class="timeline-tags"><span class="tag">VBA</span><span class="tag">Power BI</span><span class="tag">SharePoint</span><span class="tag">BACEN</span><span class="tag">APIs</span></div>
-      </div>
-
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div class="timeline-year">ABR — SET 2021</div>
-        <div class="timeline-company">Refrigeração Dufrio</div>
-        <div class="timeline-role">Analista de Inteligência de Negócios</div>
-        <div class="timeline-desc">Supply Chain em tempo real: milhares de pedidos rastreados e atualizados a cada 30 minutos para acompanhamento nos 4 CDs de Distribuição. +2 mil funcionários, +20 lojas nacionais. KPIs estratégicos de planejamento, vendas, logística e pessoas.</div>
-        <div class="timeline-tags"><span class="tag">SQL Server</span><span class="tag">Power BI</span><span class="tag">Dynamics 365</span><span class="tag">ERP</span></div>
-      </div>
-
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div class="timeline-year">FEV 2018 — OUT 2020</div>
-        <div class="timeline-company">Eichenberg<br>&amp; Lobato</div>
-        <div class="timeline-role">Analista de Relatórios · Advocacia</div>
-        <div class="timeline-desc">Ciclo completo de BI: ERP (SQL), XMLs públicos, APIs Banco Central. VBA para automação e limpeza de dados. Identificou +10 mil processos passíveis de honorários via Power BI — impacto direto no fluxo de caixa.</div>
-        <div class="timeline-tags"><span class="tag">VBA</span><span class="tag">Power BI</span><span class="tag">SQL</span><span class="tag">APIs BCB</span><span class="tag">XML</span></div>
-      </div>
-
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div class="timeline-year">2015 — 2019</div>
-        <div class="timeline-company">Estágios &amp; Formação</div>
-        <div class="timeline-role">Ball Corporation · Grupo Volpato · Graduação</div>
-        <div class="timeline-desc">Ball Corporation: controle de estoque e consumo via SAP, KPIs de produção. Grupo Volpato: agenda comercial, indicadores de desempenho. Graduação em Administração com Prouni 100%.</div>
-        <div class="timeline-tags"><span class="tag">SAP</span><span class="tag">Excel</span><span class="tag">KPI</span><span class="tag">Prouni 100%</span></div>
-      </div>
-
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div class="timeline-year">2008 — 2014</div>
-        <div class="timeline-company">Carreira Comercial</div>
-        <div class="timeline-role">Banco Cacique · Agiplan Financeira · Tramonto Fiat</div>
-        <div class="timeline-desc">Crédito consignado e pré-análise documental (Banco Cacique). Retenção de contratos no setor público federal/estadual — reconhecido como top performer em receita (Agiplan). Gestão completa do ciclo de vendas automotivas (Tramonto Fiat).</div>
-        <div class="timeline-tags"><span class="tag">Crédito</span><span class="tag">Serasa/SPC</span><span class="tag">CRM</span><span class="tag">Vendas</span></div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ════════════════════════════════════════════════════════════ -->
-<!-- EXPERTISE — Carousel                                       -->
-<!-- ════════════════════════════════════════════════════════════ -->
-<section class="exp-carousel" id="exp-carousel">
-  <div class="exp-carousel-sticky">
-    <div class="exp-carousel-head">
-      <p class="section-tag">Especialidades</p>
-      <h2 class="section-title">O que entrego.</h2>
-    </div>
-    <div class="exp-deck">
-      <article class="exp-slide-card"><div class="expertise-num">01 / 06</div><span class="expertise-icon">⚡</span><div class="expertise-title">IA Generativa & LLMs</div><div class="expertise-desc">Agentes conversacionais, pipelines de classificação automática de documentos, OCR e análise de cláusulas trabalhistas. Fundamentos MLOps, modelos open source, validação cruzada por múltiplos modelos.</div></article>
-      <article class="exp-slide-card"><div class="expertise-num">02 / 06</div><span class="expertise-icon">📊</span><div class="expertise-title">Business Intelligence</div><div class="expertise-desc">Power BI (DAX avançado, Dataflows, Direct Lake, Microsoft Fabric), Qlik. Migração Qlik → Power BI, modelagem star schema, relatórios para comitês executivos.</div></article>
-      <article class="exp-slide-card"><div class="expertise-num">03 / 06</div><span class="expertise-icon">🏗️</span><div class="expertise-title">Engenharia de Dados</div><div class="expertise-desc">Lakehouse Bronze/Silver/Gold, ETL/ELT, Databricks, BigQuery, PostgreSQL, SQL Server. Migração de ambientes analíticos legados e governança para bilhões de linhas.</div></article>
-      <article class="exp-slide-card"><div class="expertise-num">04 / 06</div><span class="expertise-icon">☁️</span><div class="expertise-title">Cloud & Integração</div><div class="expertise-desc">Azure, GCP, Microsoft Fabric. Integrações SAP, SharePoint, ERP, APIs externas. Pipelines cloud-to-cloud e híbridos para suporte a decisões estratégicas.</div></article>
-      <article class="exp-slide-card"><div class="expertise-num">05 / 06</div><span class="expertise-icon">🔄</span><div class="expertise-title">Automação & Scraping</div><div class="expertise-desc">Web scraping institucional (MTE, sindicatos, órgãos públicos) com Playwright/Selenium. VBA para rotinas operacionais. Pipelines inteligentes com IA adaptativa.</div></article>
-      <article class="exp-slide-card"><div class="expertise-num">06 / 06</div><span class="expertise-icon">⚖️</span><div class="expertise-title">Compliance & Governança</div><div class="expertise-desc">LGPD para dados sensíveis, adequação BACEN, análise comparativa de CCTs/ACTs. Perfis hierárquicos de acesso, rastreabilidade e conformidade regulatória.</div></article>
-    </div>
-    <div class="exp-carousel-progress" id="exp-dots"></div>
-  </div>
-</section>
-
-<!-- ════════════════════════════════════════════════════════════ -->
-<!-- STACK                                                      -->
-<!-- ════════════════════════════════════════════════════════════ -->
-<section class="stack-section">
-  <div class="container">
-    <p class="section-tag">Stack Técnico</p>
-    <h2 class="section-title reveal clip-reveal">Ferramentas<br>de guerra.</h2>
-  </div>
-  <div class="stack-grid">
-    <div class="stack-group reveal">
-      <div class="stack-group-title">Linguagens & Query</div>
-      <div class="stack-items">
-        <div class="stack-item">Python</div>
-        <div class="stack-item">SQL · PostgreSQL · BigQuery</div>
-        <div class="stack-item">DAX</div>
-        <div class="stack-item">VBA</div>
-        <div class="stack-item">TypeScript / React · Vibe Coding</div>
-      </div>
-    </div>
-    <div class="stack-group reveal">
-      <div class="stack-group-title">BI & Analytics</div>
-      <div class="stack-items">
-        <div class="stack-item">Power BI (Direct Lake · Fabric)</div>
-        <div class="stack-item">Qlik</div>
-        <div class="stack-item">Excel Avançado</div>
-        <div class="stack-item">Dataflows</div>
-        <div class="stack-item">Databricks</div>
-      </div>
-    </div>
-    <div class="stack-group reveal">
-      <div class="stack-group-title">Cloud & Plataformas</div>
-      <div class="stack-items">
-        <div class="stack-item">Microsoft Azure</div>
-        <div class="stack-item">Google Cloud (GCP)</div>
-        <div class="stack-item">Microsoft Fabric</div>
-        <div class="stack-item">SAP · Dynamics 365</div>
-      </div>
-    </div>
-    <div class="stack-group reveal">
-      <div class="stack-group-title">IA & Automação</div>
-      <div class="stack-items">
-        <div class="stack-item">Gemini · Perplexity · LLMs</div>
-        <div class="stack-item">Playwright · Selenium</div>
-        <div class="stack-item">Supabase · Vercel</div>
-        <div class="stack-item">OCR · Docling · Jina AI</div>
-        <div class="stack-item">MLOps (fundamentos)</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ════════════════════════════════════════════════════════════ -->
-<!-- PROJETOS                                                   -->
-<!-- ════════════════════════════════════════════════════════════ -->
-<section class="projects-section">
-  <div class="container">
-    <p class="section-tag">Demos · Insightful Data Explorer</p>
-    <h2 class="section-title reveal clip-reveal">IA aplicada ao<br>direito<br>trabalhista.</h2>
-    <div class="projects-grid">
-      <div class="project-card reveal">
-        <div class="video-thumb" onclick="loadVideo(this,'ah895Kb3tHI','16/9')">
-          <img src="https://img.youtube.com/vi/ah895Kb3tHI/maxresdefault.jpg" alt="IA aplicada ao direito do trabalho" loading="lazy">
-          <div class="play-btn">▶</div>
-        </div>
-        <div class="project-info">
-          <div class="project-tag">LegalTech · IA</div>
-          <div class="project-title">IA Aplicada ao Direito do Trabalho</div>
-          <div class="project-desc">Análise automática de cláusulas trabalhistas, OCR de convenções coletivas e comparação inteligente de CCTs/ACTs com IA generativa.</div>
-          <a href="https://youtu.be/ah895Kb3tHI" target="_blank" class="project-link">Assistir demo →</a>
-        </div>
-      </div>
-      <div class="project-card reveal">
-        <div class="video-thumb-short" onclick="loadVideo(this,'QAlaylojosU','9/16')">
-          <img src="https://img.youtube.com/vi/QAlaylojosU/hq2.jpg" alt="Dados Sindicais e Trabalhistas" loading="lazy">
-          <div class="play-btn">▶</div>
-        </div>
-        <div class="project-info">
-          <div class="project-tag">Compliance · DP / RH</div>
-          <div class="project-title">Dados Sindicais e Trabalhistas</div>
-          <div class="project-desc">SaaS para monitoramento de acordos coletivos. Web scraping de portais MTE Mediador e sindicatos, classificação automática de documentos com IA.</div>
-          <a href="https://youtube.com/shorts/QAlaylojosU" target="_blank" class="project-link">Assistir short →</a>
-        </div>
-      </div>
-    </div>
-    <div style="margin-top:32px;padding:32px;background:var(--bg);border:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px" class="reveal">
-      <div>
-        <div class="project-tag" style="margin-bottom:6px">Plataforma ao vivo</div>
-        <div style="font-family:'Cormorant Garamond',serif;font-size:22px;color:#fff">Insightful Data Explorer</div>
-        <div style="font-family:'Cormorant Garamond',serif;font-size:16px;font-style:italic;color:var(--muted);margin-top:6px">Exploração e análise de dados com rapidez e contexto.</div>
-        <div style="font-size:11px;color:var(--muted);margin-top:8px;letter-spacing:.05em">React · TypeScript · Supabase · Gemini API · Vercel</div>
-      </div>
-      <a href="http://insightful-data-explorer-27-sepia.vercel.app/site" target="_blank" class="btn btn-fill">Acessar Plataforma</a>
-    </div>
-  </div>
-</section>
-
-<!-- ════════════════════════════════════════════════════════════ -->
-<!-- CERTS                                                      -->
-<!-- ════════════════════════════════════════════════════════════ -->
-<section>
-  <div class="container">
-    <p class="section-tag">Certificações</p>
-    <h2 class="section-title reveal">Aprendizado<br>sem fim.</h2>
-    <div class="certs-list">
-      <div class="cert-item reveal"><div class="cert-num">01</div><div class="cert-name">Agile Management, Data Analytics e Marketing Intelligence</div></div>
-      <div class="cert-item reveal"><div class="cert-num">02</div><div class="cert-name">Aprender Para Liderar</div></div>
-      <div class="cert-item reveal"><div class="cert-num">03</div><div class="cert-name">Design Thinking para Disrupção e Experiência do Cliente</div></div>
-      <div class="cert-item reveal"><div class="cert-num">04</div><div class="cert-name">Mentalidade de Desenvolvimento Contínuo</div></div>
-      <div class="cert-item reveal"><div class="cert-num">05</div><div class="cert-name">Data Science e AI aplicados ao Marketing e Vendas</div></div>
-      <div class="cert-item reveal"><div class="cert-num">06</div><div class="cert-name">Inteligência Artificial e Marketing Digital</div></div>
-      <div class="cert-item reveal"><div class="cert-num">07</div><div class="cert-name">Produtividade, Gestão do Tempo e Propósito</div></div>
-      <div class="cert-item reveal"><div class="cert-num">08</div><div class="cert-name">Pós-graduação Ciências de Dados e IA · PUCRS</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- ════════════════════════════════════════════════════════════ -->
-<!-- FOOTER                                                     -->
-<!-- ════════════════════════════════════════════════════════════ -->
-<footer>
-  <div class="footer-name">AM</div>
-  <div class="footer-links">
-    <a href="https://www.linkedin.com/in/andré-machado-b7475257" target="_blank">LinkedIn</a>
-    <a href="https://github.com/andrelms" target="_blank">GitHub</a>
-    <a href="mailto:andrelms_@hotmail.com">Email</a>
-    <a href="https://api.whatsapp.com/send?phone=5551998837555" target="_blank">WhatsApp</a>
-  </div>
-</footer>
-
-<!-- Body-level elements for frame chapters (avoid overflow:hidden clip in Safari) -->
-<canvas id="qs2-canvas" class="qs2-canvas"></canvas>
-<div id="qs2-smoke">
-  <div class="smoke-layer smoke-1"></div>
-  <div class="smoke-layer smoke-2"></div>
-  <div class="smoke-layer smoke-3"></div>
-  <div class="smoke-layer smoke-4"></div>
-</div>
-<div id="qs2-frame-veil"></div>
-<div class="qs2-chapter qs2-frame-chapter" data-ch="0">
-  <p class="qs2-eyebrow">Quem sou</p>
-  <h1 class="qs2-title">Dados.<br><em>Família.</em><br>Propósito.</h1>
-</div>
-<div class="qs2-chapter qs2-frame-chapter" data-ch="1">
-  <p class="qs2-eyebrow">Sobre</p>
-  <p class="qs2-text">Profissional Senior em Data &amp; Analytics com experiência end-to-end em <em>BI, Engenharia de Dados, Data Science e IA</em> aplicada ao negócio. Pipeline, governança, Lakehouse Bronze/Silver/Gold e modernização analítica que vira <b>decisão executiva</b>.</p>
-</div>
+<!-- Scroll timeline height driver -->
+<div class="scroll-trigger" id="scrollTrigger"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
