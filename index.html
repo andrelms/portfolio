@@ -483,6 +483,24 @@
   .smoke-3{background:radial-gradient(circle,rgba(8,11,15,.88) 0%,transparent 75%);bottom:0%;right:-10%;width:360px;height:360px;animation:smokeC 7s ease-in-out 3s infinite}
   .smoke-4{background:radial-gradient(circle,rgba(8,11,15,.8) 0%,transparent 75%);bottom:-5%;left:40%;width:300px;height:300px;animation:smokeA 9s ease-in-out 4.5s infinite}
   
+  @media(min-width:901px){
+    /* Split layout for Quem Sou section photo chapters to prevent tight image cropping */
+    .qs2-photo {
+      left: 50% !important;
+      right: 0 !important;
+      width: 50% !important;
+      height: 100% !important;
+    }
+    .qs2-center {
+      right: 50% !important;
+      left: 0 !important;
+      width: 50% !important;
+    }
+    .qs2-overlay {
+      left: 50% !important;
+      width: 50% !important;
+    }
+  }
 </style>
 </head>
 <body>
