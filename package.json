@@ -1,0 +1,16 @@
+{
+  "name": "andre-machado-consultoria",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "assets": "node scripts/gen-assets.mjs",
+    "build": "node build.mjs",
+    "check": "node scripts/check.mjs",
+    "preview": "node scripts/preview.mjs",
+    "all": "npm run assets && npm run build && npm run check"
+  },
+  "devDependencies": {
+    "sharp": "^0.33.5"
+  }
+}
