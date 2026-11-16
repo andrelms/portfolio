@@ -65,5 +65,29 @@
       window.dataLayer.push({ event: 'contact_click', method: a.href.split(':')[0].replace('https', 'whatsapp') });
     }
   });
+
+  // Botão de som nos vídeos em reprodução automática no mudo
+  d.querySelectorAll('.video-mute-btn').forEach((btn) => {
+    const stage = btn.closest('.page-hero-stage, .salto-frame');
+    const vid = stage && stage.querySelector('video');
+    if (!vid) return;
+    const sync = () => {
+      const on = !vid.muted;
+      btn.setAttribute('aria-pressed', String(on));
+      btn.setAttribute('aria-label', on ? 'Desativar áudio do vídeo' : 'Ativar áudio do vídeo');
+      const label = btn.querySelector('span');
+      if (label) label.textContent = on ? 'Mutar' : 'Ativar som';
+      const x = btn.querySelector('.mute-x');
+      const w = btn.querySelector('.sound-waves');
+      if (x) x.style.display = on ? 'none' : '';
+      if (w) w.style.display = on ? '' : 'none';
+    };
+    btn.addEventListener('click', () => {
+      vid.muted = !vid.muted;
+      if (!vid.muted) vid.play().catch(() => {});
+      sync();
+    });
+    sync();
+  });
 })();
 
