@@ -46,6 +46,26 @@ export const heroVideo = () => `
   <source src="/assets/video/andre-hero-9x16.mp4" type="video/mp4">
 </video>`;
 
+export const officeVideo = () => `
+<video autoplay muted loop playsinline preload="metadata" poster="/assets/img/andre-escritorio-poster.jpg" width="960" height="540" aria-label="Visão 360 graus do escritório da André Machado Consultoria">
+  <source src="/assets/video/andre-escritorio-16x9.mp4" type="video/mp4">
+</video>`;
+
+export const precisionVideo = () => `
+<video autoplay muted loop playsinline preload="metadata" poster="/assets/img/andre-precisao-poster.jpg" width="960" height="540" aria-label="Identidade visual bordada André Machado Data &amp; Analytics e engrenagens de precisão">
+  <source src="/assets/video/andre-precisao-16x9.mp4" type="video/mp4">
+</video>`;
+
+export const saltoVideo = () => `
+<video autoplay muted loop playsinline preload="metadata" poster="/assets/img/andre-salto-9x16-poster.jpg" width="540" height="960" aria-label="Vídeo conceitual: decisões em alta velocidade com Dados, Analytics e IA">
+  <source src="/assets/video/andre-salto-9x16.mp4" type="video/mp4">
+</video>`;
+
+export const punhoVideo = () => `
+<video autoplay muted loop playsinline preload="metadata" poster="/assets/img/andre-punho-9x16-poster.jpg" width="540" height="960" aria-label="André Machado ajustando o blazer e o punho da camisa">
+  <source src="/assets/video/andre-punho-9x16.mp4" type="video/mp4">
+</video>`;
+
 export const heroPortrait = ({ sizes = '(max-width: 920px) 92vw, 520px', alt } = {}) => `
 <picture>
   <source type="image/avif" srcset="/assets/img/andre-hero-16x9-640.avif 640w, /assets/img/andre-hero-16x9.avif 960w" sizes="${sizes}">

@@ -3,7 +3,7 @@ import { site, waLink } from '../site.config.mjs';
 import { services, serviceBySlug } from './content/services.mjs';
 import { cases, caseBySlug } from './content/cases.mjs';
 import {
-  esc, abs, icon, brand, heroVideo, brandEmbroidery, portrait, breadcrumbHtml, breadcrumbLd, faqLd, faqHtml, ctaBand,
+  esc, abs, icon, brand, heroVideo, officeVideo, precisionVideo, saltoVideo, punhoVideo, portrait, breadcrumbHtml, breadcrumbLd, faqLd, faqHtml, ctaBand,
   orgId, personId, websiteId,
 } from './templates.mjs';
 
@@ -23,18 +23,22 @@ const webPage = (path, name, description, type = 'WebPage', extra = {}) => ({
   ...extra,
 });
 
-const pageHero = ({ crumbs, eyebrow, h1, lead, actions = true, msg }) => `
-<section class="page-hero">
+const pageHero = ({ crumbs, eyebrow, h1, lead, actions = true, msg, bgVideo = '', aside = '' }) => `
+<section class="page-hero${bgVideo ? ' page-hero-media' : ''}${aside ? ' page-hero-split' : ''}">
+  ${bgVideo ? `<div class="page-hero-bg" aria-hidden="true">${bgVideo}</div>` : ''}
   <div class="container">
-    ${breadcrumbHtml(crumbs)}
-    ${eyebrow ? `<span class="eyebrow">${esc(eyebrow)}</span>` : ''}
-    <h1>${h1}</h1>
-    ${lead ? `<p class="lead">${lead}</p>` : ''}
-    ${actions ? `<div class="cta-row">
-      <a class="btn btn-primary" href="${waLink(msg)}" target="_blank" rel="noopener">${brand('whatsapp')}Solicitar diagnóstico</a>
-      <a class="btn btn-ghost" href="/cases/">Ver cases ${icon('arrow')}</a>
-    </div>` : ''}
+    <div class="page-hero-copy">
+      ${breadcrumbHtml(crumbs)}
+      ${eyebrow ? `<span class="eyebrow">${esc(eyebrow)}</span>` : ''}
+      <h1>${h1}</h1>
+      ${lead ? `<p class="lead">${lead}</p>` : ''}
+      ${actions ? `<div class="cta-row">
+        <a class="btn btn-primary" href="${waLink(msg)}" target="_blank" rel="noopener">${brand('whatsapp')}Solicitar diagnóstico</a>
+        <a class="btn btn-ghost" href="/cases/">Ver cases ${icon('arrow')}</a>
+      </div>` : ''}
+    </div>
   </div>
+  ${aside ? `<div class="page-hero-stage"><img class="page-hero-stage-bg" src="/assets/img/andre-salto-9x16-poster.jpg" alt="" aria-hidden="true" width="540" height="960">${aside}<button class="video-mute-btn" type="button" aria-pressed="false" aria-label="Ativar áudio do vídeo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path class="mute-x" d="m22 9-6 6M16 9l6 6"/><path class="sound-waves" d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14" style="display:none"/></svg><span>Ativar som</span></button></div>` : ''}
 </section>`;
 
 const serviceCard = (s, h = 'h3') => `
@@ -176,10 +180,35 @@ export function homePage({ posts }) {
   </div>
 </section>
 
-<section class="section" aria-labelledby="sobre-title">
-  <div class="container split">
+<section class="section" aria-labelledby="movimento-title">
+  <div class="container split split-video">
+    <div class="salto-wrap reveal">
+      <div class="salto-frame">
+        ${saltoVideo()}
+        <button class="video-mute-btn" type="button" aria-pressed="false" aria-label="Ativar áudio do vídeo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path class="mute-x" d="m22 9-6 6M16 9l6 6"/><path class="sound-waves" d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14" style="display:none"/></svg><span>Ativar som</span></button>
+      </div>
+    </div>
     <div>
-      <div class="split-media reveal">${portrait({ alt: 'Retrato de André Machado, fundador da André Machado Consultoria', sizes: '(max-width: 920px) 90vw, 460px' })}</div>
+      <span class="eyebrow">Decisão no segundo certo</span>
+      <h2 id="movimento-title" style="font-size:clamp(1.9rem,3.4vw,2.7rem)">Sem dados confiáveis, gestão é <span class="serif gold">queda livre.</span></h2>
+      <p class="prose-lg">Quando números chegam atrasados ou cada área defende uma planilha diferente, a diretoria decide no escuro. Eu estruturo a base de dados, os indicadores em tempo real e a automação com IA para que cada decisão aconteça com segurança e precisão.</p>
+      <ul class="checklist">
+        <li>${icon('check')}Arquitetura Lakehouse e pipelines confiáveis sem retrabalho manual</li>
+        <li>${icon('check')}Dashboards executivos rápidos para decidir na hora</li>
+        <li>${icon('check')}IA generativa integrada ao fluxo real da operação</li>
+      </ul>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="${waLink()}" target="_blank" rel="noopener">${brand('whatsapp')}Agendar diagnóstico</a>
+        <a class="btn btn-ghost" href="/sobre/">Conhecer trajetória ${icon('arrow')}</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt" aria-labelledby="sobre-title">
+  <div class="container split">
+    <div class="salto-wrap reveal">
+      <div class="salto-frame">${punhoVideo()}</div>
     </div>
     <div>
       <span class="eyebrow">Quem conduz os projetos</span>
@@ -195,7 +224,7 @@ export function homePage({ posts }) {
   </div>
 </section>
 
-<section class="section section-alt" aria-labelledby="faq-title">
+<section class="section" aria-labelledby="faq-title">
   <div class="container">
     <div class="section-head center">
       <span class="eyebrow">Dúvidas frequentes</span>
@@ -220,7 +249,7 @@ export function servicesHub() {
     'Serviços da André Machado Consultoria: Power BI, engenharia de dados, migração Qlik → Power BI, IA generativa, automação Python e treinamentos.';
   const crumbs = [{ name: 'Início', path: '/' }, { name: 'Serviços', path }];
   const body = `
-${pageHero({ crumbs, eyebrow: 'Serviços', h1: 'Serviços de consultoria em dados, BI e inteligência artificial', lead: 'Escolha por onde começar — ou deixe que eu ajude a priorizar no diagnóstico. Todos os serviços podem ser contratados separadamente ou combinados em um programa de dados.' })}
+${pageHero({ crumbs, eyebrow: 'Serviços', h1: 'Serviços de consultoria em dados, BI e inteligência artificial', lead: 'Escolha por onde começar — ou deixe que eu ajude a priorizar no diagnóstico. Todos os serviços podem ser contratados separadamente ou combinados em um programa de dados.', aside: saltoVideo() })}
 <section class="section">
   <div class="container">
     <div class="grid grid-3">${services.map((s) => serviceCard(s, 'h2')).join('')}</div>
@@ -394,10 +423,10 @@ export function aboutPage() {
     ['2008 — 2014', 'Banco Cacique · Agiplan · Tramonto Fiat', 'Carreira comercial e de crédito — reconhecido como top performer em receita.'],
   ];
   const body = `
-${pageHero({ crumbs, eyebrow: 'Sobre', h1: 'André Machado: dados, negócio e propósito', lead: 'Consultor sênior de dados e IA, fundador da André Machado Consultoria, em Porto Alegre (RS).', actions: false })}
+${pageHero({ crumbs, eyebrow: 'Sobre', h1: 'André Machado: dados, negócio e propósito', lead: 'Consultor sênior de dados e IA, fundador da André Machado Consultoria, em Porto Alegre (RS).', actions: false, bgVideo: precisionVideo() })}
 <section class="section">
   <div class="container split">
-    <div class="split-media">${portrait({ eager: true, alt: 'André Luis Machado Silveira, consultor sênior de dados e inteligência artificial', sizes: '(max-width: 920px) 90vw, 460px' })}</div>
+    <div class="salto-wrap"><div class="salto-frame">${punhoVideo()}</div></div>
     <div class="prose-lg">
       <h2 style="font-size:clamp(1.7rem,3vw,2.3rem)">Do balcão de crédito ao Lakehouse</h2>
       <p>Sou <strong>André Luis Machado Silveira</strong>. Comecei a carreira em 2008 vendendo crédito e carros — e foi ali que aprendi o que mais importa em qualquer projeto de dados: entender quem decide, o que precisa decidir e quanto custa errar.</p>
@@ -407,9 +436,6 @@ ${pageHero({ crumbs, eyebrow: 'Sobre', h1: 'André Machado: dados, negócio e pr
         <a class="btn btn-primary" href="${site.social.linkedin}" target="_blank" rel="noopener me">${brand('linkedin')}Ver LinkedIn</a>
         <a class="btn btn-ghost" href="${site.social.portfolio}" target="_blank" rel="noopener me">Portfólio completo ${icon('arrow')}</a>
       </div>
-      <figure style="margin:28px 0 0;max-width:420px;border-radius:16px;overflow:hidden;border:1px solid var(--line-2)">
-        ${brandEmbroidery({ sizes: '(max-width: 920px) 90vw, 420px' })}
-      </figure>
     </div>
   </div>
 </section>
@@ -459,7 +485,7 @@ export function blogIndex({ posts }) {
     'Artigos práticos sobre Power BI, migração Qlik, arquitetura Lakehouse, Databricks, Microsoft Fabric e inteligência artificial para empresas.';
   const crumbs = [{ name: 'Início', path: '/' }, { name: 'Blog', path }];
   const body = `
-${pageHero({ crumbs, eyebrow: 'Blog', h1: 'Blog: Power BI, engenharia de dados e IA na prática', lead: 'Guias diretos, escritos a partir de projetos reais, para gestores e times de dados.', actions: false })}
+${pageHero({ crumbs, eyebrow: 'Blog', h1: 'Blog: Power BI, engenharia de dados e IA na prática', lead: 'Guias diretos, escritos a partir de projetos reais, para gestores e times de dados.', actions: false, bgVideo: officeVideo() })}
 <section class="section">
   <div class="container">
     <div class="grid grid-3">${posts.map((p) => postCard(p).replace('<h3>', '<h2 style="font-size:1.2rem">').replace('</h3>', '</h2>')).join('')}</div>
