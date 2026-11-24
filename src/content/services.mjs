@@ -193,7 +193,7 @@ export const services = [
       { t: 'Governança de IA', d: 'Políticas de uso, privacidade, LGPD, rastreabilidade e controle de custos por requisição.' },
     ],
     stack: ['Gemini API', 'OpenAI / ChatGPT API', 'LLMs open source', 'RAG', 'Python', 'OCR / Docling', 'Jina AI', 'Supabase', 'GCP', 'Azure'],
-    cases: ['legaltech-ia-trabalhista', 'quattrus-mvp-llm'],
+    cases: ['insightful-data-explorer', 'quattrus-mvp-llm'],
     faq: [
       {
         q: 'Meus dados ficam seguros usando IA generativa?',
@@ -243,7 +243,7 @@ export const services = [
       { t: 'Monitoramento', d: 'Logs, alertas e agendamento em nuvem para rodar sem intervenção.' },
     ],
     stack: ['Python', 'Pandas', 'Excel avançado', 'VBA', 'Playwright', 'Selenium', 'APIs REST', 'SharePoint', 'Supabase', 'Azure', 'GCP'],
-    cases: ['legaltech-ia-trabalhista', 'quattrus-mvp-llm', 'eichenberg-lobato-honorarios'],
+    cases: ['insightful-data-explorer', 'quattrus-mvp-llm', 'eichenberg-lobato-honorarios'],
     faq: [
       {
         q: 'Que tipo de processo pode ser automatizado com Python?',

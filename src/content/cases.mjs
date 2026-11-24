@@ -105,19 +105,19 @@ export const cases = [
     service: 'inteligencia-artificial-para-empresas',
   },
   {
-    slug: 'legaltech-ia-trabalhista',
-    client: 'Produto próprio · LegalTech',
-    sector: 'Jurídico / RH',
+    slug: 'insightful-data-explorer',
+    client: 'Projeto próprio · Insightful Data Explorer',
+    sector: 'Dados / RH',
     period: '2025',
     metric: 'IA + OCR',
     metricLabel: 'para convenções coletivas',
-    title: 'IA aplicada ao direito do trabalho e monitoramento sindical',
+    title: 'Plataforma de dados: coleta, OCR e IA sobre convenções coletivas',
     challenge:
       'Departamentos de pessoal e escritórios precisam acompanhar centenas de convenções e acordos coletivos publicados em portais diferentes.',
     solution:
       'Web scraping do MTE Mediador e de sindicatos, OCR de convenções, classificação automática e comparação inteligente de CCTs/ACTs com IA generativa.',
     result:
-      'Plataforma SaaS que transforma documentos dispersos em informação comparável e pesquisável.',
+      'Plataforma de dados que transforma documentos dispersos em informação comparável e pesquisável, com dashboards e chat de consulta.',
     tags: ['IA generativa', 'OCR', 'Playwright', 'Supabase', 'React'],
     service: 'inteligencia-artificial-para-empresas',
   },
